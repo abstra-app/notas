@@ -5,11 +5,13 @@ from dataclasses import dataclass
 class Cabecalho:
     sucesso: bool
 
+
 @dataclass
 class ChaveNFe:
     inscricao_prestador: str
     numero_nfe: int
     codigo_verificacao: str
+
 
 @dataclass
 class ChaveRPS:
@@ -17,10 +19,12 @@ class ChaveRPS:
     serie_rps: str
     numero_rps: int
 
+
 @dataclass
 class ChaveNFeRPS:
     chave_nfe: ChaveNFe
     chave_rps: ChaveRPS
+
 
 @dataclass
 class RetornoEnvioRPS:

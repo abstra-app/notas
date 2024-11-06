@@ -1,9 +1,19 @@
 from unittest import TestCase
-from .envio_pedido import PedidoEnvioRPS, Cabecalho, ChaveRPS, RPS, CPFCNPJTomador, CPFCNPJRemetente, EnderecoTomador, StatusRPS, TipoRPS, TributacaoRPS
+from .envio_pedido import (
+    PedidoEnvioRPS,
+    Cabecalho,
+    ChaveRPS,
+    RPS,
+    CPFCNPJTomador,
+    EnderecoTomador,
+    StatusRPS,
+    TipoRPS,
+    TributacaoRPS,
+)
+from .tipos_comuns import CPFCNPJRemetente
 from pathlib import Path
 from xml.etree.ElementTree import parse
 from datetime import date
-
 
 
 class EnvioTest(TestCase):
@@ -14,15 +24,11 @@ class EnvioTest(TestCase):
         exemplo = PedidoEnvioRPS.parse_xml(exemplo_xml.getroot())
 
         pedido = PedidoEnvioRPS(
-            cabecalho=Cabecalho(
-                CPFCNPJRemetente(tipo="CNPJ", numero="99999997000100")
-            ),
+            cabecalho=Cabecalho(CPFCNPJRemetente(tipo="CNPJ", numero="99999997000100")),
             rps=RPS(
                 assinatura="d8Pg/jdA7t5tSaB8Il1d/CMiLGgfFAXzTL9o5stv6TNbhm9I94DIo0/ocqJpGx0KzoEeIQz4RSn99pWX4fiW/aETlNT3u5woqCAyL6U2hSyl/eQfWRYrqFu2zcdc4rsAG/wJbDjNO8y0Pz9b6rlTwkIJ+kMdLo+EWXMnB744olYE721g2O9CmUTvjtBgCfVUgvuN1MGjgzpgyussCOSkLpGbrqtM5+pYMXZsTaEVIIck1baDkoRpLmZ5Y/mcn1/Om1fMyhJVUAkgI5xBrORuotIP7e3+HLJnKgzQQPWCtLyEEyAqUk9Gq64wMayITua5FodaJsX+Eic/ie3kS5m50Q==",
                 chave_rps=ChaveRPS(
-                    inscricao_prestador="39616924",
-                    serie_rps="BB",
-                    numero_rps=4105
+                    inscricao_prestador="39616924", serie_rps="BB", numero_rps=4105
                 ),
                 aliquota_servicos=0.05,
                 codigo_servico=7617,
@@ -38,7 +44,7 @@ class EnvioTest(TestCase):
                     logradouro="Paulista",
                     numero_endereco="100",
                     tipo_logradouro="Av",
-                    uf="SP"
+                    uf="SP",
                 ),
                 iss_retido=False,
                 razao_social_tomador="TOMADOR PF",
@@ -52,7 +58,7 @@ class EnvioTest(TestCase):
                 valor_ir=10,
                 valor_pis=10,
                 valor_servicos=20500,
-            )
+            ),
         )
-        
+
         self.assertEqual(exemplo, pedido)

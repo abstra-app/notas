@@ -1,5 +1,5 @@
 def normalizar_cnpj(cnpj: str) -> str:
-    cnpj = cnpj.replace('.', '').replace('/', '').replace('-', '')
+    cnpj = cnpj.replace(".", "").replace("/", "").replace("-", "")
 
     if len(cnpj) == 14:
         validar = True
@@ -23,10 +23,22 @@ def normalizar_cnpj(cnpj: str) -> str:
         dig_11 = int(cnpj[10]) * 8
         dig_12 = int(cnpj[11]) * 9
     except IndexError:
-        raise Exception('Quantidade de caracteres incorreto.')
+        raise Exception("Quantidade de caracteres incorreto.")
 
-    dig_1_ao_12_somados = (dig_1 + dig_2 + dig_3 + dig_4 + dig_5 + dig_6 +
-                           dig_7 + dig_8 + dig_9 + dig_10 + dig_11 + dig_12)
+    dig_1_ao_12_somados = (
+        dig_1
+        + dig_2
+        + dig_3
+        + dig_4
+        + dig_5
+        + dig_6
+        + dig_7
+        + dig_8
+        + dig_9
+        + dig_10
+        + dig_11
+        + dig_12
+    )
 
     dig_13 = dig_1_ao_12_somados % 11
 
@@ -49,8 +61,21 @@ def normalizar_cnpj(cnpj: str) -> str:
     dig_12 = int(cnpj[11]) * 8
     dig_13 = int(cnpj[12]) * 9
 
-    dig_1_ao_13_somados = (dig_1 + dig_2 + dig_3 + dig_4 + dig_5 + dig_6 +
-                           dig_7 + dig_8 + dig_9 + dig_10 + dig_11 + dig_12 + dig_13)
+    dig_1_ao_13_somados = (
+        dig_1
+        + dig_2
+        + dig_3
+        + dig_4
+        + dig_5
+        + dig_6
+        + dig_7
+        + dig_8
+        + dig_9
+        + dig_10
+        + dig_11
+        + dig_12
+        + dig_13
+    )
 
     dig_14 = dig_1_ao_13_somados % 11
 
@@ -59,13 +84,22 @@ def normalizar_cnpj(cnpj: str) -> str:
 
     cnpj_validado = cnpj + str(dig_14)
 
-    cnpj = (cnpj_validado[0:2] + '.' + cnpj_validado[2:5] + '.' +
-            cnpj_validado[5:8] + '/' + cnpj_validado[8:12] + '-' + cnpj_validado[12:])
-    cnpj_normalizado = cnpj.replace('.', '').replace('/', '').replace('-', '')
+    cnpj = (
+        cnpj_validado[0:2]
+        + "."
+        + cnpj_validado[2:5]
+        + "."
+        + cnpj_validado[5:8]
+        + "/"
+        + cnpj_validado[8:12]
+        + "-"
+        + cnpj_validado[12:]
+    )
+    cnpj_normalizado = cnpj.replace(".", "").replace("/", "").replace("-", "")
     if validar:
         if digitos_verificadores == cnpj_validado[12:]:
             return cnpj_normalizado
         else:
-            raise Exception('Os dígitos verificadores estão incorretos.')
+            raise Exception("Os dígitos verificadores estão incorretos.")
     else:
         return cnpj_normalizado

@@ -1,8 +1,6 @@
 from dataclasses import dataclass
 from typing import Literal
-from xml.etree.ElementTree import Element, SubElement, tostring
-from abstra_notas.validacoes.cnpj import normalizar_cnpj
-from abstra_notas.validacoes.cpf import normalizar_cpf
+from lxml.etree import Element, SubElement, tostring
 from abstra_notas.validacoes.email import validar_email
 from abstra_notas.validacoes.cidades import validar_codigo_cidade, normalizar_uf
 from abstra_notas.validacoes.cep import normalizar_cep
@@ -10,8 +8,10 @@ from .codigos_de_servico import codigos_de_servico_validos
 from datetime import date
 from abc import ABC, abstractmethod
 from decimal import Decimal, getcontext
+from .tipos_comuns import Cabecalho
 
 getcontext().prec = 2
+
 
 class StatusRPS(ABC):
     class _Normal(ABC):
@@ -28,7 +28,7 @@ class StatusRPS(ABC):
     @abstractmethod
     def gerar_string(self) -> str:
         raise NotImplementedError
-    
+
     @staticmethod
     def parse_string(string: str) -> "StatusRPS":
         if string == "N":
@@ -38,7 +38,10 @@ class StatusRPS(ABC):
         raise ValueError(f"Status de RPS inválido: {string}")
 
     def __eq__(self, value):
-        return isinstance(value, self.__class__) and self.gerar_string() == value.gerar_string()
+        return (
+            isinstance(value, self.__class__)
+            and self.gerar_string() == value.gerar_string()
+        )
 
 
 class TipoRPS(ABC):
@@ -49,21 +52,21 @@ class TipoRPS(ABC):
     class _RPS(ABC):
         def gerar_string(self) -> str:
             return "RPS"
-    
+
     class _RPSC(ABC):
         def gerar_string(self) -> str:
             return "RPS-C"
-    
+
     RPS_M = _RPSM()
     """
     Recibo provisório de serviços provenientes de nota fiscal conjugada (mista)
     """
-    
+
     RPS = _RPS()
     """
     Recibo provisório de serviços
     """
-    
+
     RPS_C = _RPSC()
     """
     Recibo provisório de cupom fiscal
@@ -72,7 +75,7 @@ class TipoRPS(ABC):
     @abstractmethod
     def gerar_string(self) -> str:
         raise NotImplementedError
-    
+
     @staticmethod
     def parse_string(string: str) -> "TipoRPS":
         if string == "RPS-M":
@@ -84,58 +87,61 @@ class TipoRPS(ABC):
         raise ValueError(f"Tipo de RPS inválido: {string}")
 
     def __eq__(self, value):
-        return isinstance(value, self.__class__) and self.gerar_string() == value.gerar_string()
+        return (
+            isinstance(value, self.__class__)
+            and self.gerar_string() == value.gerar_string()
+        )
+
 
 class TributacaoRPS(ABC):
-
     class _T(ABC):
         def gerar_string(self) -> str:
             return "T"
-    
+
     class _F(ABC):
         def gerar_string(self) -> str:
             return "F"
-    
+
     class _A(ABC):
         def gerar_string(self) -> str:
             return "A"
-    
+
     class _B(ABC):
         def gerar_string(self) -> str:
             return "B"
-    
+
     class _D(ABC):
         def gerar_string(self) -> str:
             return "D"
-    
+
     class _M(ABC):
         def gerar_string(self) -> str:
             return "M"
-    
+
     class _N(ABC):
         def gerar_string(self) -> str:
             return "N"
-    
+
     class _R(ABC):
         def gerar_string(self) -> str:
             return "R"
-    
+
     class _S(ABC):
         def gerar_string(self) -> str:
             return "S"
-    
+
     class _X(ABC):
         def gerar_string(self) -> str:
             return "X"
-    
+
     class _V(ABC):
         def gerar_string(self) -> str:
             return "V"
-    
+
     class _P(ABC):
         def gerar_string(self) -> str:
             return "P"
-    
+
     T = _T()
     """
     Tributado em São Paulo
@@ -199,7 +205,7 @@ class TributacaoRPS(ABC):
     @abstractmethod
     def gerar_string(self) -> str:
         raise NotImplementedError
-    
+
     @staticmethod
     def parse_string(string: str) -> "TributacaoRPS":
         if string == "T":
@@ -229,44 +235,11 @@ class TributacaoRPS(ABC):
         raise ValueError(f"Tributação de RPS inválida: {string}")
 
     def __eq__(self, value):
-        return isinstance(value, self.__class__) and self.gerar_string() == value.gerar_string()
+        return (
+            isinstance(value, self.__class__)
+            and self.gerar_string() == value.gerar_string()
+        )
 
-@dataclass
-class CPFCNPJRemetente:
-    tipo: Literal["CPF", "CNPJ"]
-    numero: str
-
-    def __post_init__(self):
-        if self.tipo == "CPF":
-            self.numero = normalizar_cpf(self.numero)
-        if self.tipo == "CNPJ":
-            self.numero = normalizar_cnpj(self.numero)
-
-    def gerar_xml(self) -> Element:
-        cpfcnpjremetente = Element("CPFCNPJRemetente")
-        SubElement(cpfcnpjremetente, self.tipo).text = self.numero
-        return cpfcnpjremetente
-
-    @staticmethod
-    def parse_xml(element: Element) -> "CPFCNPJRemetente":
-        tipo = element[0].tag
-        numero = element.find(tipo).text
-        return CPFCNPJRemetente(tipo=tipo, numero=numero)
-
-@dataclass
-class Cabecalho:
-    cpf_cnpj_remetente: CPFCNPJRemetente
-
-    def gerar_xml(self) -> Element:
-        cabecalho = Element("Cabecalho")
-        cpfcnpjremetente = self.cpf_cnpj_remetente.gerar_xml()
-        cabecalho.append(cpfcnpjremetente)
-        return cabecalho
-
-    @staticmethod
-    def parse_xml(element: Element) -> "Cabecalho":
-        cpf_cnpj_remetente = CPFCNPJRemetente.parse_xml(element.find("CPFCNPJRemetente"))
-        return Cabecalho(cpf_cnpj_remetente=cpf_cnpj_remetente)
 
 @dataclass
 class ChaveRPS:
@@ -280,13 +253,18 @@ class ChaveRPS:
         SubElement(chaverps, "SerieRPS").text = self.serie_rps
         SubElement(chaverps, "NumeroRPS").text = str(self.numero_rps)
         return chaverps
-    
+
     @staticmethod
     def parse_xml(element: Element) -> "ChaveRPS":
         inscricao_prestador = element.find("InscricaoPrestador").text
         serie_rps = element.find("SerieRPS").text
         numero_rps = int(element.find("NumeroRPS").text)
-        return ChaveRPS(inscricao_prestador=inscricao_prestador, serie_rps=serie_rps, numero_rps=numero_rps)
+        return ChaveRPS(
+            inscricao_prestador=inscricao_prestador,
+            serie_rps=serie_rps,
+            numero_rps=numero_rps,
+        )
+
 
 @dataclass
 class CPFCNPJTomador:
@@ -297,12 +275,13 @@ class CPFCNPJTomador:
         cpfcnpjtomador = Element("CPFCNPJTomador")
         SubElement(cpfcnpjtomador, self.tipo).text = self.numero
         return cpfcnpjtomador
-    
+
     @staticmethod
     def parse_xml(element: Element) -> "CPFCNPJTomador":
         tipo = element[0].tag
         numero = element.find(tipo).text
         return CPFCNPJTomador(tipo=tipo, numero=numero)
+
 
 @dataclass
 class EnderecoTomador:
@@ -318,20 +297,24 @@ class EnderecoTomador:
     def __post_init__(self):
         self.cep = normalizar_cep(self.cep)
         self.uf = normalizar_uf(self.uf)
-        assert validar_codigo_cidade(self.cidade), f"Código de cidade inválido: {self.cidade}"
+        assert validar_codigo_cidade(
+            self.cidade
+        ), f"Código de cidade inválido: {self.cidade}"
 
     def gerar_xml(self) -> Element:
         enderecotomador = Element("EnderecoTomador")
         SubElement(enderecotomador, "TipoLogradouro").text = self.tipo_logradouro
         SubElement(enderecotomador, "Logradouro").text = self.logradouro
         SubElement(enderecotomador, "NumeroEndereco").text = self.numero_endereco
-        SubElement(enderecotomador, "ComplementoEndereco").text = self.complemento_endereco
+        SubElement(
+            enderecotomador, "ComplementoEndereco"
+        ).text = self.complemento_endereco
         SubElement(enderecotomador, "Bairro").text = self.bairro
         SubElement(enderecotomador, "Cidade").text = str(self.cidade)
         SubElement(enderecotomador, "UF").text = self.uf
         SubElement(enderecotomador, "CEP").text = self.cep
         return enderecotomador
-    
+
     @staticmethod
     def parse_xml(element: Element) -> "EnderecoTomador":
         tipo_logradouro = element.find("TipoLogradouro").text
@@ -342,7 +325,17 @@ class EnderecoTomador:
         cidade = int(element.find("Cidade").text)
         uf = element.find("UF").text
         cep = element.find("CEP").text
-        return EnderecoTomador(tipo_logradouro=tipo_logradouro, logradouro=logradouro, numero_endereco=numero_endereco, complemento_endereco=complemento_endereco, bairro=bairro, cidade=cidade, uf=uf, cep=cep)
+        return EnderecoTomador(
+            tipo_logradouro=tipo_logradouro,
+            logradouro=logradouro,
+            numero_endereco=numero_endereco,
+            complemento_endereco=complemento_endereco,
+            bairro=bairro,
+            cidade=cidade,
+            uf=uf,
+            cep=cep,
+        )
+
 
 @dataclass
 class RPS:
@@ -369,20 +362,46 @@ class RPS:
     discriminacao: str
 
     def __post_init__(self):
-        assert self.aliquota_servicos >= 0 and self.aliquota_servicos <= 1, "A alíquota de serviços deve ser um valor entre 0 e 1"
-        assert self.codigo_servico in codigos_de_servico_validos, f"Código de serviço inválido, os códigos válidos são: {codigos_de_servico_validos}"
-        assert validar_email(self.email_tomador), f"Email do tomador com formato inválido: {self.email_tomador}"
-        assert isinstance(self.valor_servicos, (int, Decimal)), "O valor de serviços deve ser um valor decimal"
-        assert isinstance(self.valor_deducoes, (int, Decimal)), "O valor de deduções deve ser um valor decimal"
-        assert isinstance(self.valor_pis, (int, Decimal)), "O valor de PIS deve ser um valor decimal"
-        assert isinstance(self.valor_cofins, (int, Decimal)), "O valor de COFINS deve ser um valor decimal"
-        assert isinstance(self.valor_inss, (int, Decimal)), "O valor de INSS deve ser um valor decimal"
-        assert isinstance(self.valor_ir, (int, Decimal)), "O valor de IR deve ser um valor decimal"
-        assert isinstance(self.valor_csll, (int, Decimal)), "O valor de CSLL deve ser um valor decimal"
-        assert self.valor_servicos >= 0, "O valor de serviços deve ser maior ou igual a zero"
-        assert self.valor_deducoes >= 0, "O valor de deduções deve ser maior ou igual a zero"
+        assert (
+            self.aliquota_servicos >= 0 and self.aliquota_servicos <= 1
+        ), "A alíquota de serviços deve ser um valor entre 0 e 1"
+        assert (
+            self.codigo_servico in codigos_de_servico_validos
+        ), f"Código de serviço inválido, os códigos válidos são: {codigos_de_servico_validos}"
+        assert validar_email(
+            self.email_tomador
+        ), f"Email do tomador com formato inválido: {self.email_tomador}"
+        assert isinstance(
+            self.valor_servicos, (int, Decimal)
+        ), "O valor de serviços deve ser um valor decimal"
+        assert isinstance(
+            self.valor_deducoes, (int, Decimal)
+        ), "O valor de deduções deve ser um valor decimal"
+        assert isinstance(
+            self.valor_pis, (int, Decimal)
+        ), "O valor de PIS deve ser um valor decimal"
+        assert isinstance(
+            self.valor_cofins, (int, Decimal)
+        ), "O valor de COFINS deve ser um valor decimal"
+        assert isinstance(
+            self.valor_inss, (int, Decimal)
+        ), "O valor de INSS deve ser um valor decimal"
+        assert isinstance(
+            self.valor_ir, (int, Decimal)
+        ), "O valor de IR deve ser um valor decimal"
+        assert isinstance(
+            self.valor_csll, (int, Decimal)
+        ), "O valor de CSLL deve ser um valor decimal"
+        assert (
+            self.valor_servicos >= 0
+        ), "O valor de serviços deve ser maior ou igual a zero"
+        assert (
+            self.valor_deducoes >= 0
+        ), "O valor de deduções deve ser maior ou igual a zero"
         assert self.valor_pis >= 0, "O valor de PIS deve ser maior ou igual a zero"
-        assert self.valor_cofins >= 0, "O valor de COFINS deve ser maior ou igual a zero"
+        assert (
+            self.valor_cofins >= 0
+        ), "O valor de COFINS deve ser maior ou igual a zero"
         assert self.valor_inss >= 0, "O valor de INSS deve ser maior ou igual a zero"
         assert self.valor_ir >= 0, "O valor de IR deve ser maior ou igual a zero"
         assert self.valor_csll >= 0, "O valor de CSLL deve ser maior ou igual a zero"
@@ -393,7 +412,16 @@ class RPS:
         self.valor_inss = Decimal(self.valor_inss)
         self.valor_ir = Decimal(self.valor_ir)
         self.valor_csll = Decimal(self.valor_csll)
-        assert self.valor_servicos - self.valor_deducoes - self.valor_pis - self.valor_cofins - self.valor_inss - self.valor_ir - self.valor_csll >= 0, "A soma dos valores não pode ser negativa"
+        assert (
+            self.valor_servicos
+            - self.valor_deducoes
+            - self.valor_pis
+            - self.valor_cofins
+            - self.valor_inss
+            - self.valor_ir
+            - self.valor_csll
+            >= 0
+        ), "A soma dos valores não pode ser negativa"
 
     def gerar_xml(self) -> Element:
         rps = Element("RPS")
@@ -422,7 +450,7 @@ class RPS:
         SubElement(rps, "EmailTomador").text = self.email_tomador
         SubElement(rps, "Discriminacao").text = self.discriminacao
         return rps
-    
+
     @staticmethod
     def parse_xml(element: Element) -> "RPS":
         return RPS(
@@ -431,7 +459,9 @@ class RPS:
             tipo_rps=TipoRPS.parse_string(element.find("TipoRPS").text),
             data_emissao=date.fromisoformat(element.find("DataEmissao").text),
             status_rps=StatusRPS.parse_string(element.find("StatusRPS").text),
-            tributacao_rps=TributacaoRPS.parse_string(element.find("TributacaoRPS").text),
+            tributacao_rps=TributacaoRPS.parse_string(
+                element.find("TributacaoRPS").text
+            ),
             valor_servicos=Decimal(element.find("ValorServicos").text),
             valor_deducoes=Decimal(element.find("ValorDeducoes").text),
             valor_pis=Decimal(element.find("ValorPIS").text),
@@ -446,7 +476,7 @@ class RPS:
             razao_social_tomador=element.find("RazaoSocialTomador").text,
             endereco_tomador=EnderecoTomador.parse_xml(element.find("EnderecoTomador")),
             email_tomador=element.find("EmailTomador").text,
-            discriminacao=element.find("Discriminacao").text
+            discriminacao=element.find("Discriminacao").text,
         )
 
 
@@ -464,7 +494,7 @@ class PedidoEnvioRPS:
         return pedidoenviorps
 
     def gerar_string(self) -> str:
-        return tostring(self.gerar_xml()).decode("utf-8")
+        return tostring(self.gerar_xml(), encoding="unicode")
 
     @staticmethod
     def parse_xml(element: Element) -> "PedidoEnvioRPS":

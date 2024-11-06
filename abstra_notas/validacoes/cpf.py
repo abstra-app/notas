@@ -1,5 +1,5 @@
 def normalizar_cpf(cpf: str) -> str:
-    cpf = cpf.replace('.', '').replace('-', '')
+    cpf = cpf.replace(".", "").replace("-", "")
 
     if len(cpf) == 11:
         validar = True
@@ -20,9 +20,11 @@ def normalizar_cpf(cpf: str) -> str:
         dig_8 = int(cpf[7]) * 8
         dig_9 = int(cpf[8]) * 9
     except IndexError:
-        raise Exception('Quantidade de caracteres incorreto.')
+        raise Exception("Quantidade de caracteres incorreto.")
 
-    dig_1_ao_9_somados = (dig_1 + dig_2 + dig_3 + dig_4 + dig_5 + dig_6 + dig_7 + dig_8 + dig_9)
+    dig_1_ao_9_somados = (
+        dig_1 + dig_2 + dig_3 + dig_4 + dig_5 + dig_6 + dig_7 + dig_8 + dig_9
+    )
 
     dig_10 = dig_1_ao_9_somados % 11
 
@@ -42,7 +44,9 @@ def normalizar_cpf(cpf: str) -> str:
     dig_9 = int(cpf[8]) * 8
     dig_10 = int(cpf[9]) * 9
 
-    dig_1_ao_10_somados = (dig_1 + dig_2 + dig_3 + dig_4 + dig_5 + dig_6 + dig_7 + dig_8 + dig_9 + dig_10)
+    dig_1_ao_10_somados = (
+        dig_1 + dig_2 + dig_3 + dig_4 + dig_5 + dig_6 + dig_7 + dig_8 + dig_9 + dig_10
+    )
 
     dig_11 = dig_1_ao_10_somados % 11
 
@@ -51,16 +55,22 @@ def normalizar_cpf(cpf: str) -> str:
 
     cpf_validado = cpf + str(dig_11)
 
-    cpf = (cpf_validado[:3] + '.' + cpf_validado[3:6] + '.' +
-           cpf_validado[6:9] + '-' + cpf_validado[9:])
+    cpf = (
+        cpf_validado[:3]
+        + "."
+        + cpf_validado[3:6]
+        + "."
+        + cpf_validado[6:9]
+        + "-"
+        + cpf_validado[9:]
+    )
 
-    cpf_normalizado = cpf.replace('.', '').replace('-', '')
+    cpf_normalizado = cpf.replace(".", "").replace("-", "")
     if validar:
         if digitos_verificadores == cpf_validado[9:]:
             return cpf_normalizado
         else:
             print()
-            raise Exception('Os dígitos verificadores estão incorretos.')
+            raise Exception("Os dígitos verificadores estão incorretos.")
     else:
         return cpf_normalizado
-
