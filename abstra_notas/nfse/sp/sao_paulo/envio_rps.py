@@ -83,9 +83,9 @@ class PedidoEnvioRPS(Pedido):
         assert (
             self.aliquota_servicos >= 0 and self.aliquota_servicos <= 1
         ), "A alíquota de serviços deve ser um valor entre 0 e 1"
-        assert (
-            self.codigo_servico in codigos_de_servico_validos
-        ), f"Código de serviço inválido, os códigos válidos são: {codigos_de_servico_validos}"
+        # assert (
+        #     self.codigo_servico in codigos_de_servico_validos
+        # ), f"Código de serviço inválido, os códigos válidos são: {codigos_de_servico_validos}"
         assert validar_email(
             self.email_tomador
         ), f"Email do tomador com formato inválido: {self.email_tomador}"
