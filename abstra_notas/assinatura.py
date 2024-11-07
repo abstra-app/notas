@@ -23,8 +23,8 @@ class Assinador:
 
     def __init__(
         self,
-        pfx_path: Path = Path(getenv("NFSE_PFX_PATH")),
-        pfx_password: str = getenv("NFSE_PFX_PASSWORD"),
+        pfx_path: Path,
+        pfx_password: str,
     ):
         self.pfx_path = pfx_path
         self.pfx_password = pfx_password
