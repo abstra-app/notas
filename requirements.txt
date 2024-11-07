@@ -3,3 +3,4 @@ requests
 pycryptodome
 Jinja2
 lxml
+xmlsec >= 5.0.0
