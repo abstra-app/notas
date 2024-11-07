@@ -1,3 +1,5 @@
 zeep
 requests
 pycryptodome
+Jinja2
+lxml

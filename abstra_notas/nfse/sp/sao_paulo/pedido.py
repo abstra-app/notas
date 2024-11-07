@@ -1,8 +1,8 @@
 from abc import ABC, abstractmethod
 from abstra_notas.assinatura import Assinador
 from .retorno import Retorno
+from .templates import load_template
 from jinja2 import Template
-from pathlib import Path
 
 
 class Pedido(ABC):
@@ -17,7 +17,4 @@ class Pedido(ABC):
 
     @property
     def template(self) -> Template:
-        template_path = (
-            Path(__file__).parent / "templates" / f"{self.__class__.__name__}.xml"
-        )
-        return Template(template_path.read_text())
+        return load_template(self.__class__.__name__)
