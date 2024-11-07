@@ -6,7 +6,7 @@
     </CPFCNPJRemetente>
   </Cabecalho>
   <RPS xmlns="">
-    <Assinador>{{ assinatura }}</Assinador>
+    <Assinatura>{{ assinatura }}</Assinatura>
     <ChaveRPS>
       <InscricaoPrestador>{{ inscricao_prestador }}</InscricaoPrestador>
       <SerieRPS>{{ serie_rps }}</SerieRPS>

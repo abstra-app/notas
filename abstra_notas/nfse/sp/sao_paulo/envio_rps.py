@@ -8,8 +8,6 @@ from abstra_notas.validacoes.cpf import normalizar_cpf
 from abstra_notas.validacoes.cnpj import normalizar_cnpj
 from .codigos_de_servico import codigos_de_servico_validos
 from datetime import date
-from jinja2 import Template
-from pathlib import Path
 from .pedido import Pedido
 from .retorno import Retorno
 from abstra_notas.assinatura import Assinador
@@ -26,7 +24,10 @@ class RetornoEnvioRPS(Retorno):
     chave_rps_numero_rps: str
 
     @staticmethod
-    def ler_xml(xml: Element) -> "RetornoEnvioRPS":
+    def ler_xml(xml: str) -> "RetornoEnvioRPS":
+        print(xml)
+        xml = xml.encode("utf-8")
+        xml = fromstring(xml)
         return RetornoEnvioRPS(
             sucesso=xml.find(".//Sucesso").text == "true",
             chave_nfe_inscricao_prestador=xml.find(".//InscricaoPrestador").text,

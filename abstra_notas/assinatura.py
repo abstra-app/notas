@@ -88,7 +88,6 @@ class Assinador:
                 cert_pem_file.name, xmlsec.constants.KeyDataFormatPem
             )
             ctx.sign(signature_node)
-            print(tostring(element, encoding=str))
             return element
 
     def assinar_bytes_rsa_sh1(self, data: bytes) -> bytes:

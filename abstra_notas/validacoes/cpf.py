@@ -70,7 +70,6 @@ def normalizar_cpf(cpf: str) -> str:
         if digitos_verificadores == cpf_validado[9:]:
             return cpf_normalizado
         else:
-            print()
             raise Exception("Os dígitos verificadores estão incorretos.")
     else:
         return cpf_normalizado
