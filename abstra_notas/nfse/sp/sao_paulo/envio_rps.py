@@ -12,32 +12,59 @@ from .pedido import Pedido
 from .retorno import Retorno
 from abstra_notas.assinatura import Assinador
 
-
-@dataclass
 class RetornoEnvioRPS(Retorno):
-    sucesso: bool
-    chave_nfe_inscricao_prestador: str
-    chave_nfe_numero_nfe: str
-    chave_nfe_codigo_verificacao: str
-    chave_rps_inscricao_prestador: str
-    chave_rps_serie_rps: str
-    chave_rps_numero_rps: str
+    @dataclass
+    class RetornoEnvioRpsSucesso:
+        chave_nfe_inscricao_prestador: str
+        chave_nfe_numero_nfe: str
+        chave_nfe_codigo_verificacao: str
+        chave_rps_inscricao_prestador: str
+        chave_rps_serie_rps: str
+        chave_rps_numero_rps: str
+
+        @property
+        def sucesso(self):
+            return True
+
+        @staticmethod
+        def ler_xml(xml: Element):
+            return RetornoEnvioRPS.RetornoEnvioRpsSucesso(
+                chave_nfe_inscricao_prestador=xml.find(".//InscricaoPrestador").text,
+                chave_nfe_codigo_verificacao=xml.find(".//CodigoVerificacao").text,
+                chave_nfe_numero_nfe=xml.find(".//NumeroNFe").text,
+                chave_rps_inscricao_prestador=xml.find(".//InscricaoPrestador").text,
+                chave_rps_numero_rps=xml.find(".//NumeroRPS").text,
+                chave_rps_serie_rps=xml.find(".//SerieRPS").text,
+            )
+
+    @dataclass
+    class RetornoEnvioRpsErro:
+        codigo: int
+        descricao: str
+        chave_rps_inscricao_prestador: str
+        
+        @property
+        def sucesso(self):
+            return False
+
+        @staticmethod
+        def ler_xml(xml: Element):
+            return RetornoEnvioRPS.RetornoEnvioRpsErro(
+                codigo=int(xml.find(".//Codigo").text),
+                descricao=xml.find(".//Descricao").text,
+                chave_rps_inscricao_prestador=xml.find(".//InscricaoPrestador").text,
+            )
+
 
     @staticmethod
-    def ler_xml(xml: str) -> "RetornoEnvioRPS":
-        print(xml)
+    def ler_xml(xml):
         xml = xml.encode("utf-8")
         xml = fromstring(xml)
-        return RetornoEnvioRPS(
-            sucesso=xml.find(".//Sucesso").text == "true",
-            chave_nfe_inscricao_prestador=xml.find(".//InscricaoPrestador").text,
-            chave_nfe_codigo_verificacao=xml.find(".//CodigoVerificacao").text,
-            chave_nfe_numero_nfe=xml.find(".//NumeroNFe").text,
-            chave_rps_inscricao_prestador=xml.find(".//InscricaoPrestador").text,
-            chave_rps_numero_rps=xml.find(".//NumeroRPS").text,
-            chave_rps_serie_rps=xml.find(".//SerieRPS").text,
-        )
-
+        sucesso = xml.find(".//Sucesso").text == "true"
+        if sucesso:
+            return RetornoEnvioRPS.RetornoEnvioRpsSucesso.ler_xml(xml)
+        else:
+            return RetornoEnvioRPS.RetornoEnvioRpsErro.ler_xml(xml)
 
 @dataclass
 class PedidoEnvioRPS(Pedido):
@@ -145,7 +172,37 @@ class PedidoEnvioRPS(Pedido):
 
     def gerar_xml(self, assinador: Assinador) -> Element:
         xml = self.template.render(
-            **self.__dict__, assinatura=self.assinatura(assinador)
+            remetente=self.remetente,
+            inscricao_prestador=self.inscricao_prestador,
+            serie_rps=self.serie_rps,
+            numero_rps=self.numero_rps,
+            tipo_rps=self.tipo_rps,
+            data_emissao=self.data_emissao,
+            status_rps=self.status_rps,
+            tributacao_rps=self.tributacao_rps,
+            valor_servicos=f"{self.valor_servicos_centavos / 100:.2f}",
+            valor_deducoes=f"{self.valor_deducoes_centavos / 100:.2f}",
+            valor_pis=f"{self.valor_pis_centavos / 100:.2f}",
+            valor_cofins=f"{self.valor_cofins_centavos / 100:.2f}",
+            valor_inss=f"{self.valor_inss_centavos / 100:.2f}",
+            valor_ir=f"{self.valor_ir_centavos / 100:.2f}",
+            valor_csll=f"{self.valor_csll_centavos / 100:.2f}",
+            codigo_servico=self.codigo_servico,
+            aliquota_servicos=self.aliquota_servicos,
+            iss_retido=self.iss_retido,
+            tomador=self.tomador,
+            razao_social_tomador=self.razao_social_tomador,
+            endereco_tipo_logradouro=self.endereco_tipo_logradouro,
+            endereco_logradouro=self.endereco_logradouro,
+            endereco_numero=self.endereco_numero,
+            endereco_complemento=self.endereco_complemento,
+            endereco_bairro=self.endereco_bairro,
+            endereco_cidade=self.endereco_cidade,
+            endereco_uf=self.endereco_uf,
+            endereco_cep=self.endereco_cep,
+            email_tomador=self.email_tomador,
+            discriminacao=self.discriminacao,
+            assinatura=self.assinatura(assinador),
         )
 
         return fromstring(xml)
@@ -156,7 +213,7 @@ class PedidoEnvioRPS(Pedido):
 
     def assinatura(self, assinador: Assinador) -> str:
         template = ""
-        template += str(self.inscricao_prestador)
+        template += self.inscricao_prestador
         template += self.serie_rps.upper()
         template += str(self.numero_rps).zfill(12)
         template += self.data_emissao.strftime("%Y%m%d").upper()

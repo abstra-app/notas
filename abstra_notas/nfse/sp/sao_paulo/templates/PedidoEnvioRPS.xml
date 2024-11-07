@@ -16,13 +16,13 @@
     <DataEmissao>{{ data_emissao }}</DataEmissao>
     <StatusRPS>{{ status_rps }}</StatusRPS>
     <TributacaoRPS>{{ tributacao_rps }}</TributacaoRPS>
-    <ValorServicos>{{ valor_servicos_centavos }}</ValorServicos>
-    <ValorDeducoes>{{ valor_deducoes_centavos }}</ValorDeducoes>
-    <ValorPIS>{{ valor_pis_centavos }}</ValorPIS>
-    <ValorCOFINS>{{ valor_cofins_centavos }}</ValorCOFINS>
-    <ValorINSS>{{ valor_inss_centavos }}</ValorINSS>
-    <ValorIR>{{ valor_ir_centavos }}</ValorIR>
-    <ValorCSLL>{{ valor_csll_centavos }}</ValorCSLL>
+    <ValorServicos>{{ valor_servicos }}</ValorServicos>
+    <ValorDeducoes>{{ valor_deducoes }}</ValorDeducoes>
+    <ValorPIS>{{ valor_pis }}</ValorPIS>
+    <ValorCOFINS>{{ valor_cofins }}</ValorCOFINS>
+    <ValorINSS>{{ valor_inss }}</ValorINSS>
+    <ValorIR>{{ valor_ir }}</ValorIR>
+    <ValorCSLL>{{ valor_csll }}</ValorCSLL>
     <CodigoServico>{{ codigo_servico }}</CodigoServico>
     <AliquotaServicos>{{ aliquota_servicos }}</AliquotaServicos>
     <ISSRetido>{{ iss_retido }}</ISSRetido>
