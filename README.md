@@ -8,7 +8,7 @@ Se você está interessado em automações financeiras com Python, dê uma olhad
 ## Instalação
 
 ```bash
-pip install abstra-notas
+pip install abstra_notas
 ```
 
 ## Exemplos
