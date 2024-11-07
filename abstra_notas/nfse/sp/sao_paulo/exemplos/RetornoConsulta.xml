@@ -6,8 +6,8 @@ xmlns="http://www.prefeitura.sp.gov.br/nfe">
     <Sucesso>true</Sucesso>
   </Cabecalho>
   <NFe xmlns="">
-    <Assinatura>
-    d8Pg/jdA7t5tSaB8Il1d/CMiLGgfFAXzTL9o5stv6TNbhm9I94DIo0/ocqJpGx0KzoEeIQz4RSn99pWX4fiW/aETlNT3u5woqCAyL6U2hSyl/eQfWRYrqFu2zcdc4rsAG/wJbDjNO8y0Pz9b6rlTwkIJ+kMdLo+EWXMnB744olYE721g2O9CmUTvjtBgCfVUgvuN1MGjgzpgyussCOSkLpGbrqtM5+pYMXZsTaEVIIck1baDkoRpLmZ5Y/mcn1/Om1fMyhJVUAkgI5xBrORuotIP7e3+HLJnKgzQQPWCtLyEEyAqUk9Gq64wMayITua5FodaJsX+Eic/ie3kS5m50Q==</Assinatura>
+    <Assinador>
+    d8Pg/jdA7t5tSaB8Il1d/CMiLGgfFAXzTL9o5stv6TNbhm9I94DIo0/ocqJpGx0KzoEeIQz4RSn99pWX4fiW/aETlNT3u5woqCAyL6U2hSyl/eQfWRYrqFu2zcdc4rsAG/wJbDjNO8y0Pz9b6rlTwkIJ+kMdLo+EWXMnB744olYE721g2O9CmUTvjtBgCfVUgvuN1MGjgzpgyussCOSkLpGbrqtM5+pYMXZsTaEVIIck1baDkoRpLmZ5Y/mcn1/Om1fMyhJVUAkgI5xBrORuotIP7e3+HLJnKgzQQPWCtLyEEyAqUk9Gq64wMayITua5FodaJsX+Eic/ie3kS5m50Q==</Assinador>
     <ChaveNFe>
       <InscricaoPrestador>39616924</InscricaoPrestador>
       <NumeroNFe>17943</NumeroNFe>
@@ -70,8 +70,8 @@ xmlns="http://www.prefeitura.sp.gov.br/nfe">
     <FonteCargaTributaria />
   </NFe>
   <NFe xmlns="">
-    <Assinatura>
-    XwAGUeJfR3AVRctSPTMyuF0wzkd5LSbsOpFEXxVCLdMI4RP7lGEAYwoHFSCfoL6iYH/XMGAXWpua8YUSjPzAXC//TpFnoaNmpN5f9YvpxhW/0y4NiZfYTBiuLlArDLXSG7691vMixk6xRnAXY1eL4GdgrW8GU8VtLjp1tyku5u+gzfkCJDaLi1h2JplbCCvXtNr7smcJl7srYo/MuyLvuawEBCWPr3TtLtRyEu3fsOX8E3TK6ReF5kJ1BF+lO6SIX0GFw+OxQukPVeJt3WXDGZseV8Uh7GNBgxpTRIf1LU4fSoIDXGDzE0UgNJWRKEgcMbDEECBTCYNHl5vFdmePxA==</Assinatura>
+    <Assinador>
+    XwAGUeJfR3AVRctSPTMyuF0wzkd5LSbsOpFEXxVCLdMI4RP7lGEAYwoHFSCfoL6iYH/XMGAXWpua8YUSjPzAXC//TpFnoaNmpN5f9YvpxhW/0y4NiZfYTBiuLlArDLXSG7691vMixk6xRnAXY1eL4GdgrW8GU8VtLjp1tyku5u+gzfkCJDaLi1h2JplbCCvXtNr7smcJl7srYo/MuyLvuawEBCWPr3TtLtRyEu3fsOX8E3TK6ReF5kJ1BF+lO6SIX0GFw+OxQukPVeJt3WXDGZseV8Uh7GNBgxpTRIf1LU4fSoIDXGDzE0UgNJWRKEgcMbDEECBTCYNHl5vFdmePxA==</Assinador>
     <ChaveNFe>
       <InscricaoPrestador>39616924</InscricaoPrestador>
       <NumeroNFe>17944</NumeroNFe>

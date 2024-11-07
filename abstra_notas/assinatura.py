@@ -1,4 +1,5 @@
 from cryptography.hazmat.primitives import serialization, hashes
+from cryptography.hazmat.primitives.asymmetric import padding
 from cryptography.hazmat.primitives.serialization.pkcs12 import (
     load_key_and_certificates,
 )
@@ -9,12 +10,12 @@ from cryptography import x509
 from os import getenv
 from pathlib import Path
 from tempfile import NamedTemporaryFile
-from lxml.etree import Element, tostring, canonicalize, fromstring
+from lxml.etree import Element, tostring, fromstring
 import xmlsec
 import datetime
 
 
-class Assinatura:
+class Assinador:
     pfx_path: Path
     pfx_password: str
     cert_pem_bytes: bytes
@@ -60,7 +61,7 @@ class Assinatura:
         file.seek(0)
         return file
 
-    def assinar(self, element: Element) -> Element:
+    def assinar_xml(self, element: Element) -> Element:
         with self.private_key_pem_file as private_key_pem_file, self.cert_pem_file as cert_pem_file:
             element = fromstring(tostring(element, encoding=str))
             key = xmlsec.Key.from_file(
@@ -90,50 +91,24 @@ class Assinatura:
             print(tostring(element, encoding=str))
             return element
 
-
-def gerar_pfx_teste(path: Path, password: str):
-    # Generate private key
-    private_key = rsa.generate_private_key(
-        public_exponent=65537,
-        key_size=2048,
-    )
-
-    # Generate a self-signed certificate
-    subject = issuer = x509.Name(
-        [
-            x509.NameAttribute(NameOID.COUNTRY_NAME, "US"),
-            x509.NameAttribute(NameOID.STATE_OR_PROVINCE_NAME, "California"),
-            x509.NameAttribute(NameOID.LOCALITY_NAME, "San Francisco"),
-            x509.NameAttribute(NameOID.ORGANIZATION_NAME, "My Company"),
-            x509.NameAttribute(NameOID.COMMON_NAME, "mycompany.com"),
-        ]
-    )
-    cert = (
-        x509.CertificateBuilder()
-        .subject_name(subject)
-        .issuer_name(issuer)
-        .public_key(private_key.public_key())
-        .serial_number(x509.random_serial_number())
-        .not_valid_before(datetime.datetime.utcnow())
-        .not_valid_after(
-            # Certificate valid for 10 days
-            datetime.datetime.utcnow()
-            + datetime.timedelta(days=10)
+    def assinar_bytes_rsa_sh1(self, data: bytes) -> bytes:
+        private_key = serialization.load_pem_private_key(
+            self.private_key_pem_bytes,
+            password=None,
+            backend=default_backend(),
         )
-        .add_extension(
-            x509.SubjectAlternativeName([x509.DNSName("localhost")]),
-            critical=False,
+
+        signature = private_key.sign(
+            data,
+            padding.PKCS1v15(),
+            hashes.SHA1(),
         )
-        .sign(private_key, hashes.SHA256())
-    )
+        return signature
 
-    # Serialize private key and certificate to PFX
-    pfx = serialization.pkcs12.serialize_key_and_certificates(
-        name=b"mykey",
-        key=private_key,
-        cert=cert,
-        cas=None,
-        encryption_algorithm=serialization.BestAvailableEncryption(password.encode()),
-    )
 
-    path.write_bytes(pfx)
+class AssinadorMock:
+    def assinar_xml(self, element: Element) -> Element:
+        return element
+
+    def assinar_bytes_rsa_sh1(self, data: bytes) -> bytes:
+        return data

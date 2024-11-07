@@ -38,7 +38,7 @@
         </xs:element>
         <xs:element ref="ds:Signature" minOccurs="1" maxOccurs="1">
           <xs:annotation>
-            <xs:documentation>Assinatura digital do CNPJ tomador/prestador que gerou a mensagem XML.</xs:documentation>
+            <xs:documentation>Assinador digital do CNPJ tomador/prestador que gerou a mensagem XML.</xs:documentation>
           </xs:annotation>
         </xs:element>
       </xs:sequence>

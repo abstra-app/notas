@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from xml.etree.ElementTree import Element, SubElement
+from lxml.etree import Element, SubElement
 
 
 @dataclass

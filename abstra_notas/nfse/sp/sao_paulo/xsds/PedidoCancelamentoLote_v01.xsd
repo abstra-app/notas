@@ -38,7 +38,7 @@
         </xs:element>
         <xs:element ref="ds:Signature" minOccurs="1" maxOccurs="1">
           <xs:annotation>
-            <xs:documentation>Assinatura digital do CNPJ emissor dos RPS.</xs:documentation>
+            <xs:documentation>Assinador digital do CNPJ emissor dos RPS.</xs:documentation>
           </xs:annotation>
         </xs:element>
       </xs:sequence>

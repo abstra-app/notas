@@ -38,7 +38,7 @@
         </xs:element>
         <xs:element ref="ds:Signature" minOccurs="1" maxOccurs="1">
           <xs:annotation>
-            <xs:documentation>Assinatura digital do contribuinte que gerou o RPS contido da mensagem XML.</xs:documentation>
+            <xs:documentation>Assinador digital do contribuinte que gerou o RPS contido da mensagem XML.</xs:documentation>
           </xs:annotation>
         </xs:element>
       </xs:sequence>

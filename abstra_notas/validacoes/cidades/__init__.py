@@ -27,3 +27,4 @@ def normalizar_uf(uf: str) -> str:
         cidade["regiao-imediata"]["regiao-intermediaria"]["UF"]["sigla"] == uf
         for cidade in cidades
     ), "UF não encontrada. Insira uma UF válida no formato de sigla (ex: SP, RJ, MG, etc)"
+    return uf

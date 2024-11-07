@@ -1,23 +1,7 @@
 from dataclasses import dataclass
-from .tipos_comuns import Cabecalho, CPFCNPJRemetente
-
-# from xml.etree.ElementTree import Element, SubElement, tostring
+from .tipos_comuns import Cabecalho
 from lxml.etree import Element, SubElement, tostring, indent
 from abstra_notas.validacoes.cnpj import normalizar_cnpj
-
-"""
-<?xml version="1.0" encoding="UTF-8"?>
-<p1:PedidoConsultaCNPJ xmlns:p1="http://www.prefeitura.sp.gov.br/nfe" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <Cabecalho Versao="1">
-    <CPFCNPJRemetente>
-      <CNPJ>99999997000100</CNPJ>
-    </CPFCNPJRemetente>
-  </Cabecalho>
-  <CNPJContribuinte>
-    <CNPJ>99999997000100</CNPJ>
-  </CNPJContribuinte>
-</p1:PedidoConsultaCNPJ>
-"""
 
 
 @dataclass

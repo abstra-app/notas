@@ -1,0 +1,46 @@
+﻿<PedidoEnvioRPS xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.prefeitura.sp.gov.br/nfe">
+  <Cabecalho Versao="1" xmlns="">
+    <CPFCNPJRemetente>
+      <{{ remetente[0] }}>{{ remetente[1] }}</{{ remetente[0] }}>
+    </CPFCNPJRemetente>
+  </Cabecalho>
+  <RPS xmlns="">
+    <Assinador>{{ assinatura }}</Assinador>
+    <ChaveRPS>
+      <InscricaoPrestador>{{ inscricao_prestador }}</InscricaoPrestador>
+      <SerieRPS>{{ serie_rps }}</SerieRPS>
+      <NumeroRPS>{{ numero_rps }}</NumeroRPS>
+    </ChaveRPS>
+    <TipoRPS>{{ tipo_rps }}</TipoRPS>
+    <DataEmissao>{{ data_emissao }}</DataEmissao>
+    <StatusRPS>{{ status_rps }}</StatusRPS>
+    <TributacaoRPS>{{ tributacao_rps }}</TributacaoRPS>
+    <ValorServicos>{{ valor_servicos_centavos }}</ValorServicos>
+    <ValorDeducoes>{{ valor_deducoes_centavos }}</ValorDeducoes>
+    <ValorPIS>{{ valor_pis_centavos }}</ValorPIS>
+    <ValorCOFINS>{{ valor_cofins_centavos }}</ValorCOFINS>
+    <ValorINSS>{{ valor_inss_centavos }}</ValorINSS>
+    <ValorIR>{{ valor_ir_centavos }}</ValorIR>
+    <ValorCSLL>{{ valor_csll_centavos }}</ValorCSLL>
+    <CodigoServico>{{ codigo_servico }}</CodigoServico>
+    <AliquotaServicos>{{ aliquota_servicos }}</AliquotaServicos>
+    <ISSRetido>{{ iss_retido }}</ISSRetido>
+    <CPFCNPJTomador>
+      <{{ tomador[0] }}>{{ tomador[1] }}</{{ tomador[0] }}>
+    </CPFCNPJTomador>
+    <RazaoSocialTomador>{{ razao_social_tomador }}</RazaoSocialTomador>
+    <EnderecoTomador>
+      <TipoLogradouro>{{ endereco_tipo_logradouro }}</TipoLogradouro>
+      <Logradouro>{{ endereco_logradouro }}</Logradouro>
+      <NumeroEndereco>{{ endereco_numero }}</NumeroEndereco>
+      <ComplementoEndereco>{{ endereco_complemento }}</ComplementoEndereco>
+      <Bairro>{{ endereco_bairro }}</Bairro>
+      <Cidade>{{ endereco_cidade }}</Cidade>
+      <UF>{{ endereco_uf }}</UF>
+      <CEP>{{ endereco_cep }}</CEP>
+    </EnderecoTomador>
+    <EmailTomador>{{ email_tomador }}</EmailTomador>
+    <Discriminacao>{{ discriminacao }}</Discriminacao>
+  </RPS>
+</PedidoEnvioRPS>
