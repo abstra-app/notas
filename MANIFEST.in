@@ -1,0 +1,4 @@
+include *.md
+include *.txt
+recursive-include abstra_notas *.xml
+recursive-include abstra_notas *.json

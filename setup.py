@@ -39,4 +39,8 @@ setup(
     url="https://github.com/abstra-app/abstra_notas",
     packages=find_packages(exclude=["tests"]),
     install_requires=REQUIREMENTS,
+    package_data={
+        "": ["*.xml", "*.json"],
+    },
+    include_package_data=True,
 )
