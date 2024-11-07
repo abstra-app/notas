@@ -10,7 +10,7 @@ def ler_cidades():
     if _cidades is not None:
         return _cidades
 
-    with open(Path(__file__).parent / "municipios.json") as f:
+    with open(Path(__file__).parent / "municipios.json", encoding="utf-8") as f:
         _cidades = loads(f.read())
     return _cidades
 
