@@ -2,18 +2,19 @@ from abstra_notas.nfse.sp.sao_paulo import EnvioRPS, Cliente, RetornoEnvioRPS
 from datetime import date
 from dotenv import load_dotenv
 from os import getenv
+from pathlib import Path
 
 load_dotenv()
 
 
 cliente = Cliente(
-    caminho_pfx=load_dotenv("NFSE_PFX_PATH"), senha_pfx=getenv("NFSE_PFX_PASSWORD")
+    caminho_pfx=Path(getenv("NFSE_PFX_PATH")), senha_pfx=getenv("NFSE_PFX_PASSWORD")
 )
 
 pedido = EnvioRPS(
     remetente=getenv("NFSE_CNPJ_REMETENTE"),
     tomador=getenv("NFSE_CNPJ_TOMADOR"),
-    aliquota_servicos=2.0,
+    aliquota_servicos=0.01,
     codigo_servico=1,
     data_emissao=date(2021, 1, 1),
     endereco_bairro="Bairro",
@@ -45,4 +46,8 @@ pedido = EnvioRPS(
 
 retorno: RetornoEnvioRPS = cliente.executar(pedido)
 
-print(retorno.sucesso)
+if retorno.sucesso:
+    print("RPS enviado com sucesso")
+    print(retorno)
+else:
+    print(retorno.descricao)

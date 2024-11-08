@@ -1,12 +1,10 @@
 from dataclasses import dataclass
 from typing import Literal, Union, List
-from lxml.etree import Element, fromstring
+from lxml.etree import Element, fromstring, tostring
 import base64
 from abstra_notas.validacoes.email import validar_email
 from abstra_notas.validacoes.cidades import validar_codigo_cidade, normalizar_uf
-from abstra_notas.validacoes.cpf import normalizar_cpf
-from abstra_notas.validacoes.cnpj import normalizar_cnpj
-from abstra_notas.validacoes.cpfcnpj import normalizar_cpf_ou_cnpj
+from abstra_notas.validacoes.cpfcnpj import normalizar_cpf_ou_cnpj, cpf_ou_cnpj
 from .codigos_de_servico import codigos_de_servico_validos
 from datetime import date
 from .pedido import Pedido
@@ -46,7 +44,6 @@ class RetornoEnvioRPS(Retorno):
     class RetornoEnvioRpsErro:
         codigo: int
         descricao: str
-        chave_rps_inscricao_prestador: str
 
         @property
         def sucesso(self):
@@ -57,7 +54,6 @@ class RetornoEnvioRPS(Retorno):
             return RetornoEnvioRPS.RetornoEnvioRpsErro(
                 codigo=int(xml.find(".//Codigo").text),
                 descricao=xml.find(".//Descricao").text,
-                chave_rps_inscricao_prestador=xml.find(".//InscricaoPrestador").text,
             )
 
     @staticmethod
@@ -236,7 +232,7 @@ class RPS:
 
     @property
     def tomador_tipo(self) -> Literal["CPF", "CNPJ"]:
-        return normalizar_cpf_ou_cnpj(self.tomador)
+        return cpf_ou_cnpj(self.tomador)
 
 
 @dataclass
@@ -262,7 +258,7 @@ class EnvioRPS(RPS, Pedido):
 
     @property
     def remetente_tipo(self) -> Literal["CPF", "CNPJ"]:
-        return normalizar_cpf_ou_cnpj(self.remetente)
+        return cpf_ou_cnpj(self.remetente)
 
     def executar(
         self, cliente: Cliente
@@ -313,7 +309,7 @@ class EnvioLoteRps(Pedido):
 
     @property
     def remetente_tipo(self) -> Literal["CPF", "CNPJ"]:
-        return normalizar_cpf_ou_cnpj(self.remetente)
+        return cpf_ou_cnpj(self.remetente)
 
 
 class TesteEnvioLoteRps(EnvioLoteRps): ...
