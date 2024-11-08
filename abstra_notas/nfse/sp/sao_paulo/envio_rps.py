@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Literal
+from typing import Literal, Union
 from lxml.etree import Element, fromstring
 import base64
 from abstra_notas.validacoes.email import validar_email
@@ -253,3 +253,7 @@ class EnvioRPS(Pedido):
     @property
     def tomador_tipo(self) -> Literal["CPF", "CNPJ"]:
         return cpf_ou_cnpj(self.tomador)
+
+
+    def executar(cliente: Cliente) -> Union[RetornoEnvioRPS.RetornoEnvioRpsSucesso, RetornoEnvioRPS.RetornoEnvioRpsErro]:
+        return cliente.executar(self)

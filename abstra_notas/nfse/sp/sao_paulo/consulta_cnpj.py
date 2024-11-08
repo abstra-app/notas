@@ -1,9 +1,10 @@
 from .pedido import Pedido
 from .retorno import Retorno
 from dataclasses import dataclass
+from .cliente import Cliente
 from lxml.etree import Element, fromstring
 from abstra_notas.assinatura import Assinador
-from typing import Literal
+from typing import Literal, Union
 from abstra_notas.validacoes.cpfcnpj import cpf_ou_cnpj, normalizar_cpf_ou_cnpj
 
 @dataclass
@@ -77,3 +78,6 @@ class ConsultaCNPJ(Pedido):
     @property
     def contribuinte_tipo(self) -> Literal["CPF", "CNPJ"]:
         return cpf_ou_cnpj(self.contribuinte)
+    
+    def executar(self, cliente: Cliente) -> Union[RetornoConsultaCNPJSucesso, RetornoConsultaCNPJErro]:
+        return cliente.executar(self)

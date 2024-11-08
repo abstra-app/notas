@@ -1,9 +1,10 @@
 from .pedido import Pedido
 from .retorno import Retorno
 from dataclasses import dataclass
-from typing import Literal
+from typing import Literal, Union
 from lxml.etree import Element, fromstring
 from abstra_notas.validacoes.cpfcnpj import cpf_ou_cnpj, normalizar_cpf_ou_cnpj
+from .cliente import Cliente
 from abstra_notas.assinatura import Assinador
 import base64
 
@@ -81,3 +82,7 @@ class CancelamentoNFe(Pedido):
     @property
     def remetente_tipo(self) -> Literal["CPF", "CNPJ"]:
         return cpf_ou_cnpj(self.remetente)
+
+
+    def executar(cliente: Cliente) -> Union[RetornoCancelamentoNFeSucesso, RetornoCancelamentoNFeErro]:
+        return cliente.executar(self)

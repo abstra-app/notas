@@ -1,6 +1,5 @@
 from abstra_notas.nfse.sp.sao_paulo import (
     CancelamentoNFe,
-    RetornoCancelamentoNFe,
     Cliente,
 )
 
@@ -13,7 +12,7 @@ pedido = CancelamentoNFe(
     transacao="true",
 )
 
-retorno: RetornoCancelamentoNFe = cliente.executar(pedido)
+retorno = pedido.executar(cliente)
 
 if retorno.sucesso:
     print("Cancelamento realizado com sucesso")
