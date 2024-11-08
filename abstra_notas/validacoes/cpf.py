@@ -1,6 +1,7 @@
 class CpfInvalido(Exception):
     ...
 
+
 def normalizar_cpf(cpf: str) -> str:
     cpf = cpf.replace(".", "").replace("-", "")
 

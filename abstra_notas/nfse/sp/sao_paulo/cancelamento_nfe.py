@@ -36,11 +36,10 @@ class CancelamentoNFe(Pedido):
             transacao=self.transacao,
             inscricao_prestador=self.inscricao_prestador,
             numero_nfe=self.numero_nfe,
-            assinatura=self.assinatura(assinador)
+            assinatura=self.assinatura(assinador),
         ).encode("utf-8")
-    
+
         return fromstring(xml)
-    
 
     def assinatura(self, assinador: Assinador) -> str:
         template = ""
@@ -51,11 +50,11 @@ class CancelamentoNFe(Pedido):
 
         signed_template = assinador.assinar_bytes_rsa_sh1(template_bytes)
         return base64.b64encode(signed_template).decode("ascii")
-    
+
     @property
     def classe_retorno(self):
         return RetornoCancelamentoNFe
-    
+
     @property
     def remetente_tipo(self) -> Literal["CPF", "CNPJ"]:
         return cpf_ou_cnpj(self.remetente)

@@ -1,6 +1,7 @@
 class CnpjInvalido(Exception):
     ...
 
+
 def normalizar_cnpj(cnpj: str) -> str:
     cnpj = cnpj.replace(".", "").replace("/", "").replace("-", "")
 

@@ -14,6 +14,7 @@ from .retorno import Retorno
 from abstra_notas.assinatura import Assinador
 from .cliente import Cliente
 
+
 class RetornoEnvioRPS(Retorno):
     @dataclass
     class RetornoEnvioRpsSucesso:
@@ -44,7 +45,7 @@ class RetornoEnvioRPS(Retorno):
         codigo: int
         descricao: str
         chave_rps_inscricao_prestador: str
-        
+
         @property
         def sucesso(self):
             return False
@@ -57,7 +58,6 @@ class RetornoEnvioRPS(Retorno):
                 chave_rps_inscricao_prestador=xml.find(".//InscricaoPrestador").text,
             )
 
-
     @staticmethod
     def ler_xml(xml):
         xml = xml.encode("utf-8")
@@ -67,6 +67,7 @@ class RetornoEnvioRPS(Retorno):
             return RetornoEnvioRPS.RetornoEnvioRpsSucesso.ler_xml(xml)
         else:
             return RetornoEnvioRPS.RetornoEnvioRpsErro.ler_xml(xml)
+
 
 @dataclass
 class PedidoEnvioRPS(Pedido):
@@ -243,7 +244,6 @@ class PedidoEnvioRPS(Pedido):
     @property
     def classe_retorno(self):
         return RetornoEnvioRPS
-
 
     @property
     def remetente_tipo(self) -> Literal["CPF", "CNPJ"]:
