@@ -6,7 +6,7 @@ from abstra_notas.validacoes.email import validar_email
 from abstra_notas.validacoes.cidades import validar_codigo_cidade, normalizar_uf
 from abstra_notas.validacoes.cpf import normalizar_cpf
 from abstra_notas.validacoes.cnpj import normalizar_cnpj
-from abstra_notas.validacoes.cpfcnpj import cpf_ou_cnpj
+from abstra_notas.validacoes.cpfcnpj import normalizar_cpf_ou_cnpj
 from .codigos_de_servico import codigos_de_servico_validos
 from datetime import date
 from .pedido import Pedido
@@ -104,10 +104,7 @@ class RPS:
     discriminacao: str
 
     def __post_init__(self):
-        if self.tomador_tipo == "CPF":
-            self.tomador = ("CPF", normalizar_cpf(self.tomador))
-        if self.tomador_tipo == "CNPJ":
-            self.tomador = ("CNPJ", normalizar_cnpj(self.tomador))
+        self.tomador = normalizar_cpf_ou_cnpj(self.tomador)
         self.endereco_uf = normalizar_uf(self.endereco_uf)
         assert validar_codigo_cidade(
             self.endereco_cidade
@@ -195,6 +192,7 @@ class RPS:
             aliquota_servicos=self.aliquota_servicos,
             iss_retido=str(self.iss_retido).lower(),
             tomador=self.tomador,
+            tomador_tipo=self.tomador_tipo,
             razao_social_tomador=self.razao_social_tomador,
             endereco_tipo_logradouro=self.endereco_tipo_logradouro,
             endereco_logradouro=self.endereco_logradouro,
@@ -238,7 +236,7 @@ class RPS:
 
     @property
     def tomador_tipo(self) -> Literal["CPF", "CNPJ"]:
-        return cpf_ou_cnpj(self.tomador)
+        return normalizar_cpf_ou_cnpj(self.tomador)
 
 
 @dataclass
@@ -248,6 +246,7 @@ class EnvioRPS(RPS, Pedido):
     def gerar_xml(self, assinador: Assinador) -> Element:
         xml = self.template.render(
             remetente=self.remetente,
+            remetente_tipo=self.remetente_tipo,
             rps=self.gerar_string_xml(assinador),
         )
 
@@ -263,7 +262,7 @@ class EnvioRPS(RPS, Pedido):
 
     @property
     def remetente_tipo(self) -> Literal["CPF", "CNPJ"]:
-        return cpf_ou_cnpj(self.remetente)
+        return normalizar_cpf_ou_cnpj(self.remetente)
 
     def executar(
         self, cliente: Cliente
@@ -317,7 +316,7 @@ class EnvioLoteRps(Pedido):
 
     @property
     def remetente_tipo(self) -> Literal["CPF", "CNPJ"]:
-        return cpf_ou_cnpj(self.remetente)
+        return normalizar_cpf_ou_cnpj(self.remetente)
 
 
 class TesteEnvioLoteRps(EnvioLoteRps): ...
