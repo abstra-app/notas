@@ -1,16 +1,26 @@
 from abstra_notas.nfse.sp.sao_paulo import (
-    PedidoConsultaCNPJ,
+    ConsultaCNPJ,
     Cliente,
     RetornoConsultaCNPJ,
 )
+from dotenv import load_dotenv
+from os import getenv
 
-cliente = Cliente(caminho_pfx="/meu/caminho/certificado.pfx", senha_pfx="senha")
+load_dotenv()
 
-pedido = PedidoConsultaCNPJ(
-    remetente="54.188.924/0001-92",
-    destinatario="131.274.830-31",
+
+cliente = Cliente(caminho_pfx=getenv("NFSE_PFX_PATH"), senha_pfx=getenv("NFSE_PFX_PASSWORD"))
+
+pedido = ConsultaCNPJ(
+    remetente=getenv("NFSE_CNPJ_REMETENTE"),
+    contribuinte=getenv("NFSE_CNPJ_CONTRIBUINTE"),
 )
 
 retorno: RetornoConsultaCNPJ = cliente.executar(pedido)
 
-print(retorno.sucesso)
+if retorno.sucesso:
+    print(f"Inscrição Municipal: {retorno.inscricao_municipal}")
+    print(f"Emite NFe: {retorno.emite_nfe}")
+else:
+    print(f"Código: {retorno.codigo}")
+    print(f"Descrição: {retorno.descricao}")

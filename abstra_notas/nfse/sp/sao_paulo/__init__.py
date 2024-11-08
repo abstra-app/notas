@@ -1,10 +1,11 @@
-from .envio_rps import PedidoEnvioRPS, RetornoEnvioRPS
-from .consulta_cnpj import PedidoConsultaCNPJ, RetornoConsultaCNPJ
+from .envio_rps import EnvioRPS, RetornoEnvioRPS
+from .consulta_cnpj import ConsultaCNPJ, RetornoConsultaCNPJ
 from .cancelamento_nfe import CancelamentoNFe, RetornoCancelamentoNFe
 from .cliente import Cliente
 
 __all__ = [
-    "PedidoEnvioRPS",
+    "EnvioRPS",
+    "ConsultaCNPJ",
     "RetornoEnvioRPS",
     "PedidoConsultaCNPJ",
     "RetornoConsultaCNPJ",

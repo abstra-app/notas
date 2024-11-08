@@ -1,41 +1,79 @@
 from .pedido import Pedido
+from .retorno import Retorno
 from dataclasses import dataclass
-from lxml.etree import Element
+from lxml.etree import Element, fromstring
 from abstra_notas.assinatura import Assinador
 from typing import Literal
+from abstra_notas.validacoes.cpfcnpj import cpf_ou_cnpj, normalizar_cpf_ou_cnpj
+
+@dataclass
+class RetornoConsultaCNPJ(Retorno):
+    sucesso: bool
+
+    @staticmethod
+    def ler_xml(xml: Element) -> "RetornoConsultaCNPJ":
+        xml = fromstring(xml.encode("utf-8"))
+        if xml.find(".//Sucesso").text == "true":
+            return RetornoConsultaCNPJSucesso.ler_xml(xml)
+        else:
+            return RetornoConsultaCNPJErro.ler_xml(xml)
 
 
 @dataclass
-class RetornoConsultaCNPJ:
-    sucesso: bool
+class RetornoConsultaCNPJSucesso(RetornoConsultaCNPJ):
     inscricao_municipal: str
     emite_nfe: bool
 
     @staticmethod
-    def ler_xml(xml: Element) -> "RetornoConsultaCNPJ":
-        return RetornoConsultaCNPJ(
-            sucesso=xml.find(".//Sucesso").text == "true",
+    def ler_xml(xml: str) -> "RetornoConsultaCNPJSucesso":
+        return RetornoConsultaCNPJSucesso(
+            sucesso=True,
             inscricao_municipal=xml.find(".//InscricaoMunicipal").text,
             emite_nfe=xml.find(".//EmiteNFe").text == "true",
         )
 
+@dataclass
+class RetornoConsultaCNPJErro(RetornoConsultaCNPJ):
+    codigo: int
+    descricao: str
+
+    @staticmethod
+    def ler_xml(xml: Element) -> "RetornoConsultaCNPJErro":
+        return RetornoConsultaCNPJErro(
+            sucesso=False,
+            codigo=int(xml.find(".//Codigo").text),
+            descricao=xml.find(".//Descricao").text,
+        )
+
 
 @dataclass
-class PedidoConsultaCNPJ(Pedido):
+class ConsultaCNPJ(Pedido):
     remetente: str
     contribuinte: str
 
-    remetente_tipo: Literal["CPF", "CNPJ"]
-    contribuinte_tipo: Literal["CPF", "CNPJ"]
+    def __post_init__(self):
+        self.remetente = normalizar_cpf_ou_cnpj(self.remetente)
+        self.contribuinte = normalizar_cpf_ou_cnpj(self.contribuinte)
+
 
     @property
     def classe_retorno(self) -> RetornoConsultaCNPJ:
         return RetornoConsultaCNPJ
 
-    def gerar_xml(self, assinador: Assinador):
+    def gerar_xml(self, assinador: Assinador) -> Element:
         xml = self.template.render(
             remetente=self.remetente,
             contribuinte=self.contribuinte,
+            contribuinte_tipo=self.contribuinte_tipo,
+            remetente_tipo=self.remetente_tipo,
         )
+        return fromstring(xml)
 
-        return xml
+
+    @property
+    def remetente_tipo(self) -> Literal["CPF", "CNPJ"]:
+        return cpf_ou_cnpj(self.remetente)
+    
+    @property
+    def contribuinte_tipo(self) -> Literal["CPF", "CNPJ"]:
+        return cpf_ou_cnpj(self.contribuinte)

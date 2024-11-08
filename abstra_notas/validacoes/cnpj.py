@@ -9,7 +9,7 @@ def normalizar_cnpj(cnpj: str) -> str:
         validar = True
         digitos_verificadores = cnpj[12:]
     else:
-        validar = False
+        raise CnpjInvalido("Quantidade de caracteres incorreto.")
 
     cnpj = cnpj[:12]
 
