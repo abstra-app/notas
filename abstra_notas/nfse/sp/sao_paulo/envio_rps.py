@@ -205,7 +205,7 @@ class RPS:
     def assinatura(self, assinador: Assinador) -> str:
         template = ""
         template += self.inscricao_prestador
-        template += self.serie_rps.upper()
+        template += self.serie_rps.upper() + (5-len(self.serie_rps)) * " "
         template += str(self.numero_rps).zfill(12)
         template += self.data_emissao.strftime("%Y%m%d").upper()
         template += self.tributacao_rps
