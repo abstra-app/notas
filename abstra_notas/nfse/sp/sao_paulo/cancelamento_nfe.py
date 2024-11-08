@@ -1,9 +1,10 @@
 from .pedido import Pedido
 from .retorno import Retorno
 from dataclasses import dataclass
-from typing import Literal
+from typing import Literal, Union
 from lxml.etree import Element, fromstring
-from abstra_notas.validacoes.cpfcnpj import cpf_ou_cnpj
+from abstra_notas.validacoes.cpfcnpj import cpf_ou_cnpj, normalizar_cpf_ou_cnpj
+from .cliente import Cliente
 from abstra_notas.assinatura import Assinador
 import base64
 
@@ -13,9 +14,29 @@ class RetornoCancelamentoNFe(Retorno):
     sucesso: bool
 
     @staticmethod
-    def ler_xml(xml: Element):
+    def ler_xml(xml: str):
+        xml = fromstring(xml.encode("utf-8"))
         sucesso = xml.find(".//Sucesso").text
-        return RetornoCancelamentoNFe(sucesso=sucesso == "true")
+        if sucesso == "true":
+            return RetornoCancelamentoNFeSucesso(sucesso=True)
+        else:
+            return RetornoCancelamentoNFeErro(
+                sucesso=False,
+                codigo=int(xml.find(".//Codigo").text),
+                descricao=xml.find(".//Descricao").text,
+            )
+
+
+@dataclass
+class RetornoCancelamentoNFeSucesso:
+    sucesso: bool
+
+
+@dataclass
+class RetornoCancelamentoNFeErro:
+    sucesso: bool
+    codigo: int
+    descricao: str
 
 
 @dataclass
@@ -24,6 +45,9 @@ class CancelamentoNFe(Pedido):
     transacao: str
     inscricao_prestador: str
     numero_nfe: int
+
+    def __post_init__(self):
+        self.remetente = normalizar_cpf_ou_cnpj(self.remetente)
 
     @property
     def remetente_tipo(self) -> Literal["CPF", "CNPJ"]:
@@ -58,3 +82,8 @@ class CancelamentoNFe(Pedido):
     @property
     def remetente_tipo(self) -> Literal["CPF", "CNPJ"]:
         return cpf_ou_cnpj(self.remetente)
+
+    def executar(
+        self, cliente: Cliente
+    ) -> Union[RetornoCancelamentoNFeSucesso, RetornoCancelamentoNFeErro]:
+        return cliente.executar(self)

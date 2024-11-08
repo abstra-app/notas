@@ -1,0 +1,38 @@
+<RPS xmlns="">
+    <Assinatura>{{ assinatura }}</Assinatura>
+    <ChaveRPS>
+        <InscricaoPrestador>{{ inscricao_prestador }}</InscricaoPrestador>
+        <SerieRPS>{{ serie_rps }}</SerieRPS>
+        <NumeroRPS>{{ numero_rps }}</NumeroRPS>
+    </ChaveRPS>
+    <TipoRPS>{{ tipo_rps }}</TipoRPS>
+    <DataEmissao>{{ data_emissao }}</DataEmissao>
+    <StatusRPS>{{ status_rps }}</StatusRPS>
+    <TributacaoRPS>{{ tributacao_rps }}</TributacaoRPS>
+    <ValorServicos>{{ valor_servicos }}</ValorServicos>
+    <ValorDeducoes>{{ valor_deducoes }}</ValorDeducoes>
+    <ValorPIS>{{ valor_pis }}</ValorPIS>
+    <ValorCOFINS>{{ valor_cofins }}</ValorCOFINS>
+    <ValorINSS>{{ valor_inss }}</ValorINSS>
+    <ValorIR>{{ valor_ir }}</ValorIR>
+    <ValorCSLL>{{ valor_csll }}</ValorCSLL>
+    <CodigoServico>{{ codigo_servico }}</CodigoServico>
+    <AliquotaServicos>{{ aliquota_servicos }}</AliquotaServicos>
+    <ISSRetido>{{ iss_retido }}</ISSRetido>
+    <CPFCNPJTomador>
+        <{{ tomador_tipo }}>{{ tomador }}</{{ tomador_tipo }}>
+    </CPFCNPJTomador>
+    <RazaoSocialTomador>{{ razao_social_tomador }}</RazaoSocialTomador>
+    <EnderecoTomador>
+        <TipoLogradouro>{{ endereco_tipo_logradouro }}</TipoLogradouro>
+        <Logradouro>{{ endereco_logradouro }}</Logradouro>
+        <NumeroEndereco>{{ endereco_numero }}</NumeroEndereco>
+        <ComplementoEndereco>{{ endereco_complemento }}</ComplementoEndereco>
+        <Bairro>{{ endereco_bairro }}</Bairro>
+        <Cidade>{{ endereco_cidade }}</Cidade>
+        <UF>{{ endereco_uf }}</UF>
+        <CEP>{{ endereco_cep }}</CEP>
+    </EnderecoTomador>
+    <EmailTomador>{{ email_tomador }}</EmailTomador>
+    <Discriminacao>{{ discriminacao }}</Discriminacao>
+</RPS>

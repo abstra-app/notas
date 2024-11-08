@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<PedidoEnvioLoteRPS xmlns="http://www.prefeitura.sp.gov.br/nfe"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <Cabecalho xmlns="" Versao="1">
+        <CPFCNPJRemetente>
+            <{{remetente_tipo}}>{{remetente}}</{{remetente_tipo}}>
+        </CPFCNPJRemetente>
+        <transacao>{{transacao}}</transacao>
+        <dtInicio>{{dt_inicio}}</dtInicio>
+        <dtFim>{{dt_fim}}</dtFim>
+        <QtdRPS>{{ qtd_rps }}</QtdRPS>
+        <ValorTotalServicos>{{ valor_total_servico }}</ValorTotalServicos>
+        <ValorTotalDeducoes>{{ valor_toral_deducoes }}</ValorTotalDeducoes>
+    </Cabecalho>
+    {% fo rps in lista_rps %}
+    {{ rps | safe }}
+    {% endfor %}
+</PedidoEnvioLoteRPS>

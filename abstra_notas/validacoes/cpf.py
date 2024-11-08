@@ -1,15 +1,14 @@
-class CpfInvalido(Exception):
-    ...
+class CpfInvalido(Exception): ...
 
 
 def normalizar_cpf(cpf: str) -> str:
-    cpf = cpf.replace(".", "").replace("-", "")
+    cpf = cpf.replace(".", "").replace("-", "").replace("/", "")
 
     if len(cpf) == 11:
         validar = True
         digitos_verificadores = cpf[9:]
     else:
-        validar = False
+        raise CpfInvalido("Quantidade de caracteres incorreto.")
 
     cpf = cpf[:9]
 

@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Literal
+from typing import Literal, Union, List
 from lxml.etree import Element, fromstring
 import base64
 from abstra_notas.validacoes.email import validar_email
@@ -11,6 +11,7 @@ from .codigos_de_servico import codigos_de_servico_validos
 from datetime import date
 from .pedido import Pedido
 from .retorno import Retorno
+from .templates import load_template
 from abstra_notas.assinatura import Assinador
 from .cliente import Cliente
 
@@ -30,7 +31,8 @@ class RetornoEnvioRPS(Retorno):
             return True
 
         @staticmethod
-        def ler_xml(xml: Element):
+        def ler_xml(xml: str):
+            xml = fromstring(xml.encode("utf-8"))
             return RetornoEnvioRPS.RetornoEnvioRpsSucesso(
                 chave_nfe_inscricao_prestador=xml.find(".//InscricaoPrestador").text,
                 chave_nfe_codigo_verificacao=xml.find(".//CodigoVerificacao").text,
@@ -70,8 +72,7 @@ class RetornoEnvioRPS(Retorno):
 
 
 @dataclass
-class PedidoEnvioRPS(Pedido):
-    remetente: str
+class RPS:
     inscricao_prestador: str
     serie_rps: str
     numero_rps: int
@@ -88,7 +89,7 @@ class PedidoEnvioRPS(Pedido):
     valor_csll_centavos: int
     codigo_servico: int
     aliquota_servicos: float
-    iss_retido: Literal["true", "false"]
+    iss_retido: bool
     tomador: str
     razao_social_tomador: str
     endereco_tipo_logradouro: str
@@ -173,9 +174,9 @@ class PedidoEnvioRPS(Pedido):
             >= 0
         ), "A soma dos valores não pode ser negativa"
 
-    def gerar_xml(self, assinador: Assinador) -> Element:
-        xml = self.template.render(
-            remetente=self.remetente,
+    def gerar_string_xml(self, assinador: Assinador) -> Element:
+        template = load_template("RPS")
+        return template.render(
             inscricao_prestador=self.inscricao_prestador,
             serie_rps=self.serie_rps,
             numero_rps=self.numero_rps,
@@ -192,7 +193,7 @@ class PedidoEnvioRPS(Pedido):
             valor_csll=f"{self.valor_csll_centavos / 100:.2f}",
             codigo_servico=self.codigo_servico,
             aliquota_servicos=self.aliquota_servicos,
-            iss_retido=self.iss_retido,
+            iss_retido=str(self.iss_retido).lower(),
             tomador=self.tomador,
             razao_social_tomador=self.razao_social_tomador,
             endereco_tipo_logradouro=self.endereco_tipo_logradouro,
@@ -207,12 +208,6 @@ class PedidoEnvioRPS(Pedido):
             discriminacao=self.discriminacao,
             assinatura=self.assinatura(assinador),
         )
-
-        return fromstring(xml)
-
-    @property
-    def nome_metodo(self):
-        return "EnvioRPS"
 
     def assinatura(self, assinador: Assinador) -> str:
         template = ""
@@ -242,6 +237,27 @@ class PedidoEnvioRPS(Pedido):
         return base64.b64encode(signed_template).decode("ascii")
 
     @property
+    def tomador_tipo(self) -> Literal["CPF", "CNPJ"]:
+        return cpf_ou_cnpj(self.tomador)
+
+
+@dataclass
+class EnvioRPS(RPS, Pedido):
+    remetente: str
+
+    def gerar_xml(self, assinador: Assinador) -> Element:
+        xml = self.template.render(
+            remetente=self.remetente,
+            rps=self.gerar_string_xml(assinador),
+        )
+
+        return fromstring(xml)
+
+    @property
+    def nome_metodo(self):
+        return "EnvioRPS"
+
+    @property
     def classe_retorno(self):
         return RetornoEnvioRPS
 
@@ -249,6 +265,59 @@ class PedidoEnvioRPS(Pedido):
     def remetente_tipo(self) -> Literal["CPF", "CNPJ"]:
         return cpf_ou_cnpj(self.remetente)
 
+    def executar(
+        self, cliente: Cliente
+    ) -> Union[
+        RetornoEnvioRPS.RetornoEnvioRpsSucesso, RetornoEnvioRPS.RetornoEnvioRpsErro
+    ]:
+        return cliente.executar(self)
+
+
+@dataclass
+class EnvioLoteRps(Pedido):
+    remetente: str
+    transacao: bool
+    data_inicio_periodo_transmitido: date
+    data_fim_periodo_transmitido: date
+    quantidade_rps: int
+    valor_total_servicos: int
+    valor_total_deducoes: int
+    lista_rps: List[RPS]
+
+    def __post_init__(self):
+        assert len(self.lista_rps) > 0, "Deve haver pelo menos um RPS no lote"
+        assert len(self.lista_rps) <= 50, "O lote não pode ter mais de 50 RPS"
+
+    def gerar_xml(self, assinador: Assinador) -> Element:
+        xml = self.template.render(
+            remetente=self.remetente,
+            remetente_tipo=self.remetente_tipo,
+            transacao=str(self.transacao).lower(),
+            dt_inicio=str(self.data_inicio_periodo_transmitido),
+            dt_fim=str(self.data_fim_periodo_transmitido),
+            qtd_rps=self.quantidade_rps,
+            valor_total_servicos=f"{self.valor_total_servicos:.2f}",
+            valor_total_deducoes=f"{self.valor_total_deducoes: .2f}",
+            lista_rps=[rps.gerar_string_xml(assinador) for rps in self.lista_rps],
+        )
+
+        return fromstring(xml)
+
     @property
-    def tomador_tipo(self) -> Literal["CPF", "CNPJ"]:
-        return cpf_ou_cnpj(self.tomador)
+    def quantidade_rps(self):
+        return len(self.lista_rps)
+
+    @property
+    def valor_total_servicos(self):
+        return sum(rps.valor_servicos_centavos for rps in self.lista_rps)
+
+    @property
+    def valor_total_deducoes(self):
+        return sum(rps.valor_deducoes_centavos for rps in self.lista_rps)
+
+    @property
+    def remetente_tipo(self) -> Literal["CPF", "CNPJ"]:
+        return cpf_ou_cnpj(self.remetente)
+
+
+class TesteEnvioLoteRps(EnvioLoteRps): ...

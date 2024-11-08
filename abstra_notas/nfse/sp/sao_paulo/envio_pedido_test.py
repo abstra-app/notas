@@ -28,7 +28,7 @@ class EnvioTest(TestCase):
             endereco_tipo_logradouro="Av",
             endereco_uf="SP",
             inscricao_prestador="39616924",
-            iss_retido="false",
+            iss_retido=False,
             numero_rps=4105,
             razao_social_tomador="TOMADOR PF",
             remetente="99999997000100",

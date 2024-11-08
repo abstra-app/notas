@@ -1,11 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <p1:PedidoConsultaCNPJ xmlns:p1="http://www.prefeitura.sp.gov.br/nfe" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Cabecalho Versao="1">
     <CPFCNPJRemetente>
-      <{{remetente_tipo}}>{{remetente}}</{{remetente_tipo}}>
+      <{{ remetente_tipo }}>{{ remetente }}</{{ remetente_tipo }}>
     </CPFCNPJRemetente>
   </Cabecalho>
   <CNPJContribuinte>
-    <{{contribuinte[0]}}>{{contribuinte[1]}}</{{contribuinte[0]}}>
+    <{{ contribuinte_tipo }}>{{ contribuinte }}</{{ contribuinte_tipo }}>
   </CNPJContribuinte>
 </p1:PedidoConsultaCNPJ>
