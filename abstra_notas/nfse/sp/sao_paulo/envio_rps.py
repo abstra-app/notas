@@ -278,9 +278,6 @@ class EnvioLoteRps(Pedido):
     transacao: bool
     data_inicio_periodo_transmitido: date
     data_fim_periodo_transmitido: date
-    quantidade_rps: int
-    valor_total_servicos: int
-    valor_total_deducoes: int
     lista_rps: List[RPS]
 
     def __post_init__(self):
