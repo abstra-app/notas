@@ -29,8 +29,7 @@ class RetornoEnvioRPS(Retorno):
             return True
 
         @staticmethod
-        def ler_xml(xml: str):
-            xml = fromstring(xml.encode("utf-8"))
+        def ler_xml(xml: Element):
             return RetornoEnvioRPS.RetornoEnvioRpsSucesso(
                 chave_nfe_inscricao_prestador=xml.find(".//InscricaoPrestador").text,
                 chave_nfe_codigo_verificacao=xml.find(".//CodigoVerificacao").text,
