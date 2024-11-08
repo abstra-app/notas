@@ -62,33 +62,32 @@ class Assinador:
         return file
 
     def assinar_xml(self, element: Element) -> Element:
-        with self.private_key_pem_file as private_key_pem_file, self.cert_pem_file as cert_pem_file:
-            element = fromstring(tostring(element, encoding=str))
-            key = xmlsec.Key.from_file(
-                private_key_pem_file.name,
-                format=xmlsec.constants.KeyDataFormatPem,
-                password=self.pfx_password,
-            )
-            signature_node: Element = xmlsec.template.create(
-                element,
-                c14n_method=xmlsec.constants.TransformInclC14N,
-                sign_method=xmlsec.constants.TransformRsaSha1,
-            )
-            element.append(signature_node)
-            ref = xmlsec.template.add_reference(
-                signature_node, xmlsec.constants.TransformSha1, uri=""
-            )
-            xmlsec.template.add_transform(ref, xmlsec.constants.TransformEnveloped)
-            xmlsec.template.add_transform(ref, xmlsec.constants.TransformInclC14N)
-            key_info = xmlsec.template.ensure_key_info(signature_node)
-            xmlsec.template.add_x509_data(key_info)
-            ctx = xmlsec.SignatureContext()
-            ctx.key = key
-            ctx.key.load_cert_from_file(
-                cert_pem_file.name, xmlsec.constants.KeyDataFormatPem
-            )
-            ctx.sign(signature_node)
-            return element
+        element = fromstring(tostring(element, encoding=str))
+        key = xmlsec.Key.from_memory(
+            self.private_key_pem_bytes,
+            format=xmlsec.constants.KeyDataFormatPem,
+            password=self.pfx_password,
+        )
+        signature_node: Element = xmlsec.template.create(
+            element,
+            c14n_method=xmlsec.constants.TransformInclC14N,
+            sign_method=xmlsec.constants.TransformRsaSha1,
+        )
+        element.append(signature_node)
+        ref = xmlsec.template.add_reference(
+            signature_node, xmlsec.constants.TransformSha1, uri=""
+        )
+        xmlsec.template.add_transform(ref, xmlsec.constants.TransformEnveloped)
+        xmlsec.template.add_transform(ref, xmlsec.constants.TransformInclC14N)
+        key_info = xmlsec.template.ensure_key_info(signature_node)
+        xmlsec.template.add_x509_data(key_info)
+        ctx = xmlsec.SignatureContext()
+        ctx.key = key
+        ctx.key.load_cert_from_memory(
+            self.cert_pem_bytes, xmlsec.constants.KeyDataFormatPem
+        )
+        ctx.sign(signature_node)
+        return element
 
     def assinar_bytes_rsa_sh1(self, data: bytes) -> bytes:
         private_key = serialization.load_pem_private_key(
