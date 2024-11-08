@@ -2,7 +2,7 @@
 <p1:PedidoConsultaCNPJ xmlns:p1="http://www.prefeitura.sp.gov.br/nfe" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Cabecalho Versao="1">
     <CPFCNPJRemetente>
-      <{{remetente[0]}}>{{remetente[1]}}</{{remetente[0]}}>
+      <{{remetente_tipo}}>{{remetente}}</{{remetente_tipo}}>
     </CPFCNPJRemetente>
   </Cabecalho>
   <CNPJContribuinte>

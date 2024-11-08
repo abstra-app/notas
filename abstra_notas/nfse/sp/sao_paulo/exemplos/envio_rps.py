@@ -5,8 +5,8 @@ from datetime import date
 cliente = Cliente(caminho_pfx="/meu/caminho/certificado.pfx", senha_pfx="senha")
 
 pedido = PedidoEnvioRPS(
-    remetente=("CNPJ", "54.188.924/0001-92"),
-    tomador=("CPF", "131.274.830-31"),
+    remetente="54.188.924/0001-92",
+    tomador="131.274.830-31",
     aliquota_servicos=2.0,
     codigo_servico=1,
     data_emissao=date(2021, 1, 1),

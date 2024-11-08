@@ -2,7 +2,7 @@ from .pedido import Pedido
 from dataclasses import dataclass
 from lxml.etree import Element
 from abstra_notas.assinatura import Assinador
-from typing import Tuple, Literal
+from typing import Literal
 
 
 @dataclass
@@ -22,8 +22,11 @@ class RetornoConsultaCNPJ:
 
 @dataclass
 class PedidoConsultaCNPJ(Pedido):
-    remetente: Tuple[Literal["CNPJ", "CPF"], str]
-    contribuinte: Tuple[Literal["CNPJ", "CPF"], str]
+    remetente: str
+    contribuinte: str
+
+    remetente_tipo: Literal["CPF", "CNPJ"]
+    contribuinte_tipo: Literal["CPF", "CNPJ"]
 
     @property
     def classe_retorno(self) -> RetornoConsultaCNPJ:

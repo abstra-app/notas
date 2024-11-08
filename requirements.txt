@@ -4,3 +4,4 @@ pycryptodome
 Jinja2
 lxml >= 5.0.0
 xmlsec
+cryptography

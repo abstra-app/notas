@@ -24,7 +24,7 @@ class Cliente:
             client = Client(url, transport=transport)
             signed_xml = self.assinador.assinar_xml(xml)
 
-            retorno = getattr(client.service, pedido.nome_metodo)(
+            retorno = getattr(client.service, pedido.__class__.__name__)(
                 1, tostring(signed_xml, encoding=str)
             )
             return pedido.classe_retorno.ler_xml(retorno)

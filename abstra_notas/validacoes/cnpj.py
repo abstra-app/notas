@@ -1,3 +1,6 @@
+class CnpjInvalido(Exception):
+    ...
+
 def normalizar_cnpj(cnpj: str) -> str:
     cnpj = cnpj.replace(".", "").replace("/", "").replace("-", "")
 
@@ -23,7 +26,7 @@ def normalizar_cnpj(cnpj: str) -> str:
         dig_11 = int(cnpj[10]) * 8
         dig_12 = int(cnpj[11]) * 9
     except IndexError:
-        raise Exception("Quantidade de caracteres incorreto.")
+        raise CnpjInvalido("Quantidade de caracteres incorreto.")
 
     dig_1_ao_12_somados = (
         dig_1
@@ -100,6 +103,14 @@ def normalizar_cnpj(cnpj: str) -> str:
         if digitos_verificadores == cnpj_validado[12:]:
             return cnpj_normalizado
         else:
-            raise Exception("Os dígitos verificadores estão incorretos.")
+            raise CnpjInvalido("Os dígitos verificadores estão incorretos.")
     else:
         return cnpj_normalizado
+
+
+def cnpj_valido(cnpj: str) -> bool:
+    try:
+        normalizar_cnpj(cnpj)
+        return True
+    except CnpjInvalido:
+        return False

@@ -1,16 +1,18 @@
 from dataclasses import dataclass
-from typing import Literal, Tuple
+from typing import Literal
 from lxml.etree import Element, fromstring
 import base64
 from abstra_notas.validacoes.email import validar_email
 from abstra_notas.validacoes.cidades import validar_codigo_cidade, normalizar_uf
 from abstra_notas.validacoes.cpf import normalizar_cpf
 from abstra_notas.validacoes.cnpj import normalizar_cnpj
+from abstra_notas.validacoes.cpfcnpj import cpf_ou_cnpj
 from .codigos_de_servico import codigos_de_servico_validos
 from datetime import date
 from .pedido import Pedido
 from .retorno import Retorno
 from abstra_notas.assinatura import Assinador
+from .cliente import Cliente
 
 class RetornoEnvioRPS(Retorno):
     @dataclass
@@ -68,7 +70,7 @@ class RetornoEnvioRPS(Retorno):
 
 @dataclass
 class PedidoEnvioRPS(Pedido):
-    remetente: Tuple[Literal["CPF", "CNPJ"], str]
+    remetente: str
     inscricao_prestador: str
     serie_rps: str
     numero_rps: int
@@ -86,7 +88,7 @@ class PedidoEnvioRPS(Pedido):
     codigo_servico: int
     aliquota_servicos: float
     iss_retido: Literal["true", "false"]
-    tomador: Tuple[Literal["CPF", "CNPJ"], str]
+    tomador: str
     razao_social_tomador: str
     endereco_tipo_logradouro: str
     endereco_logradouro: str
@@ -100,10 +102,10 @@ class PedidoEnvioRPS(Pedido):
     discriminacao: str
 
     def __post_init__(self):
-        if self.tomador[0] == "CPF":
-            self.tomador = ("CPF", normalizar_cpf(self.tomador[1]))
-        if self.tomador[0] == "CNPJ":
-            self.tomador = ("CNPJ", normalizar_cnpj(self.tomador[1]))
+        if self.tomador_tipo == "CPF":
+            self.tomador = ("CPF", normalizar_cpf(self.tomador))
+        if self.tomador_tipo == "CNPJ":
+            self.tomador = ("CNPJ", normalizar_cnpj(self.tomador))
         self.endereco_uf = normalizar_uf(self.endereco_uf)
         assert validar_codigo_cidade(
             self.endereco_cidade
@@ -223,14 +225,14 @@ class PedidoEnvioRPS(Pedido):
         template += str(self.valor_servicos_centavos).zfill(15)
         template += str(self.valor_deducoes_centavos).zfill(15)
         template += str(self.codigo_servico).zfill(5)
-        if self.tomador[0] == "CPF":
+        if self.tomador_tipo == "CPF":
             template += "1"
-        elif self.tomador[0] == "CNPJ":
+        elif self.tomador_tipo == "CNPJ":
             template += "2"
         else:
             template += "3"
         template += (
-            self.tomador[1].replace(".", "").replace("-", "").replace("/", "").zfill(14)
+            self.tomador.replace(".", "").replace("-", "").replace("/", "").zfill(14)
         )
 
         template_bytes = template.encode("ascii")
@@ -241,3 +243,12 @@ class PedidoEnvioRPS(Pedido):
     @property
     def classe_retorno(self):
         return RetornoEnvioRPS
+
+
+    @property
+    def remetente_tipo(self) -> Literal["CPF", "CNPJ"]:
+        return cpf_ou_cnpj(self.remetente)
+
+    @property
+    def tomador_tipo(self) -> Literal["CPF", "CNPJ"]:
+        return cpf_ou_cnpj(self.tomador)
