@@ -13,7 +13,9 @@ class EnvioTest(TestCase):
         assinador = AssinadorMock()
         self.maxDiff = None
         exemplo_path = Path(__file__).parent / "exemplos" / "PedidoEnvioRPS.xml"
-        exemplo_xml = assinador.assinar_xml(fromstring(exemplo_path.read_text()))
+        exemplo_xml = assinador.assinar_xml(
+            fromstring(exemplo_path.read_text(encoding="utf-8"))
+        )
 
         pedido = EnvioRPS(
             aliquota_servicos=0.05,

@@ -1,7 +1,7 @@
 from .pedido import Pedido
 from .retorno import Retorno
 from dataclasses import dataclass
-from lxml.etree import Element, fromstring
+from lxml.etree import Element, fromstring, ElementBase
 from abstra_notas.assinatura import Assinador
 from typing import Literal
 from abstra_notas.validacoes.cpfcnpj import cpf_ou_cnpj, normalizar_cpf_ou_cnpj
@@ -15,8 +15,7 @@ class RetornoConsultaCNPJ(Retorno):
     emite_nfe: bool
 
     @staticmethod
-    def ler_xml(xml: str) -> "RetornoConsultaCNPJ":
-        xml = fromstring(xml)
+    def ler_xml(xml: ElementBase) -> "RetornoConsultaCNPJ":
         sucesso = xml.find(".//Sucesso").text == "true"
         if sucesso:
             return RetornoConsultaCNPJ(

@@ -15,7 +15,6 @@ class RetornoCancelamentoNFe(Retorno):
 
     @staticmethod
     def ler_xml(xml: str):
-        xml = fromstring(xml.encode("utf-8"))
         sucesso = xml.find(".//Sucesso").text
         if sucesso == "true":
             return RetornoCancelamentoNFe(sucesso=True)

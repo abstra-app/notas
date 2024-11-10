@@ -3,14 +3,12 @@ from zeep.plugins import HistoryPlugin
 from zeep import Client, Transport, Settings
 from requests import Session
 from .pedido import Pedido
-from lxml.etree import tostring
+from lxml.etree import tostring, fromstring
 from pathlib import Path
 from tempfile import mktemp
-from .retorno import Retorno
 from .envio_rps import EnvioRPS, RetornoEnvioRps
 from .consulta_cnpj import ConsultaCNPJ, RetornoConsultaCNPJ
 from .cancelamento_nfe import CancelamentoNFe, RetornoCancelamentoNFe
-from .erro import Erro
 
 
 class Cliente:
@@ -19,7 +17,7 @@ class Cliente:
     def __init__(self, caminho_pfx: Path, senha_pfx: str):
         self.assinador = Assinador(caminho_pfx, senha_pfx)
 
-    def executar(self, pedido: Pedido, erro: Erro) -> Retorno:
+    def executar(self, pedido: Pedido) -> str:
         try:
             history = HistoryPlugin()
             keyfile = Path(mktemp())
@@ -37,19 +35,20 @@ class Cliente:
             )
             signed_xml = self.assinador.assinar_xml(xml)
 
-            retorno = getattr(client.service, pedido.__class__.__name__)(
+            response: str = getattr(client.service, pedido.__class__.__name__)(
                 1, tostring(signed_xml, encoding=str)
             )
-            return pedido.classe_retorno.ler_xml(retorno)
+
+            return fromstring(response.encode("utf-8"))
         finally:
             keyfile.unlink()
             certfile.unlink()
 
     def gerar_nota(self, pedido: EnvioRPS) -> RetornoEnvioRps:
-        return self.executar(pedido)
+        return RetornoEnvioRps.ler_xml(self.executar(pedido))
 
     def consultar_cnpj(self, pedido: ConsultaCNPJ) -> RetornoConsultaCNPJ:
-        return self.executar(pedido)
+        return RetornoConsultaCNPJ.ler_xml(self.executar(pedido))
 
     def cancelar_nota(self, pedido: CancelamentoNFe) -> RetornoCancelamentoNFe:
-        return self.executar(pedido)
+        return RetornoCancelamentoNFe.ler_xml(self.executar(pedido))
