@@ -4,6 +4,8 @@ Biblioteca de emissão de notas fiscais eletrônicas para empresas da cidade de 
 
 A integração é feita atraves da [Nota do Milhão](https://notadomilhao.prefeitura.sp.gov.br/) utilizando SOAP.
 
+[Abstra Notas](/README.md) > [NFSe](/abstra_notas/nfse/README.md) > [SP](/abstra_notas/nfse/sp/README.md) > São Paulo
+
 - [Gerar nota](/abstra_notas/nfse/sp/sao_paulo/exemplos/envio_rps.py)
 - [Consultar CNPJ](/abstra_notas/nfse/sp/sao_paulo/exemplos/consulta_cnpj.py)
 - [Cancelar nota](/abstra_notas/nfse/sp/sao_paulo/exemplos/cancelamento_nfe.py)

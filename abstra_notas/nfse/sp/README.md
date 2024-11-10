@@ -1,7 +1,7 @@
 # Emissão de notas fiscais de serviço eletrônicas (NFSe) em Python para o estado de São Paulo
 
 
-[Abstra Notas](/README.md) > [NFSe](/abstra_notas/nfse/README.md) > [Estados](/abstra_notas/nfse/README.md) > São Paulo
+[Abstra Notas](/README.md) > [NFSe](/abstra_notas/nfse/README.md) > SP
 
 > [!TIP]
 > Caso esteja procurando por notas fiscais de produtos, veja [NFe](/abstra_notas/nfe/README.md).
