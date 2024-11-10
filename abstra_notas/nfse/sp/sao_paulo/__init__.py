@@ -8,15 +8,18 @@ from .cancelamento_nfe import (
 from .cliente import Cliente
 
 __all__ = [
+    # EnvioRPS
     "EnvioRPS",
     "RetornoEnvioRps",
     "ErroEnvioRps",
-    "ErroConsultaCNPJ",
+    # ConsultaCNPJ
     "ConsultaCNPJ",
-    "PedidoConsultaCNPJ",
-    "ErroCancelamentoNFe",
     "RetornoConsultaCNPJ",
+    "ErroConsultaCNPJ",
+    # CancelamentoNFe
     "CancelamentoNFe",
     "RetornoCancelamentoNFe",
+    "ErroCancelamentoNFe",
+    # Cliente
     "Cliente",
 ]
