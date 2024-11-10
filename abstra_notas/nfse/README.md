@@ -3,10 +3,9 @@
 
 Biblioteca de emissão de notas fiscais eletrônicas para empresas brasileiras.
 
+[Abstra Notas](/README.md) > NFSe
+
 ## Listagem de estados
-
-[Abstra Notas](/README.md) > [NFSe](/abstra_notas/nfse/README.md) > Estados
-
 
 - [São Paulo](/abstra_notas/nfse/sp/README.md)
 - Rio de Janeiro (Em breve)
