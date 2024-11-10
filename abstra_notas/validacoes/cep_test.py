@@ -15,6 +15,10 @@ class CepTest(TestCase):
         normalizado = normalizar_cep("013.10100")
         self.assertEqual(normalizado, "01310100")
 
-    def test_zeros_a_esquerda(self):
+    def test_menor_que_8_digitos(self):
         normalizado = normalizar_cep("1310100")
         self.assertEqual(normalizado, "01310100")
+
+    def test_maior_que_8_digitos(self):
+        with self.assertRaises(AssertionError):
+            normalizar_cep("131010123123")

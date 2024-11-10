@@ -1,10 +1,12 @@
 from dataclasses import dataclass
-from typing import Literal, List
+from typing import Literal, List, Optional
 from lxml.etree import Element, fromstring, ElementBase
 import base64
 from abstra_notas.validacoes.email import validar_email
-from abstra_notas.validacoes.cidades import validar_codigo_cidade, normalizar_uf
+from abstra_notas.validacoes.cidades import validar_codigo_cidade, normalizar_uf, UF
 from abstra_notas.validacoes.cpfcnpj import normalizar_cpf_ou_cnpj, cpf_ou_cnpj
+from abstra_notas.validacoes.cep import normalizar_cep
+from abstra_notas.validacoes.tipo_logradouro import TipoLogradouro
 from .codigos_de_servico import codigos_de_servico_validos
 from datetime import date
 from .pedido import Pedido
@@ -52,13 +54,56 @@ class ErroEnvioRps(Erro):
 
 @dataclass
 class RPS:
-    inscricao_prestador: str
-    serie_rps: str
+    inscricao_prestador: int
+    """
+    Inscrição Municipal do Prestador.
+    """
+
     numero_rps: int
+    """
+    Número que identifica o RPS. Deve ser único para cada série de RPS.
+    Recomenda-se que seja sequencial, iniciando em 1.
+    Use algum banco de dados para salvar o número do RPS e garantir que seja único.
+    """
+
     tipo_rps: Literal["RPS", "RPS-M", "RPS-C"]
+    """
+    RPS: Recibo Provisório de Serviços.
+    
+    RPS-M: Recibo Provisório de Serviços proveniente de Nota Fiscal Conjugada (Mista).
+    
+    RPS-C: Recibo Provisório de Serviços proveniente de Nota Fiscal Conjugada (Comum).
+    """
+
     data_emissao: date
     status_rps: Literal["N", "C"]
     tributacao_rps: Literal["T", "F", "A", "B", "D", "M", "N", "R", "S", "X", "V", "P"]
+    """
+    T: Tributado em São Paulo
+
+    F: Tributado Fora de São Paulo
+    
+    A: Tributado em São Paulo, porém Isento
+    
+    B: Tributado Fora de São Paulo, porém Isento
+    
+    D: Tributado em São Paulo com isenção parcial
+    
+    M: Tributado em São Paulo, porém com indicação de imunidade subjetiva
+    
+    N: Tributado Fora de São Paulo, porém com indicação de imunidade subjetiva
+    
+    R: Tributado em São Paulo, porém com indicação de imunidade objetiva
+    
+    S: Tributado fora de São Paulo, porém com indicação de imunidade objetiva
+    
+    X: Tributado em São Paulo, porém Exigibilidade Suspensa
+    
+    V: Tributado Fora de São Paulo, porém Exigibilidade Suspensa
+    
+    P: Exportação de Serviços
+    """
+
     valor_servicos_centavos: int
     valor_deducoes_centavos: int
     valor_pis_centavos: int
@@ -66,28 +111,59 @@ class RPS:
     valor_inss_centavos: int
     valor_ir_centavos: int
     valor_csll_centavos: int
+
     codigo_servico: int
+    """
+    Informe o código do serviço do RPS. Este código deve pertencer à lista de serviços.
+    """
+
     aliquota_servicos: float
     iss_retido: bool
     tomador: str
     razao_social_tomador: str
-    endereco_tipo_logradouro: str
-    endereco_logradouro: str
-    endereco_numero: str
-    endereco_complemento: str
-    endereco_bairro: str
-    endereco_cidade: int
-    endereco_uf: str
-    endereco_cep: str
+
     email_tomador: str
     discriminacao: str
 
+    serie_rps: Optional[str] = None
+    """
+    Série do RPS com 5 posições (caracteres). Completar com espaços em branco à direita caso seja necessário.
+
+    Atenção: Não utilize espaços à esquerda. O conteúdo deverá estar alinhado à esquerda. 
+    """
+
+    endereco_tipo_logradouro: Optional[TipoLogradouro] = None
+    endereco_logradouro: Optional[str] = None
+    endereco_numero: Optional[str] = None
+    endereco_complemento: Optional[str] = None
+    endereco_bairro: Optional[str] = None
+    endereco_cidade: Optional[int] = None
+    endereco_uf: Optional[UF] = None
+    endereco_cep: Optional[str] = None
+
     def __post_init__(self):
+        if self.endereco_cep is not None:
+            self.endereco_cep = normalizar_cep(self.endereco_cep)
+
+        if self.endereco_uf is not None:
+            if isinstance(self.endereco_uf, str):
+                uf_str = self.endereco_uf
+            else:
+                uf_str = self.endereco_uf.value
+            self.endereco_uf = UF(normalizar_uf(uf_str))
+
         self.tomador = normalizar_cpf_ou_cnpj(self.tomador)
-        self.endereco_uf = normalizar_uf(self.endereco_uf)
-        assert validar_codigo_cidade(
-            self.endereco_cidade
-        ), f"Código de cidade inválido: {self.endereco_cidade}"
+
+        if self.endereco_cidade is not None:
+            assert validar_codigo_cidade(
+                self.endereco_cidade
+            ), f"Código de cidade inválido: {self.endereco_cidade}"
+
+        if isinstance(self.endereco_tipo_logradouro, str):
+            self.endereco_tipo_logradouro = TipoLogradouro(
+                self.endereco_tipo_logradouro.upper()
+            )
+
         assert (
             self.aliquota_servicos >= 0 and self.aliquota_servicos <= 1
         ), "A alíquota de serviços deve ser um valor entre 0 e 1"
@@ -150,10 +226,16 @@ class RPS:
             >= 0
         ), "A soma dos valores não pode ser negativa"
 
+        if self.serie_rps is not None:
+            self.serie_rps = self.serie_rps.strip()
+            assert (
+                len(self.serie_rps) <= 5
+            ), "A série do RPS deve ter no máximo 5 caracteres"
+
     def gerar_string_xml(self, assinador: Assinador) -> Element:
         template = load_template("RPS")
         return template.render(
-            inscricao_prestador=self.inscricao_prestador,
+            inscricao_prestador=str(self.inscricao_prestador).zfill(8),
             serie_rps=self.serie_rps,
             numero_rps=self.numero_rps,
             tipo_rps=self.tipo_rps,
@@ -173,13 +255,13 @@ class RPS:
             tomador=self.tomador,
             tomador_tipo=self.tomador_tipo,
             razao_social_tomador=self.razao_social_tomador,
-            endereco_tipo_logradouro=self.endereco_tipo_logradouro,
+            endereco_tipo_logradouro=self.endereco_tipo_logradouro.value.capitalize(),
             endereco_logradouro=self.endereco_logradouro,
             endereco_numero=self.endereco_numero,
             endereco_complemento=self.endereco_complemento,
             endereco_bairro=self.endereco_bairro,
             endereco_cidade=self.endereco_cidade,
-            endereco_uf=self.endereco_uf,
+            endereco_uf=self.endereco_uf.value,
             endereco_cep=self.endereco_cep,
             email_tomador=self.email_tomador,
             discriminacao=self.discriminacao,
@@ -219,7 +301,16 @@ class RPS:
 
 
 @dataclass
-class EnvioRPS(RPS, Pedido):
+class Remetente:
+    remetente: str
+
+    @property
+    def remetente_tipo(self) -> Literal["CPF", "CNPJ"]:
+        return cpf_ou_cnpj(self.remetente)
+
+
+@dataclass
+class EnvioRPS(RPS, Pedido, Remetente):
     remetente: str
 
     def gerar_xml(self, assinador: Assinador) -> Element:
@@ -234,10 +325,6 @@ class EnvioRPS(RPS, Pedido):
     @property
     def nome_metodo(self):
         return "EnvioRPS"
-
-    @property
-    def remetente_tipo(self) -> Literal["CPF", "CNPJ"]:
-        return cpf_ou_cnpj(self.remetente)
 
 
 @dataclass

@@ -1,4 +1,5 @@
 from abstra_notas.nfse.sp.sao_paulo import EnvioRPS, Cliente, ErroEnvioRps
+from abstra_notas.validacoes.tipo_logradouro import TipoLogradouro
 from datetime import date
 from dotenv import load_dotenv
 from os import getenv
@@ -25,7 +26,7 @@ pedido = EnvioRPS(
     endereco_complemento="Complemento",
     endereco_logradouro="Logradouro",
     endereco_numero="Número",
-    endereco_tipo_logradouro="Rua",
+    endereco_tipo_logradouro=TipoLogradouro.RUA,
     endereco_uf="SP",
     inscricao_prestador=getenv("NFSE_INSCRICAO_PRESTADOR"),
     iss_retido=False,

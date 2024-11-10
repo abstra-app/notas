@@ -24,14 +24,37 @@
     </CPFCNPJTomador>
     <RazaoSocialTomador>{{ razao_social_tomador }}</RazaoSocialTomador>
     <EnderecoTomador>
-        <TipoLogradouro>{{ endereco_tipo_logradouro }}</TipoLogradouro>
-        <Logradouro>{{ endereco_logradouro }}</Logradouro>
-        <NumeroEndereco>{{ endereco_numero }}</NumeroEndereco>
-        <ComplementoEndereco>{{ endereco_complemento }}</ComplementoEndereco>
-        <Bairro>{{ endereco_bairro }}</Bairro>
-        <Cidade>{{ endereco_cidade }}</Cidade>
-        <UF>{{ endereco_uf }}</UF>
-        <CEP>{{ endereco_cep }}</CEP>
+        {% if endereco_tipo_logradouro %}
+            <TipoLogradouro>{{ endereco_tipo_logradouro }}</TipoLogradouro>
+        {% endif %}
+
+        {% if endereco_logradouro %}
+            <Logradouro>{{ endereco_logradouro }}</Logradouro>
+        {% endif %}
+
+        {% if endereco_numero %}
+            <NumeroEndereco>{{ endereco_numero }}</NumeroEndereco>
+        {% endif %}
+
+        {% if endereco_complemento %}
+            <ComplementoEndereco>{{ endereco_complemento }}</ComplementoEndereco>
+        {% endif %}
+
+        {% if endereco_bairro %}
+            <Bairro>{{ endereco_bairro }}</Bairro>
+        {% endif %}
+
+        {% if endereco_cidade %}
+            <Cidade>{{ endereco_cidade }}</Cidade>
+        {% endif %}
+
+        {% if endereco_uf %}
+            <UF>{{ endereco_uf }}</UF>
+        {% endif %}
+
+        {% if endereco_cep %}
+            <CEP>{{ endereco_cep }}</CEP>
+        {% endif %}
     </EnderecoTomador>
     <EmailTomador>{{ email_tomador }}</EmailTomador>
     <Discriminacao>{{ discriminacao }}</Discriminacao>

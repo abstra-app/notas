@@ -1,6 +1,10 @@
-def normalizar_cep(cep: str) -> str:
-    cep_normalizado = cep.replace("-", "").replace(".", "")
-    if len(cep_normalizado) < 8:
-        cep_normalizado = "0" * (8 - len(cep_normalizado)) + cep_normalizado
-    assert len(cep_normalizado) == 8, "CEP deve ter 8 dígitos"
-    return cep_normalizado
+from typing import Union
+
+
+def normalizar_cep(cep: Union[str, int]) -> str:
+    cep = str(cep)
+    cep = cep.replace("-", "").replace(".", "")
+    assert cep.isdigit(), "CEP deve conter apenas números"
+    cep = cep.zfill(8)
+    assert len(cep) == 8, "CEP deve conter 8 dígitos"
+    return cep
