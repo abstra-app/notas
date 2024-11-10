@@ -1,5 +1,6 @@
 from abstra_notas.nfse.sp.sao_paulo import (
     CancelamentoNFe,
+    ErroCancelamentoNFe,
     Cliente,
 )
 from dotenv import load_dotenv
@@ -19,11 +20,8 @@ pedido = CancelamentoNFe(
     transacao="true",
 )
 
-retorno = pedido.executar(cliente)
 
-if retorno.sucesso:
-    print("Cancelamento realizado com sucesso")
-    print(retorno)
-else:
-    print("Erro ao cancelar")
-    print(retorno)
+try:
+    retorno = cliente.cancelar_nota(pedido)
+except ErroCancelamentoNFe as e:
+    print(e.descricao)
