@@ -139,6 +139,10 @@ class RPS:
     endereco_complemento: Optional[str] = None
     endereco_bairro: Optional[str] = None
     endereco_cidade: Optional[int] = None
+    """
+    Código da cidade. Pode ser obtido em:
+    https://servicodados.ibge.gov.br/api/v1/localidades/municipios
+    """
     endereco_uf: Optional[UF] = None
     endereco_cep: Optional[str] = None
 
