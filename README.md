@@ -27,7 +27,7 @@ pip install abstra_notas
 
 ## Exemplos
 
-- [NFSe](/abstra_notas/nfse/README.md): Notas de serviço via prefeituras (Em breve)
+- [NFSe](/abstra_notas/nfse/README.md): Notas de serviço via prefeituras.
 - NFe: Notas de produtos via SEFAZ (Em breve)
 
 ## Licença
