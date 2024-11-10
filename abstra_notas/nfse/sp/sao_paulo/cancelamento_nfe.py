@@ -7,6 +7,7 @@ from abstra_notas.validacoes.cpfcnpj import cpf_ou_cnpj, normalizar_cpf_ou_cnpj
 from abstra_notas.assinatura import Assinador
 import base64
 from .erro import Erro
+from .remessa import Remessa
 
 
 @dataclass
@@ -32,8 +33,7 @@ class ErroCancelamentoNFe(Erro):
 
 
 @dataclass
-class CancelamentoNFe(Pedido):
-    remetente: str
+class CancelamentoNFe(Pedido, Remessa):
     transacao: str
     inscricao_prestador: str
     numero_nfe: int

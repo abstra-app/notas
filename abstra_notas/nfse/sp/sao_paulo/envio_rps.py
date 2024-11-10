@@ -9,6 +9,7 @@ from abstra_notas.validacoes.cep import normalizar_cep
 from abstra_notas.validacoes.tipo_logradouro import TipoLogradouro
 from .codigos_de_servico import codigos_de_servico_validos
 from datetime import date
+from .remessa import Remessa
 from .pedido import Pedido
 from .templates import load_template
 from abstra_notas.assinatura import Assinador
@@ -301,21 +302,7 @@ class RPS:
 
 
 @dataclass
-class Remetente:
-    remetente: str
-
-    def __post_init__(self):
-        self.remetente = normalizar_cpf_ou_cnpj(self.remetente)
-
-    @property
-    def remetente_tipo(self) -> Literal["CPF", "CNPJ"]:
-        return cpf_ou_cnpj(self.remetente)
-
-
-@dataclass
-class EnvioRPS(RPS, Pedido, Remetente):
-    remetente: str
-
+class EnvioRPS(RPS, Pedido, Remessa):
     def gerar_xml(self, assinador: Assinador) -> Element:
         xml = self.template.render(
             remetente=self.remetente,
@@ -331,8 +318,7 @@ class EnvioRPS(RPS, Pedido, Remetente):
 
 
 @dataclass
-class EnvioLoteRps(Pedido):
-    remetente: str
+class EnvioLoteRps(Pedido, Remessa):
     transacao: bool
     data_inicio_periodo_transmitido: date
     data_fim_periodo_transmitido: date

@@ -5,6 +5,7 @@ from lxml.etree import Element, fromstring, ElementBase
 from abstra_notas.assinatura import Assinador
 from typing import Literal
 from abstra_notas.validacoes.cpfcnpj import cpf_ou_cnpj, normalizar_cpf_ou_cnpj
+from .remessa import Remessa
 from .erro import Erro
 
 
@@ -37,8 +38,7 @@ class ErroConsultaCNPJ(Erro):
 
 
 @dataclass
-class ConsultaCNPJ(Pedido):
-    remetente: str
+class ConsultaCNPJ(Pedido, Remessa):
     contribuinte: str
 
     def __post_init__(self):
