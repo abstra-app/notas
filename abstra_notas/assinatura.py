@@ -10,7 +10,7 @@ from cryptography import x509
 from os import getenv
 from pathlib import Path
 from tempfile import NamedTemporaryFile
-from lxml.etree import Element, tostring, fromstring
+from lxml.etree import Element, tostring, fromstring, ElementBase
 import xmlsec
 import datetime
 
@@ -61,14 +61,14 @@ class Assinador:
         file.seek(0)
         return file
 
-    def assinar_xml(self, element: Element) -> Element:
+    def assinar_xml(self, element: ElementBase) -> Element:
         element = fromstring(tostring(element, encoding=str))
         key = xmlsec.Key.from_memory(
             self.private_key_pem_bytes,
             format=xmlsec.constants.KeyDataFormatPem,
             password=self.pfx_password,
         )
-        signature_node: Element = xmlsec.template.create(
+        signature_node: ElementBase = xmlsec.template.create(
             element,
             c14n_method=xmlsec.constants.TransformInclC14N,
             sign_method=xmlsec.constants.TransformRsaSha1,
@@ -105,7 +105,29 @@ class Assinador:
 
 
 class AssinadorMock:
-    def assinar_xml(self, element: Element) -> Element:
+    def assinar_xml(self, element: ElementBase) -> ElementBase:
+        signature = """
+        <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+            <SignedInfo>
+                <CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />
+                <SignatureMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />
+                <Reference>
+                    <Transforms>
+                        <Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />
+                    </Transforms>
+                    <DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />
+                    <DigestValue />
+                </Reference>
+            </SignedInfo>
+            <SignatureValue />
+            <KeyInfo>
+                <X509Data>
+                    <X509Certificate />
+                </X509Data>
+            </KeyInfo>
+        </Signature>
+        """
+        element.append(fromstring(signature))
         return element
 
     def assinar_bytes_rsa_sh1(self, data: bytes) -> bytes:

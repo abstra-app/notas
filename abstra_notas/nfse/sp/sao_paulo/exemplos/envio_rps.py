@@ -1,4 +1,4 @@
-from abstra_notas.nfse.sp.sao_paulo import EnvioRPS, Cliente, RetornoEnvioRPS
+from abstra_notas.nfse.sp.sao_paulo import EnvioRPS, Cliente, ErroEnvioRps
 from datetime import date
 from dotenv import load_dotenv
 from os import getenv
@@ -44,10 +44,10 @@ pedido = EnvioRPS(
     valor_servicos_centavos=10000,
 )
 
-retorno: RetornoEnvioRPS = cliente.executar(pedido)
 
-if retorno.sucesso:
-    print("RPS enviado com sucesso")
+try:
+    retorno = cliente.gerar_nota(pedido)
     print(retorno)
-else:
-    print(retorno.descricao)
+except ErroEnvioRps as e:
+    print(f"Código: {e.codigo}")
+    print(f"Descrição: {e.descricao}")

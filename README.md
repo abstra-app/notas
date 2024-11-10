@@ -27,7 +27,7 @@ pedido = PedidoConsultaCNPJ(
     destinatario="131.274.830-31",
 )
 
-retorno: RetornoConsultaCNPJ = cliente.executar(pedido)
+retorno = cliente.consultar_cnpj(pedido)
 
 print(retorno.sucesso)
 ```
@@ -75,7 +75,7 @@ pedido = PedidoEnvioRPS(
     valor_servicos_centavos=10000
 )
 
-retorno: RetornoEnvioRPS = cliente.executar(pedido)
+retorno = cliente.gerar_nota(pedido)
 
 print(retorno.sucesso)
 ```

@@ -1,6 +1,6 @@
 from dataclasses import dataclass
-from typing import Literal, Union, List
-from lxml.etree import Element, fromstring, tostring
+from typing import Literal, List
+from lxml.etree import Element, fromstring, ElementBase
 import base64
 from abstra_notas.validacoes.email import validar_email
 from abstra_notas.validacoes.cidades import validar_codigo_cidade, normalizar_uf
@@ -8,29 +8,33 @@ from abstra_notas.validacoes.cpfcnpj import normalizar_cpf_ou_cnpj, cpf_ou_cnpj
 from .codigos_de_servico import codigos_de_servico_validos
 from datetime import date
 from .pedido import Pedido
-from .retorno import Retorno
 from .templates import load_template
 from abstra_notas.assinatura import Assinador
-from .cliente import Cliente
+from .erro import Erro
 
 
-class RetornoEnvioRPS(Retorno):
-    @dataclass
-    class RetornoEnvioRpsSucesso:
-        chave_nfe_inscricao_prestador: str
-        chave_nfe_numero_nfe: str
-        chave_nfe_codigo_verificacao: str
-        chave_rps_inscricao_prestador: str
-        chave_rps_serie_rps: str
-        chave_rps_numero_rps: str
+class RetornoEnvioRps:
+    chave_nfe_inscricao_prestador: str
+    chave_nfe_numero_nfe: str
+    chave_nfe_codigo_verificacao: str
+    chave_rps_inscricao_prestador: str
+    chave_rps_serie_rps: str
+    chave_rps_numero_rps: str
 
-        @property
-        def sucesso(self):
-            return True
+    @property
+    def sucesso(self):
+        return True
 
-        @staticmethod
-        def ler_xml(xml: Element):
-            return RetornoEnvioRPS.RetornoEnvioRpsSucesso(
+    @staticmethod
+    def ler_xml(xml: ElementBase) -> "RetornoEnvioRps":
+        sucesso = xml.find(".//Sucesso").text
+        if sucesso == "false":
+            raise ErroEnvioRps(
+                codigo=xml.find(".//Codigo").text,
+                descricao=xml.find(".//Descricao").text,
+            )
+        elif sucesso == "true":
+            return RetornoEnvioRps(
                 chave_nfe_inscricao_prestador=xml.find(".//InscricaoPrestador").text,
                 chave_nfe_codigo_verificacao=xml.find(".//CodigoVerificacao").text,
                 chave_nfe_numero_nfe=xml.find(".//NumeroNFe").text,
@@ -39,31 +43,11 @@ class RetornoEnvioRPS(Retorno):
                 chave_rps_serie_rps=xml.find(".//SerieRPS").text,
             )
 
-    @dataclass
-    class RetornoEnvioRpsErro:
-        codigo: int
-        descricao: str
 
-        @property
-        def sucesso(self):
-            return False
-
-        @staticmethod
-        def ler_xml(xml: Element):
-            return RetornoEnvioRPS.RetornoEnvioRpsErro(
-                codigo=int(xml.find(".//Codigo").text),
-                descricao=xml.find(".//Descricao").text,
-            )
-
-    @staticmethod
-    def ler_xml(xml):
-        xml = xml.encode("utf-8")
-        xml = fromstring(xml)
-        sucesso = xml.find(".//Sucesso").text == "true"
-        if sucesso:
-            return RetornoEnvioRPS.RetornoEnvioRpsSucesso.ler_xml(xml)
-        else:
-            return RetornoEnvioRPS.RetornoEnvioRpsErro.ler_xml(xml)
+@dataclass
+class ErroEnvioRps(Erro):
+    codigo: int
+    descricao: str
 
 
 @dataclass
@@ -205,7 +189,7 @@ class RPS:
     def assinatura(self, assinador: Assinador) -> str:
         template = ""
         template += self.inscricao_prestador
-        template += self.serie_rps.upper() + (5-len(self.serie_rps)) * " "
+        template += self.serie_rps.upper() + (5 - len(self.serie_rps)) * " "
         template += str(self.numero_rps).zfill(12)
         template += self.data_emissao.strftime("%Y%m%d").upper()
         template += self.tributacao_rps
@@ -252,19 +236,8 @@ class EnvioRPS(RPS, Pedido):
         return "EnvioRPS"
 
     @property
-    def classe_retorno(self):
-        return RetornoEnvioRPS
-
-    @property
     def remetente_tipo(self) -> Literal["CPF", "CNPJ"]:
         return cpf_ou_cnpj(self.remetente)
-
-    def executar(
-        self, cliente: Cliente
-    ) -> Union[
-        RetornoEnvioRPS.RetornoEnvioRpsSucesso, RetornoEnvioRPS.RetornoEnvioRpsErro
-    ]:
-        return cliente.executar(self)
 
 
 @dataclass

@@ -1,13 +1,16 @@
 from ....assinatura import Assinador
 from zeep.plugins import HistoryPlugin
 from zeep import Client, Transport, Settings
-import ssl
 from requests import Session
 from .pedido import Pedido
 from lxml.etree import tostring
 from pathlib import Path
 from tempfile import mktemp
 from .retorno import Retorno
+from .envio_rps import EnvioRPS, RetornoEnvioRps
+from .consulta_cnpj import ConsultaCNPJ, RetornoConsultaCNPJ
+from .cancelamento_nfe import CancelamentoNFe, RetornoCancelamentoNFe
+from .erro import Erro
 
 
 class Cliente:
@@ -16,7 +19,7 @@ class Cliente:
     def __init__(self, caminho_pfx: Path, senha_pfx: str):
         self.assinador = Assinador(caminho_pfx, senha_pfx)
 
-    def executar(self, pedido: Pedido) -> Retorno:
+    def executar(self, pedido: Pedido, erro: Erro) -> Retorno:
         try:
             history = HistoryPlugin()
             keyfile = Path(mktemp())
@@ -41,3 +44,12 @@ class Cliente:
         finally:
             keyfile.unlink()
             certfile.unlink()
+
+    def gerar_nota(self, pedido: EnvioRPS) -> RetornoEnvioRps:
+        return self.executar(pedido)
+
+    def consultar_cnpj(self, pedido: ConsultaCNPJ) -> RetornoConsultaCNPJ:
+        return self.executar(pedido)
+
+    def cancelar_nota(self, pedido: CancelamentoNFe) -> RetornoCancelamentoNFe:
+        return self.executar(pedido)

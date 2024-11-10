@@ -6,11 +6,6 @@ from jinja2 import Template
 
 
 class Pedido(ABC):
-    @property
-    @abstractmethod
-    def classe_retorno(self) -> Retorno:
-        raise NotImplementedError
-
     @abstractmethod
     def gerar_xml(self, assinador: Assinador) -> str:
         raise NotImplementedError

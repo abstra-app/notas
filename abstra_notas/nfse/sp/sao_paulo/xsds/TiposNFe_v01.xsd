@@ -16,7 +16,7 @@
   </xs:simpleType>
   <xs:simpleType name="tpAssinatura">
     <xs:annotation>
-      <xs:documentation>Assinador digital do RPS emitido.</xs:documentation>
+      <xs:documentation>Assinatura digital do RPS emitido.</xs:documentation>
       <xs:documentation>O RPS deverá ser assinado digitalmente. O contribuinte deverá assinar uma cadeia de caracteres (ASCII) com informações do RPS emitido.</xs:documentation>
       <xs:documentation>O certificado digital utilizado na assinatura de cancelamento deverá ser o mesmo utilizado na assinatura da mensagem XML. A cadeia de caracteres a ser assinada deverá conter 86 posições com as informações apresentadas a seguir:</xs:documentation>
       <xs:documentation>Inscrição Municipal (CCM) do Prestador com 8 caracteres. Caso o CCM do Prestador tenha menos de 8 caracteres, o mesmo deverá ser completado com zeros à esquerda.</xs:documentation>
@@ -36,7 +36,7 @@
   </xs:simpleType>
   <xs:simpleType name="tpAssinaturaCancelamento">
     <xs:annotation>
-      <xs:documentation>Assinador digital de cancelamento da NFS-e.</xs:documentation>
+      <xs:documentation>Assinatura digital de cancelamento da NFS-e.</xs:documentation>
       <xs:documentation>Cada NFS-e a ser cancelada deverá ter sua respectiva assinatura de cancelamento. O contribuinte deverá assinar uma cadeia de caracteres (ASCII) com informações da NFS-e a ser cancelada.</xs:documentation>
       <xs:documentation>O certificado digital utilizado na assinatura de cancelamento deverá ser o mesmo utilizado na assinatura da mensagem XML. A cadeia de caracteres a ser assinada deverá conter 20 posições com as informações apresentadas a seguir:</xs:documentation>
       <xs:documentation>Inscrição Municipal (CCM) do Prestador com 8 caracteres. Caso o CCM do Prestador tenha menos de 8 caracteres, o mesmo deverá ser completado com zeros à esquerda.</xs:documentation>
@@ -548,9 +548,9 @@
       <xs:documentation>Tipo que representa uma NFS-e</xs:documentation>
     </xs:annotation>
     <xs:sequence>
-      <xs:element name="Assinador" type="tipos:tpAssinatura" minOccurs="0" maxOccurs="1">
+      <xs:element name="Assinatura" type="tipos:tpAssinatura" minOccurs="0" maxOccurs="1">
         <xs:annotation>
-          <xs:documentation>Assinador digital da NFS-e.</xs:documentation>
+          <xs:documentation>Assinatura digital da NFS-e.</xs:documentation>
         </xs:annotation>
       </xs:element>
       <xs:element name="ChaveNFe" type="tipos:tpChaveNFe" minOccurs="1" maxOccurs="1">
@@ -800,9 +800,9 @@
       <xs:documentation>Tipo que representa um RPS.</xs:documentation>
     </xs:annotation>
     <xs:sequence>
-      <xs:element name="Assinador" type="tipos:tpAssinatura" minOccurs="1" maxOccurs="1">
+      <xs:element name="Assinatura" type="tipos:tpAssinatura" minOccurs="1" maxOccurs="1">
         <xs:annotation>
-          <xs:documentation>Assinador digital do RPS.</xs:documentation>
+          <xs:documentation>Assinatura digital do RPS.</xs:documentation>
         </xs:annotation>
       </xs:element>
       <xs:element name="ChaveRPS" type="tipos:tpChaveRPS" minOccurs="1" maxOccurs="1">

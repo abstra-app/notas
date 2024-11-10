@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from lxml.etree import Element, SubElement
+from lxml.etree import Element, SubElement, ElementBase
 
 
 @dataclass
@@ -14,7 +14,7 @@ class Detalhe:
         return detalhe
 
     @staticmethod
-    def parse_xml(element: Element) -> "Detalhe":
+    def parse_xml(element: ElementBase) -> "Detalhe":
         inscricao_municipal = element.find("InscricaoMunicipal").text
         emite_nfse = element.find("EmiteNFSe").text == "true"
         return Detalhe(inscricao_municipal=inscricao_municipal, emite_nfse=emite_nfse)
@@ -26,7 +26,7 @@ class RetornoConsultaCNPJ:
     detalhe: Detalhe
 
     def gerar_xml(self):
-        retorno_consulta_cnpj = Element(
+        retorno_consulta_cnpj = ElementBase(
             "p1:RetornoConsultaCNPJ",
             nsmap={
                 "p1": "http://www.prefeitura.sp.gov.br/nfe",
@@ -41,7 +41,7 @@ class RetornoConsultaCNPJ:
         return retorno_consulta_cnpj
 
     @staticmethod
-    def parse_xml(element: Element) -> "RetornoConsultaCNPJ":
+    def parse_xml(element: ElementBase) -> "RetornoConsultaCNPJ":
         sucesso = element.find("Sucesso").text == "true"
         detalhe = Detalhe.parse_xml(element.find("Detalhe"))
         return RetornoConsultaCNPJ(sucesso=sucesso, detalhe=detalhe)

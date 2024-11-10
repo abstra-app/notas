@@ -1,19 +1,21 @@
 from unittest import TestCase
-from .envio_rps import PedidoEnvioRPS
+from .envio_rps import EnvioRPS
 from pathlib import Path
-from lxml.etree import parse, XMLSchema, tostring
+from lxml.etree import XMLSchema, fromstring
 from datetime import date
 import re
 from abstra_notas.assinatura import AssinadorMock
+from abstra_notas.validacoes.xml_iguais import assert_xml_iguais
 
 
 class EnvioTest(TestCase):
     def test_exemplo(self):
+        assinador = AssinadorMock()
         self.maxDiff = None
         exemplo_path = Path(__file__).parent / "exemplos" / "PedidoEnvioRPS.xml"
-        exemplo_xml = parse(exemplo_path)
+        exemplo_xml = assinador.assinar_xml(fromstring(exemplo_path.read_text()))
 
-        pedido = PedidoEnvioRPS(
+        pedido = EnvioRPS(
             aliquota_servicos=0.05,
             codigo_servico=7617,
             data_emissao=date(2015, 1, 20),
@@ -37,22 +39,18 @@ class EnvioTest(TestCase):
             tipo_rps="RPS-M",
             tomador="12345678909",
             tributacao_rps="T",
-            valor_cofins_centavos=10,
-            valor_csll_centavos=10,
-            valor_deducoes_centavos=5000,
-            valor_inss_centavos=10,
-            valor_ir_centavos=10,
-            valor_pis_centavos=10,
-            valor_servicos_centavos=20500,
+            valor_cofins_centavos=1000,
+            valor_csll_centavos=1000,
+            valor_deducoes_centavos=500000,
+            valor_inss_centavos=1000,
+            valor_ir_centavos=1000,
+            valor_pis_centavos=1000,
+            valor_servicos_centavos=2050000,
         )
-        pedido_xml = pedido.gerar_xml(assinador=AssinadorMock())
-        pedido_str: str = tostring(pedido_xml, encoding=str)
-        exemplo_str: str = tostring(exemplo_xml, encoding=str)
-        pattern = r"<Assinador>.*</Assinador>"
-        pedido_str = re.sub(pattern, "", pedido_str)
-        exemplo_str = re.sub(pattern, "", exemplo_str)
-
-        self.assertEqual(pedido_str, exemplo_str)
+        pedido_xml = assinador.assinar_xml(pedido.gerar_xml(assinador=assinador))
+        assert_xml_iguais(
+            pedido_xml, exemplo_xml, ignorar_tags=["Assinatura", "Signature"]
+        )
         schema = XMLSchema(
             file=Path(__file__).parent / "xsds" / "PedidoEnvioRPS_v01.xsd"
         )

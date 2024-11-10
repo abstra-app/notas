@@ -1,12 +1,12 @@
 from .pedido import Pedido
 from .retorno import Retorno
 from dataclasses import dataclass
-from typing import Literal, Union
+from typing import Literal
 from lxml.etree import Element, fromstring
 from abstra_notas.validacoes.cpfcnpj import cpf_ou_cnpj, normalizar_cpf_ou_cnpj
-from .cliente import Cliente
 from abstra_notas.assinatura import Assinador
 import base64
+from .erro import Erro
 
 
 @dataclass
@@ -18,23 +18,16 @@ class RetornoCancelamentoNFe(Retorno):
         xml = fromstring(xml.encode("utf-8"))
         sucesso = xml.find(".//Sucesso").text
         if sucesso == "true":
-            return RetornoCancelamentoNFeSucesso(sucesso=True)
+            return RetornoCancelamentoNFe(sucesso=True)
         else:
-            return RetornoCancelamentoNFeErro(
-                sucesso=False,
+            raise ErroCancelamentoNFe(
                 codigo=int(xml.find(".//Codigo").text),
                 descricao=xml.find(".//Descricao").text,
             )
 
 
 @dataclass
-class RetornoCancelamentoNFeSucesso:
-    sucesso: bool
-
-
-@dataclass
-class RetornoCancelamentoNFeErro:
-    sucesso: bool
+class ErroCancelamentoNFe(Erro):
     codigo: int
     descricao: str
 
@@ -76,14 +69,5 @@ class CancelamentoNFe(Pedido):
         return base64.b64encode(signed_template).decode("ascii")
 
     @property
-    def classe_retorno(self):
-        return RetornoCancelamentoNFe
-
-    @property
     def remetente_tipo(self) -> Literal["CPF", "CNPJ"]:
         return cpf_ou_cnpj(self.remetente)
-
-    def executar(
-        self, cliente: Cliente
-    ) -> Union[RetornoCancelamentoNFeSucesso, RetornoCancelamentoNFeErro]:
-        return cliente.executar(self)

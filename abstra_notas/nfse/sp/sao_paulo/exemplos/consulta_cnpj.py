@@ -1,7 +1,7 @@
 from abstra_notas.nfse.sp.sao_paulo import (
     ConsultaCNPJ,
     Cliente,
-    RetornoConsultaCNPJ,
+    ErroConsultaCNPJ,
 )
 from dotenv import load_dotenv
 from os import getenv
@@ -18,11 +18,11 @@ pedido = ConsultaCNPJ(
     contribuinte=getenv("NFSE_CNPJ_CONTRIBUINTE"),
 )
 
-retorno: RetornoConsultaCNPJ = cliente.executar(pedido)
+retorno = cliente.consultar_cnpj(pedido)
 
-if retorno.sucesso:
+try:
     print(f"Inscrição Municipal: {retorno.inscricao_municipal}")
     print(f"Emite NFe: {retorno.emite_nfe}")
-else:
-    print(f"Código: {retorno.codigo}")
-    print(f"Descrição: {retorno.descricao}")
+except ErroConsultaCNPJ as e:
+    print(f"Código: {e.codigo}")
+    print(f"Descrição: {e.descricao}")
