@@ -39,12 +39,18 @@ class RetornoEnvioRps:
             )
         elif sucesso == "true":
             return RetornoEnvioRps(
-                chave_nfe_inscricao_prestador=xml.find(".//InscricaoPrestador").text,
-                chave_nfe_codigo_verificacao=xml.find(".//CodigoVerificacao").text,
-                chave_nfe_numero_nfe=xml.find(".//NumeroNFe").text,
-                chave_rps_inscricao_prestador=xml.find(".//InscricaoPrestador").text,
-                chave_rps_numero_rps=xml.find(".//NumeroRPS").text,
-                chave_rps_serie_rps=xml.find(".//SerieRPS").text,
+                chave_nfe_inscricao_prestador=xml.find(".//ChaveNFe")
+                .find(".//InscricaoPrestador")
+                .text,
+                chave_nfe_codigo_verificacao=xml.find(".//ChaveNFe")
+                .find(".//CodigoVerificacao")
+                .text,
+                chave_nfe_numero_nfe=xml.find(".//ChaveNFe").find(".//NumeroNFe").text,
+                chave_rps_inscricao_prestador=xml.find(".//ChaveRPS")
+                .find(".//InscricaoPrestador")
+                .text,
+                chave_rps_numero_rps=xml.find(".//ChaveRPS").find(".//NumeroRPS").text,
+                chave_rps_serie_rps=xml.find(".//ChaveRPS").find(".//SerieRPS").text,
             )
 
 
@@ -238,7 +244,7 @@ class RPS:
                 len(self.serie_rps) <= 5
             ), "A série do RPS deve ter no máximo 5 caracteres"
 
-    def gerar_string_xml(self, assinador: Assinador) -> Element:
+    def gerar_string_xml(self, assinador: Assinador) -> str:
         template = load_template("RPS")
         return template.render(
             inscricao_prestador=str(self.inscricao_prestador).zfill(8),

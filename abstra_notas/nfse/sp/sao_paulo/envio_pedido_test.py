@@ -3,6 +3,7 @@ from .envio_rps import EnvioRPS
 from pathlib import Path
 from lxml.etree import XMLSchema, fromstring
 from datetime import date
+from .cliente import ClienteMock
 import re
 from abstra_notas.assinatura import AssinadorMock
 from abstra_notas.validacoes.xml_iguais import assert_xml_iguais
@@ -53,7 +54,7 @@ class EnvioTest(TestCase):
         assert_xml_iguais(
             pedido_xml, exemplo_xml, ignorar_tags=["Assinatura", "Signature"]
         )
-        schema = XMLSchema(
-            file=Path(__file__).parent / "xsds" / "PedidoEnvioRPS_v01.xsd"
-        )
-        schema.assertValid(pedido_xml)
+
+        cliente = ClienteMock()
+        resultado = cliente.gerar_nota(pedido)
+        self.assertEqual(resultado.chave_rps_serie_rps, pedido.serie_rps)

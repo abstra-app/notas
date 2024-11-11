@@ -4,15 +4,10 @@ from cryptography.hazmat.primitives.serialization.pkcs12 import (
     load_key_and_certificates,
 )
 from cryptography.hazmat.backends import default_backend
-from cryptography.hazmat.primitives.asymmetric import rsa
-from cryptography.x509.oid import NameOID
-from cryptography import x509
-from os import getenv
 from pathlib import Path
 from tempfile import NamedTemporaryFile
 from lxml.etree import Element, tostring, fromstring, ElementBase
 import xmlsec
-import datetime
 
 
 class Assinador:
@@ -61,7 +56,7 @@ class Assinador:
         file.seek(0)
         return file
 
-    def assinar_xml(self, element: ElementBase) -> Element:
+    def assinar_xml(self, element: ElementBase) -> ElementBase:
         element = fromstring(tostring(element, encoding=str))
         key = xmlsec.Key.from_memory(
             self.private_key_pem_bytes,

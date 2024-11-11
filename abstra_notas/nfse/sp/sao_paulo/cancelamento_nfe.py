@@ -34,7 +34,7 @@ class ErroCancelamentoNFe(Erro):
 
 @dataclass
 class CancelamentoNFe(Pedido, Remessa):
-    transacao: str
+    transacao: bool
     inscricao_prestador: str
     numero_nfe: int
 
@@ -49,7 +49,7 @@ class CancelamentoNFe(Pedido, Remessa):
         xml = self.template.render(
             remetente=self.remetente,
             remetente_tipo=self.remetente_tipo,
-            transacao=self.transacao,
+            transacao=str(self.transacao).lower(),
             inscricao_prestador=self.inscricao_prestador,
             numero_nfe=self.numero_nfe,
             assinatura=self.assinatura(assinador),

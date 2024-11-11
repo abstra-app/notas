@@ -1,13 +1,13 @@
 from abc import ABC, abstractmethod
 from abstra_notas.assinatura import Assinador
-from .retorno import Retorno
+from lxml.etree import ElementBase
 from .templates import load_template
 from jinja2 import Template
 
 
 class Pedido(ABC):
     @abstractmethod
-    def gerar_xml(self, assinador: Assinador) -> str:
+    def gerar_xml(self, assinador: Assinador) -> ElementBase:
         raise NotImplementedError
 
     @property

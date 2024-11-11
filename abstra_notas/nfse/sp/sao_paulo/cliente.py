@@ -1,9 +1,9 @@
-from ....assinatura import Assinador
+from ....assinatura import Assinador, AssinadorMock
 from zeep.plugins import HistoryPlugin
 from zeep import Client, Transport, Settings
 from requests import Session
 from .pedido import Pedido
-from lxml.etree import tostring, fromstring
+from lxml.etree import tostring, fromstring, XMLSchema, ElementBase
 from pathlib import Path
 from tempfile import mktemp
 from .envio_rps import EnvioRPS, RetornoEnvioRps
@@ -17,7 +17,7 @@ class Cliente:
     def __init__(self, caminho_pfx: Path, senha_pfx: str):
         self.assinador = Assinador(caminho_pfx, senha_pfx)
 
-    def executar(self, pedido: Pedido) -> str:
+    def executar(self, pedido: Pedido) -> ElementBase:
         try:
             history = HistoryPlugin()
             keyfile = Path(mktemp())
@@ -52,3 +52,37 @@ class Cliente:
 
     def cancelar_nota(self, pedido: CancelamentoNFe) -> RetornoCancelamentoNFe:
         return RetornoCancelamentoNFe.ler_xml(self.executar(pedido))
+
+
+class ClienteMock(Cliente):
+    erro: bool
+
+    def __init__(self):
+        self.assinador = AssinadorMock()
+
+    def executar(self, pedido: Pedido) -> ElementBase:
+        xml = self.assinador.assinar_xml(pedido.gerar_xml(self.assinador))
+        pedido_schema_path = (
+            Path(__file__).parent
+            / "xsds"
+            / f"Pedido{pedido.__class__.__name__}_v01.xsd"
+        )
+        pedido_schema = XMLSchema(file=pedido_schema_path)
+        pedido_schema.assertValid(xml)
+
+        retorno_schema_path = (
+            Path(__file__).parent
+            / "xsds"
+            / f"Retorno{pedido.__class__.__name__}_v01.xsd"
+        )
+        retorno_schema = XMLSchema(file=retorno_schema_path)
+        retorno_path = (
+            Path(__file__).parent
+            / "exemplos"
+            / f"Retorno{pedido.__class__.__name__}.xml"
+        )
+        retorno = retorno_path.read_text()
+        retorno_xml = fromstring(retorno.encode("utf-8"))
+        retorno_schema.assertValid(retorno_xml)
+
+        return retorno_xml
