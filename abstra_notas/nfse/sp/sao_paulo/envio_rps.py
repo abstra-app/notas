@@ -19,11 +19,11 @@ from .erro import Erro
 @dataclass
 class RetornoEnvioRps:
     chave_nfe_inscricao_prestador: str
-    chave_nfe_numero_nfe: str
+    chave_nfe_numero_nfe: int
     chave_nfe_codigo_verificacao: str
     chave_rps_inscricao_prestador: str
     chave_rps_serie_rps: str
-    chave_rps_numero_rps: str
+    chave_rps_numero_rps: int
 
     @property
     def sucesso(self):
@@ -45,11 +45,15 @@ class RetornoEnvioRps:
                 chave_nfe_codigo_verificacao=xml.find(".//ChaveNFe")
                 .find(".//CodigoVerificacao")
                 .text,
-                chave_nfe_numero_nfe=xml.find(".//ChaveNFe").find(".//NumeroNFe").text,
+                chave_nfe_numero_nfe=int(
+                    xml.find(".//ChaveNFe").find(".//NumeroNFe").text
+                ),
                 chave_rps_inscricao_prestador=xml.find(".//ChaveRPS")
                 .find(".//InscricaoPrestador")
                 .text,
-                chave_rps_numero_rps=xml.find(".//ChaveRPS").find(".//NumeroRPS").text,
+                chave_rps_numero_rps=int(
+                    xml.find(".//ChaveRPS").find(".//NumeroRPS").text
+                ),
                 chave_rps_serie_rps=xml.find(".//ChaveRPS").find(".//SerieRPS").text,
             )
 

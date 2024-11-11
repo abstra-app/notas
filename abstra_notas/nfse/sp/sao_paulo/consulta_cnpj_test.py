@@ -1,5 +1,5 @@
 from unittest import TestCase
-from .consulta_cnpj import ConsultaCNPJ
+from .consulta_cnpj import ConsultaCNPJ, RetornoConsultaCNPJ
 from pathlib import Path
 from lxml.etree import XMLSchema, fromstring
 from datetime import date
@@ -28,4 +28,12 @@ class ConsultaTest(TestCase):
 
         cliente = ClienteMock()
         resultado = cliente.consultar_cnpj(pedido)
-        self.assertEqual(resultado.emite_nfe, True)
+
+        self.assertEqual(
+            resultado,
+            RetornoConsultaCNPJ(
+                emite_nfe=True,
+                inscricao_municipal="39616924",
+                sucesso=True,
+            ),
+        )

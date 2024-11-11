@@ -1,5 +1,5 @@
 from unittest import TestCase
-from .envio_rps import EnvioRPS
+from .envio_rps import EnvioRPS, RetornoEnvioRps
 from pathlib import Path
 from lxml.etree import XMLSchema, fromstring
 from datetime import date
@@ -56,5 +56,16 @@ class EnvioTest(TestCase):
         )
 
         cliente = ClienteMock()
+
         resultado = cliente.gerar_nota(pedido)
-        self.assertEqual(resultado.chave_rps_serie_rps, pedido.serie_rps)
+        self.assertEqual(
+            resultado,
+            RetornoEnvioRps(
+                chave_nfe_codigo_verificacao="PH5GL6XU",
+                chave_nfe_inscricao_prestador="39616924",
+                chave_nfe_numero_nfe=17943,
+                chave_rps_inscricao_prestador="39616924",
+                chave_rps_numero_rps=4105,
+                chave_rps_serie_rps="BB",
+            ),
+        )

@@ -1,5 +1,5 @@
 from unittest import TestCase
-from .cancelamento_nfe import CancelamentoNFe
+from .cancelamento_nfe import CancelamentoNFe, RetornoCancelamentoNFe
 from pathlib import Path
 from lxml.etree import fromstring
 from .cliente import ClienteMock
@@ -30,4 +30,10 @@ class CancelamentoTest(TestCase):
 
         cliente = ClienteMock()
         resultado = cliente.cancelar_nota(pedido)
-        self.assertEqual(resultado.sucesso, True)
+
+        self.assertEqual(
+            resultado,
+            RetornoCancelamentoNFe(
+                sucesso=True,
+            ),
+        )
