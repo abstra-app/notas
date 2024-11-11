@@ -10,4 +10,4 @@ Biblioteca de emissão de notas fiscais eletrônicas de serviço para empresas d
 
 ## Listagem de cidades
 - [São Paulo (Capital)](/abstra_notas/nfse/sp/sao_paulo/README.md)
-- Sente falta de um estado? [Peça](https://github.com/abstra-app/notas/issues/new) ou [contribua](/CONTRIBUTING.md)!
+- Sente falta de alguma cidade? [Peça](https://github.com/abstra-app/notas/issues/new) ou [contribua](/CONTRIBUTING.md)!
