@@ -16,6 +16,7 @@ from abstra_notas.assinatura import Assinador
 from .erro import Erro
 
 
+@dataclass
 class RetornoEnvioRps:
     chave_nfe_inscricao_prestador: str
     chave_nfe_numero_nfe: str
