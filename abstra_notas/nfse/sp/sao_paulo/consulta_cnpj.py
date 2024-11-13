@@ -40,12 +40,7 @@ class ConsultaCNPJ(Pedido, Remessa):
     contribuinte: str
 
     def __post_init__(self):
-        self.remetente = normalizar_cpf_ou_cnpj(self.remetente)
         self.contribuinte = normalizar_cpf_ou_cnpj(self.contribuinte)
-
-    @property
-    def classe_retorno(self) -> RetornoConsultaCNPJ:
-        return RetornoConsultaCNPJ
 
     def gerar_xml(self, assinador: Assinador) -> Element:
         xml = self.template.render(
@@ -55,10 +50,6 @@ class ConsultaCNPJ(Pedido, Remessa):
             remetente_tipo=self.remetente_tipo,
         )
         return fromstring(xml)
-
-    @property
-    def remetente_tipo(self) -> Literal["CPF", "CNPJ"]:
-        return cpf_ou_cnpj(self.remetente)
 
     @property
     def contribuinte_tipo(self) -> Literal["CPF", "CNPJ"]:

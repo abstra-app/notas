@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<p1:PedidoConsultaNFe xmlns:p1="http://www.prefeitura.sp.gov.br/nfe" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Cabecalho Versao="1">
+    <CPFCNPJRemetente>
+      <{{remetente_tipo}}>{{remetente}}</{{remetente_tipo}}>
+    </CPFCNPJRemetente>
+  </Cabecalho>
+  <Detalhe>
+    <ChaveNFe>
+      <InscricaoPrestador>{{chave_nfe_inscricao_prestador}}</InscricaoPrestador>
+      <NumeroNFe>{{chave_nfe_numero_nfe}}</NumeroNFe>
+      {% if chave_nfe_codigo_verificacao %}
+        <CodigoVerificacao>{{chave_nfe_codigo_verificacao}}</CodigoVerificacao>
+      {% endif %}
+    </ChaveNFe>
+  </Detalhe>
+  <Detalhe>
+    <ChaveRPS>
+      <InscricaoPrestador>{{chave_rps_inscricao_prestador}}</InscricaoPrestador>
+      <SerieRPS>{{chave_rps_serie_rps}}</SerieRPS>
+      <NumeroRPS>{{chave_rps_numero_rps}}</NumeroRPS>
+    </ChaveRPS>
+  </Detalhe>
+</p1:PedidoConsultaNFe>

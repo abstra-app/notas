@@ -17,3 +17,7 @@ class Pedido(ABC):
     @property
     def metodo(self) -> str:
         return self.__class__.__name__.replace("Pedido", "")
+
+    @property
+    def classe_retorno(self):
+        return f"Retorno{self.__class__.__name__}"

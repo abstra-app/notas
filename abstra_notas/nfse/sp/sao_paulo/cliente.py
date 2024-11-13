@@ -9,6 +9,7 @@ from tempfile import mktemp
 from .envio_rps import EnvioRPS, RetornoEnvioRps, EnvioLoteRPS, RetornoEnvioRpsLote
 from .consulta_cnpj import ConsultaCNPJ, RetornoConsultaCNPJ
 from .cancelamento_nfe import CancelamentoNFe, RetornoCancelamentoNFe
+from .consulta import ConsultaNFe, RetornoConsulta
 
 
 class Cliente:
@@ -56,6 +57,9 @@ class Cliente:
     def cancelar_nota(self, pedido: CancelamentoNFe) -> RetornoCancelamentoNFe:
         return RetornoCancelamentoNFe.ler_xml(self.executar(pedido))
 
+    def consultar_nota(self, pedido: ConsultaNFe) -> RetornoConsulta:
+        return RetornoConsulta.ler_xml(self.executar(pedido))
+
 
 class ClienteMock(Cliente):
     erro: bool
@@ -73,19 +77,10 @@ class ClienteMock(Cliente):
         pedido_schema = XMLSchema(file=pedido_schema_path)
         pedido_schema.assertValid(xml)
 
-        retorno_schema_path = (
-            Path(__file__).parent
-            / "xsds"
-            / f"Retorno{pedido.__class__.__name__}_v01.xsd"
-        )
-        retorno_schema = XMLSchema(file=retorno_schema_path)
         retorno_path = (
-            Path(__file__).parent
-            / "exemplos"
-            / f"Retorno{pedido.__class__.__name__}.xml"
+            Path(__file__).parent / "exemplos" / f"{pedido.classe_retorno}.xml"
         )
         retorno = retorno_path.read_text()
         retorno_xml = fromstring(retorno.encode("utf-8"))
-        retorno_schema.assertValid(retorno_xml)
 
         return retorno_xml

@@ -272,7 +272,7 @@ class RPS:
         ), "A alíquota de serviços deve ser um valor entre 0 e 1"
 
         if isinstance(self.codigo_servico, int):
-            self.codigo_servico = str(self.codigo_servico).zfill(5)
+            self.codigo_servico = str(self.codigo_servico).zfill(4)
         elif isinstance(self.codigo_servico, str):
             assert len(self.codigo_servico) in [
                 4,

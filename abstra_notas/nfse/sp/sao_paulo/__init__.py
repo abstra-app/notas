@@ -1,32 +1,28 @@
 from .envio_rps import (
     EnvioRPS,
-    ErroEnvioRps,
     RetornoEnvioRps,
     RPS,
     EnvioLoteRPS,
     RetornoEnvioRpsLote,
 )
-from .consulta_cnpj import ConsultaCNPJ, RetornoConsultaCNPJ, ErroConsultaCNPJ
+from .consulta_cnpj import ConsultaCNPJ, RetornoConsultaCNPJ
 from .cancelamento_nfe import (
     CancelamentoNFe,
     RetornoCancelamentoNFe,
-    ErroCancelamentoNFe,
 )
+from .erro import Erro
 from .cliente import Cliente
 
 __all__ = [
     # EnvioRPS
     "EnvioRPS",
     "RetornoEnvioRps",
-    "ErroEnvioRps",
     # ConsultaCNPJ
     "ConsultaCNPJ",
     "RetornoConsultaCNPJ",
-    "ErroConsultaCNPJ",
     # CancelamentoNFe
     "CancelamentoNFe",
     "RetornoCancelamentoNFe",
-    "ErroCancelamentoNFe",
     # Cliente
     "Cliente",
     # EnvioLoteRPS
@@ -34,4 +30,6 @@ __all__ = [
     "RetornoEnvioRpsLote",
     # RPS
     "RPS",
+    # Erro
+    "Erro",
 ]
