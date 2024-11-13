@@ -118,11 +118,11 @@ class RPS:
 
     valor_servicos_centavos: int
     valor_deducoes_centavos: int
-    valor_pis_centavos: int
-    valor_cofins_centavos: int
-    valor_inss_centavos: int
-    valor_ir_centavos: int
-    valor_csll_centavos: int
+    valor_pis_centavos: Optional[int]
+    valor_cofins_centavos: Optional[int]
+    valor_inss_centavos: Optional[int]
+    valor_ir_centavos: Optional[int]
+    valor_csll_centavos: Optional[int]
 
     codigo_servico: int
     """
@@ -192,53 +192,53 @@ class RPS:
         assert isinstance(
             self.valor_servicos_centavos, int
         ), "O valor de serviços deve ser um valor decimal"
-        assert isinstance(
+        assert self.valor_deducoes_centavos is None or isinstance(
             self.valor_deducoes_centavos, int
         ), "O valor de deduções deve ser um valor decimal"
-        assert isinstance(
+        assert self.valor_pis_centavos is None or isinstance(
             self.valor_pis_centavos, int
         ), "O valor de PIS deve ser um valor decimal"
-        assert isinstance(
+        assert self.valor_cofins_centavos is None or isinstance(
             self.valor_cofins_centavos, int
         ), "O valor de COFINS deve ser um valor decimal"
-        assert isinstance(
+        assert self.valor_inss_centavos is None or isinstance(
             self.valor_inss_centavos, int
         ), "O valor de INSS deve ser um valor decimal"
-        assert isinstance(
+        assert self.valor_ir_centavos is None or isinstance(
             self.valor_ir_centavos, int
         ), "O valor de IR deve ser um valor decimal"
-        assert isinstance(
+        assert self.valor_csll_centavos is None or isinstance(
             self.valor_csll_centavos, int
         ), "O valor de CSLL deve ser um valor decimal"
         assert (
             self.valor_servicos_centavos >= 0
         ), "O valor de serviços deve ser maior ou igual a zero"
         assert (
-            self.valor_deducoes_centavos >= 0
+            self.valor_deducoes_centavos is None or self.valor_deducoes_centavos >= 0
         ), "O valor de deduções deve ser maior ou igual a zero"
         assert (
-            self.valor_pis_centavos >= 0
+            self.valor_pis_centavos is None or self.valor_pis_centavos >= 0
         ), "O valor de PIS deve ser maior ou igual a zero"
         assert (
-            self.valor_cofins_centavos >= 0
+            self.valor_cofins_centavos is None or self.valor_cofins_centavos >= 0
         ), "O valor de COFINS deve ser maior ou igual a zero"
         assert (
-            self.valor_inss_centavos >= 0
+            self.valor_inss_centavos is None or self.valor_inss_centavos >= 0
         ), "O valor de INSS deve ser maior ou igual a zero"
         assert (
-            self.valor_ir_centavos >= 0
+            self.valor_ir_centavos is None or self.valor_ir_centavos >= 0
         ), "O valor de IR deve ser maior ou igual a zero"
         assert (
-            self.valor_csll_centavos >= 0
+            self.valor_csll_centavos is None or self.valor_csll_centavos >= 0
         ), "O valor de CSLL deve ser maior ou igual a zero"
         assert (
             self.valor_servicos_centavos
-            - self.valor_deducoes_centavos
-            - self.valor_pis_centavos
-            - self.valor_cofins_centavos
-            - self.valor_inss_centavos
-            - self.valor_ir_centavos
-            - self.valor_csll_centavos
+            - (self.valor_deducoes_centavos or 0)
+            - (self.valor_pis_centavos or 0)
+            - (self.valor_cofins_centavos or 0)
+            - (self.valor_inss_centavos or 0)
+            - (self.valor_ir_centavos or 0)
+            - (self.valor_csll_centavos or 0)
             >= 0
         ), "A soma dos valores não pode ser negativa"
 
@@ -259,12 +259,24 @@ class RPS:
             status_rps=self.status_rps,
             tributacao_rps=self.tributacao_rps,
             valor_servicos=f"{self.valor_servicos_centavos / 100:.2f}",
-            valor_deducoes=f"{self.valor_deducoes_centavos / 100:.2f}",
-            valor_pis=f"{self.valor_pis_centavos / 100:.2f}",
-            valor_cofins=f"{self.valor_cofins_centavos / 100:.2f}",
-            valor_inss=f"{self.valor_inss_centavos / 100:.2f}",
-            valor_ir=f"{self.valor_ir_centavos / 100:.2f}",
-            valor_csll=f"{self.valor_csll_centavos / 100:.2f}",
+            valor_deducoes=f"{self.valor_deducoes_centavos / 100:.2f}"
+            if self.valor_deducoes_centavos is not None
+            else None,
+            valor_pis=f"{self.valor_pis_centavos / 100:.2f}"
+            if self.valor_pis_centavos is not None
+            else None,
+            valor_cofins=f"{self.valor_cofins_centavos / 100:.2f}"
+            if self.valor_cofins_centavos is not None
+            else None,
+            valor_inss=f"{self.valor_inss_centavos / 100:.2f}"
+            if self.valor_inss_centavos is not None
+            else None,
+            valor_ir=f"{self.valor_ir_centavos / 100:.2f}"
+            if self.valor_ir_centavos is not None
+            else None,
+            valor_csll=f"{self.valor_csll_centavos / 100:.2f}"
+            if self.valor_csll_centavos is not None
+            else None,
             codigo_servico=self.codigo_servico,
             aliquota_servicos=self.aliquota_servicos,
             iss_retido=str(self.iss_retido).lower(),

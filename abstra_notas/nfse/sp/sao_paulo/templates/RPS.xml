@@ -10,12 +10,24 @@
     <StatusRPS>{{ status_rps }}</StatusRPS>
     <TributacaoRPS>{{ tributacao_rps }}</TributacaoRPS>
     <ValorServicos>{{ valor_servicos }}</ValorServicos>
-    <ValorDeducoes>{{ valor_deducoes }}</ValorDeducoes>
-    <ValorPIS>{{ valor_pis }}</ValorPIS>
-    <ValorCOFINS>{{ valor_cofins }}</ValorCOFINS>
-    <ValorINSS>{{ valor_inss }}</ValorINSS>
-    <ValorIR>{{ valor_ir }}</ValorIR>
-    <ValorCSLL>{{ valor_csll }}</ValorCSLL>
+    {% if valor_deducoes %}
+        <ValorDeducoes>{{ valor_deducoes }}</ValorDeducoes>
+    {% endif %}
+    {% if valor_pis %}
+        <ValorPIS>{{ valor_pis }}</ValorPIS>
+    {% endif %}
+    {% if valor_cofins %}
+        <ValorCOFINS>{{ valor_cofins }}</ValorCOFINS>
+    {% endif %}
+    {% if valor_inss %}
+        <ValorINSS>{{ valor_inss }}</ValorINSS>
+    {% endif %}
+    {% if valor_ir %}
+        <ValorIR>{{ valor_ir }}</ValorIR>
+    {% endif %}
+    {% if valor_csll %}
+        <ValorCSLL>{{ valor_csll }}</ValorCSLL>
+    {% endif %}
     <CodigoServico>{{ codigo_servico }}</CodigoServico>
     <AliquotaServicos>{{ aliquota_servicos }}</AliquotaServicos>
     <ISSRetido>{{ iss_retido }}</ISSRetido>
