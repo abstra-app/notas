@@ -3,7 +3,7 @@ from .envio_rps import (
     ErroEnvioRps,
     RetornoEnvioRps,
     RPS,
-    EnvioLoteRps,
+    EnvioLoteRPS,
     RetornoEnvioRpsLote,
 )
 from .consulta_cnpj import ConsultaCNPJ, RetornoConsultaCNPJ, ErroConsultaCNPJ
@@ -29,8 +29,8 @@ __all__ = [
     "ErroCancelamentoNFe",
     # Cliente
     "Cliente",
-    # EnvioLoteRps
-    "EnvioLoteRps",
+    # EnvioLoteRPS
+    "EnvioLoteRPS",
     "RetornoEnvioRpsLote",
     # RPS
     "RPS",

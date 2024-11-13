@@ -540,7 +540,7 @@ class RetornoEnvioRpsLote(Retorno):
 
 
 @dataclass
-class EnvioLoteRps(Pedido, Remessa):
+class EnvioLoteRPS(Pedido, Remessa):
     transacao: bool
     data_inicio_periodo_transmitido: date
     data_fim_periodo_transmitido: date

@@ -1,5 +1,5 @@
 from unittest import TestCase
-from .envio_rps import RPS, EnvioLoteRps, RetornoEnvioRpsLote, ChaveNFeRPS
+from .envio_rps import RPS, EnvioLoteRPS, RetornoEnvioRpsLote, ChaveNFeRPS
 from pathlib import Path
 from lxml.etree import fromstring
 from datetime import date
@@ -95,7 +95,7 @@ class EnvioLoteTest(TestCase):
             fromstring(exemplo_path.read_text(encoding="utf-8"))
         )
 
-        pedido = EnvioLoteRps(
+        pedido = EnvioLoteRPS(
             **input_exemplo,
         )
         pedido_xml = assinador.assinar_xml(pedido.gerar_xml(assinador=assinador))
