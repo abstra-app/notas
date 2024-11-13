@@ -31,9 +31,17 @@
     <CodigoServico>{{ codigo_servico }}</CodigoServico>
     <AliquotaServicos>{{ aliquota_servicos }}</AliquotaServicos>
     <ISSRetido>{{ iss_retido }}</ISSRetido>
-    <CPFCNPJTomador>
-        <{{ tomador_tipo }}>{{ tomador }}</{{ tomador_tipo }}>
-    </CPFCNPJTomador>
+    {% if tomador %}
+        <CPFCNPJTomador>
+            <{{ tomador_tipo }}>{{ tomador }}</{{ tomador_tipo }}>
+        </CPFCNPJTomador>
+    {% endif %}
+    {% if inscricao_municipal_tomador %}
+        <InscricaoMunicipalTomador>{{ inscricao_municipal_tomador }}</InscricaoMunicipalTomador>
+    {% endif %}
+    {% if inscricao_estadual_tomador %}
+        <InscricaoEstadualTomador>{{ inscricao_estadual_tomador }}</InscricaoEstadualTomador>
+    {% endif %}
     <RazaoSocialTomador>{{ razao_social_tomador }}</RazaoSocialTomador>
     <EnderecoTomador>
         {% if endereco_tipo_logradouro %}
@@ -69,5 +77,43 @@
         {% endif %}
     </EnderecoTomador>
     <EmailTomador>{{ email_tomador }}</EmailTomador>
+    {% if intermediario %}
+        <CPFCNPJIntermediario>
+            <{{intermediario_tipo}}>{{ intermediario }}</{{intermediario_tipo}}>
+        </CPFCNPJIntermediario>
+    {% endif %}
+    {% if inscricao_municipal_intermediario %}
+        <InscricaoMunicipalIntermediario>{{ inscricao_municipal_intermediario }}</InscricaoMunicipalIntermediario>
+    {% endif %}
+    {% if iss_retido_intermediario %}
+        <ISSRetidoIntermediario>{{ iss_retido_intermediario }}</ISSRetidoIntermediario>
+    {% endif %}
+    {% if email_intermediario %}
+        <EmailIntermediario>{{ email_intermediario }}</EmailIntermediario>
+    {% endif %}
     <Discriminacao>{{ discriminacao }}</Discriminacao>
+    {% if valor_carga_tributaria %}
+        <ValorCargaTributaria>{{ valor_carga_tributaria }}</ValorCargaTributaria>
+    {% endif %}
+    {% if percentual_carga_tributaria %}
+        <PercentualCargaTributaria>{{ percentual_carga_tributaria }}</PercentualCargaTributaria>
+    {% endif %}
+    {% if fonte_carga_tributaria %}
+        <FonteCargaTributaria>{{ fonte_carga_tributaria }}</FonteCargaTributaria>
+    {% endif %}
+    {% if codigo_cei %}
+        <CodigoCEI>{{ codigo_cei }}</CodigoCEI>
+    {% endif %}
+    {% if matricula_obra %}
+        <MatriculaObra>{{ matricula_obra }}</MatriculaObra>
+    {% endif %}
+    {% if municipio_prestacao %}
+        <MunicipioPrestacao>{{ municipio_prestacao }}</MunicipioPrestacao>
+    {% endif %}
+    {% if numero_encapsulamento %}
+        <NumeroEncapsulamento>{{ numero_encapsulamento }}</NumeroEncapsulamento>
+    {% endif %}
+    {% if valor_total_recebido %}
+        <ValorTotalRecebido>{{ valor_total_recebido }}</ValorTotalRecebido>
+    {% endif %}
 </RPS>

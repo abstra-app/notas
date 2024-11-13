@@ -88,6 +88,7 @@ class RPS:
     """
 
     data_emissao: date
+    discriminacao: str
     status_rps: Literal["N", "C"]
     tributacao_rps: Literal["T", "F", "A", "B", "D", "M", "N", "R", "S", "X", "V", "P"]
     """
@@ -116,46 +117,112 @@ class RPS:
     P: Exportação de Serviços
     """
 
-    valor_servicos_centavos: int
-    valor_deducoes_centavos: int
-    valor_pis_centavos: Optional[int]
-    valor_cofins_centavos: Optional[int]
-    valor_inss_centavos: Optional[int]
-    valor_ir_centavos: Optional[int]
-    valor_csll_centavos: Optional[int]
-
     codigo_servico: int
     """
     Informe o código do serviço do RPS. Este código deve pertencer à lista de serviços.
     """
 
     aliquota_servicos: float
+    """
+    Valor percentual da alíquota de serviços entre 0 e 1.
+    """
     iss_retido: bool
-    tomador: str
-    razao_social_tomador: str
 
-    email_tomador: str
-    discriminacao: str
+    valor_servicos_centavos: int
+    valor_deducoes_centavos: int
 
-    serie_rps: Optional[str] = None
+    serie_rps: str
     """
     Série do RPS com 5 posições (caracteres). Completar com espaços em branco à direita caso seja necessário.
 
     Atenção: Não utilize espaços à esquerda. O conteúdo deverá estar alinhado à esquerda. 
     """
 
+    valor_pis_centavos: Optional[int] = None
+    valor_cofins_centavos: Optional[int] = None
+    valor_inss_centavos: Optional[int] = None
+    valor_ir_centavos: Optional[int] = None
+    valor_csll_centavos: Optional[int] = None
+    valor_carga_tributaria_centavos: Optional[int] = None
+    valor_total_recebido_centavos: Optional[int] = None
+
+    tomador: Optional[str] = None
+    """
+    CPF ou CNPJ do tomador. Qualquer formato é aceito, ex: 00000000000, 00.000.000/0000-00.
+    """
+    inscricao_municipal_tomador: Optional[str] = None
+    """
+    Este elemento só deverá ser preenchido para tomadores no município de São Paulo (CCM).
+    
+    CCM: Cadastro de Contribuintes Mobiliários.
+    """
+
+    inscricao_estadual_tomador: Optional[str] = None
+
+    razao_social_tomador: Optional[str] = None
+
+    email_tomador: Optional[str] = None
+
     endereco_tipo_logradouro: Optional[TipoLogradouro] = None
     endereco_logradouro: Optional[str] = None
     endereco_numero: Optional[str] = None
     endereco_complemento: Optional[str] = None
-    endereco_bairro: Optional[str] = None
+    endereco_uf: Optional[UF] = None
     endereco_cidade: Optional[int] = None
     """
     Código da cidade. Pode ser obtido em:
+
     https://servicodados.ibge.gov.br/api/v1/localidades/municipios
     """
-    endereco_uf: Optional[UF] = None
+    endereco_bairro: Optional[str] = None
     endereco_cep: Optional[str] = None
+
+    intermediario: Optional[str] = None
+    """
+    CPF ou CNPJ do intermediário. Qualquer formato é aceito, ex: 00000000000, 00.000.000/0000-00.
+    """
+
+    inscricao_municipal_intermediario: Optional[str] = None
+    """
+    Este elemento só deverá ser preenchido para intermediários no município de São Paulo (CCM).
+    """
+
+    iss_retido_intermediario: Optional[bool] = None
+    email_intermediario: Optional[str] = None
+
+    percentual_carga_tributaria: Optional[float] = None
+    """
+    Valor percentual da carga tributária entre 0 e 1.
+    """
+
+    fonte_carga_tributaria: Optional[str] = None
+    """
+    Fonte da carga tributária. Máximo de 10 caracteres.
+    """
+
+    codigo_cei: Optional[int] = None
+    """
+    Cadastro Específico do INSS.
+    """
+
+    matricula_obra: Optional[int] = None
+    """
+    Número de matrícula de obra.
+    """
+
+    municipio_prestacao: Optional[int] = None
+    """
+    Código do município onde o serviço foi prestado.
+
+    Codigo do municipio pode ser obtido em:
+
+    https://servicodados.ibge.gov.br/api/v1/localidades/municipios
+    """
+
+    numero_encapsulamento: Optional[int] = None
+    """
+    Código de encapsulamento de notas dedutoras.
+    """
 
     def __post_init__(self):
         if self.endereco_cep is not None:
@@ -168,7 +235,8 @@ class RPS:
                 uf_str = self.endereco_uf.value
             self.endereco_uf = UF(normalizar_uf(uf_str))
 
-        self.tomador = normalizar_cpf_ou_cnpj(self.tomador)
+        if self.tomador is not None:
+            self.tomador = normalizar_cpf_ou_cnpj(self.tomador)
 
         if self.endereco_cidade is not None:
             assert validar_codigo_cidade(
@@ -186,51 +254,45 @@ class RPS:
         # assert (
         #     self.codigo_servico in codigos_de_servico_validos
         # ), f"Código de serviço inválido, os códigos válidos são: {codigos_de_servico_validos}"
-        assert validar_email(
+        assert self.email_tomador is None or validar_email(
             self.email_tomador
         ), f"Email do tomador com formato inválido: {self.email_tomador}"
-        assert isinstance(
-            self.valor_servicos_centavos, int
-        ), "O valor de serviços deve ser um valor decimal"
-        assert self.valor_deducoes_centavos is None or isinstance(
-            self.valor_deducoes_centavos, int
-        ), "O valor de deduções deve ser um valor decimal"
-        assert self.valor_pis_centavos is None or isinstance(
-            self.valor_pis_centavos, int
-        ), "O valor de PIS deve ser um valor decimal"
-        assert self.valor_cofins_centavos is None or isinstance(
-            self.valor_cofins_centavos, int
-        ), "O valor de COFINS deve ser um valor decimal"
-        assert self.valor_inss_centavos is None or isinstance(
-            self.valor_inss_centavos, int
-        ), "O valor de INSS deve ser um valor decimal"
-        assert self.valor_ir_centavos is None or isinstance(
-            self.valor_ir_centavos, int
-        ), "O valor de IR deve ser um valor decimal"
-        assert self.valor_csll_centavos is None or isinstance(
-            self.valor_csll_centavos, int
-        ), "O valor de CSLL deve ser um valor decimal"
         assert (
-            self.valor_servicos_centavos >= 0
-        ), "O valor de serviços deve ser maior ou igual a zero"
+            isinstance(self.valor_servicos_centavos, int)
+            and self.valor_servicos_centavos >= 0
+        ), "O valor de serviços deve ser um valor decimal maior ou igual a zero"
+        assert self.valor_deducoes_centavos is None or (
+            isinstance(self.valor_deducoes_centavos, int)
+            and self.valor_deducoes_centavos >= 0
+        ), "O valor de deduções deve ser um valor decimal maior ou igual a zero"
+        assert self.valor_pis_centavos is None or (
+            isinstance(self.valor_pis_centavos, int) and self.valor_pis_centavos >= 0
+        ), "O valor de PIS deve ser um valor decimal maior ou igual a zero"
+        assert self.valor_cofins_centavos is None or (
+            isinstance(self.valor_cofins_centavos, int)
+            and self.valor_cofins_centavos >= 0
+        ), "O valor de COFINS deve ser um valor decimal maior ou igual a zero"
+        assert self.valor_inss_centavos is None or (
+            isinstance(self.valor_inss_centavos, int) and self.valor_inss_centavos >= 0
+        ), "O valor de INSS deve ser um valor decimal maior ou igual a zero"
+        assert self.valor_ir_centavos is None or (
+            isinstance(self.valor_ir_centavos, int) and self.valor_ir_centavos >= 0
+        ), "O valor de IR deve ser um valor decimal maior ou igual a zero"
+        assert self.valor_csll_centavos is None or (
+            isinstance(self.valor_csll_centavos, int) and self.valor_csll_centavos >= 0
+        ), "O valor de CSLL deve ser um valor decimal maior ou igual a zero"
+        assert self.valor_carga_tributaria_centavos is None or (
+            isinstance(self.valor_carga_tributaria_centavos, int)
+            and self.valor_carga_tributaria_centavos >= 0
+        ), "O valor da carga tributária deve ser um valor decimal maior ou igual a zero"
+        assert self.valor_total_recebido_centavos is None or (
+            isinstance(self.valor_total_recebido_centavos, int)
+            and self.valor_total_recebido_centavos >= 0
+        ), "O valor total recebido deve ser um valor decimal maior ou igual a zero"
         assert (
-            self.valor_deducoes_centavos is None or self.valor_deducoes_centavos >= 0
-        ), "O valor de deduções deve ser maior ou igual a zero"
-        assert (
-            self.valor_pis_centavos is None or self.valor_pis_centavos >= 0
-        ), "O valor de PIS deve ser maior ou igual a zero"
-        assert (
-            self.valor_cofins_centavos is None or self.valor_cofins_centavos >= 0
-        ), "O valor de COFINS deve ser maior ou igual a zero"
-        assert (
-            self.valor_inss_centavos is None or self.valor_inss_centavos >= 0
-        ), "O valor de INSS deve ser maior ou igual a zero"
-        assert (
-            self.valor_ir_centavos is None or self.valor_ir_centavos >= 0
-        ), "O valor de IR deve ser maior ou igual a zero"
-        assert (
-            self.valor_csll_centavos is None or self.valor_csll_centavos >= 0
-        ), "O valor de CSLL deve ser maior ou igual a zero"
+            self.valor_carga_tributaria_centavos is None
+            or self.valor_carga_tributaria_centavos >= 0
+        ), "O valor da carga tributária deve ser maior ou igual a zero"
         assert (
             self.valor_servicos_centavos
             - (self.valor_deducoes_centavos or 0)
@@ -248,6 +310,46 @@ class RPS:
                 len(self.serie_rps) <= 5
             ), "A série do RPS deve ter no máximo 5 caracteres"
 
+        if self.inscricao_municipal_tomador is not None:
+            assert (
+                self.inscricao_municipal_tomador.isdigit()
+                and len(self.inscricao_municipal_tomador) == 8
+            ), "Inscrição municipal do tomador deve ter 8 dígitos"
+            assert (
+                self.tomador is not None
+            ), "Ao preencher a inscrição municipal do tomador, o CPF ou CNPJ do tomador deve ser preenchido"
+
+        if self.inscricao_municipal_intermediario is not None:
+            assert (
+                self.inscricao_municipal_intermediario.isdigit()
+                and len(self.inscricao_municipal_intermediario) == 8
+            ), "Inscrição municipal do intermediário deve ter 8 dígitos"
+            assert (
+                self.intermediario is not None
+            ), "Ao preencher a inscrição municipal do intermediário, o CPF ou CNPJ do intermediário deve ser preenchido"
+
+        if self.intermediario is not None:
+            assert (
+                self.iss_retido_intermediario is not None
+            ), "Ao preencher o intermediário, o ISS retido do intermediário deve ser preenchido"
+
+        assert self.email_intermediario is None or validar_email(
+            self.email_intermediario
+        ), f"Email do intermediário com formato inválido: {self.email_intermediario}"
+
+        assert (
+            self.percentual_carga_tributaria is None
+            or isinstance(self.percentual_carga_tributaria, float)
+            and self.percentual_carga_tributaria >= 0
+            and self.percentual_carga_tributaria <= 1
+        ), "O percentual da carga tributária deve ser um valor entre 0 e 1"
+
+        assert (
+            self.fonte_carga_tributaria is None
+            or isinstance(self.fonte_carga_tributaria, str)
+            and len(self.fonte_carga_tributaria) <= 10
+        ), "A fonte da carga tributária deve ter no máximo 10 caracteres"
+
     def gerar_string_xml(self, assinador: Assinador) -> str:
         template = load_template("RPS")
         return template.render(
@@ -257,6 +359,7 @@ class RPS:
             tipo_rps=self.tipo_rps,
             data_emissao=self.data_emissao,
             status_rps=self.status_rps,
+            inscricao_estadual_tomador=self.inscricao_estadual_tomador,
             tributacao_rps=self.tributacao_rps,
             valor_servicos=f"{self.valor_servicos_centavos / 100:.2f}",
             valor_deducoes=f"{self.valor_deducoes_centavos / 100:.2f}"
@@ -283,22 +386,44 @@ class RPS:
             tomador=self.tomador,
             tomador_tipo=self.tomador_tipo,
             razao_social_tomador=self.razao_social_tomador,
-            endereco_tipo_logradouro=self.endereco_tipo_logradouro.value.capitalize(),
+            endereco_tipo_logradouro=self.endereco_tipo_logradouro.value.capitalize()
+            if self.endereco_tipo_logradouro is not None
+            else None,
             endereco_logradouro=self.endereco_logradouro,
             endereco_numero=self.endereco_numero,
             endereco_complemento=self.endereco_complemento,
             endereco_bairro=self.endereco_bairro,
             endereco_cidade=self.endereco_cidade,
-            endereco_uf=self.endereco_uf.value,
+            endereco_uf=self.endereco_uf.value
+            if self.endereco_uf is not None
+            else None,
             endereco_cep=self.endereco_cep,
             email_tomador=self.email_tomador,
             discriminacao=self.discriminacao,
             assinatura=self.assinatura(assinador),
+            intermediario=self.intermediario,
+            intermediario_tipo=self.intermediario_tipo,
+            inscricao_municipal_intermediario=self.inscricao_municipal_intermediario,
+            iss_retido_intermediario=self.iss_retido_intermediario,
+            email_intermediario=self.email_intermediario,
+            percentual_carga_tributaria=self.percentual_carga_tributaria,
+            fonte_carga_tributaria=self.fonte_carga_tributaria,
+            codigo_cei=self.codigo_cei,
+            matricula_obra=self.matricula_obra,
+            municipio_prestacao=self.municipio_prestacao,
+            numero_encapsulamento=self.numero_encapsulamento,
+            inscricao_municipal_tomador=self.inscricao_municipal_tomador,
+            valor_carga_tributaria=f"{self.valor_carga_tributaria_centavos / 100:.2f}"
+            if self.valor_carga_tributaria_centavos is not None
+            else None,
+            valor_total_recebido=f"{self.valor_total_recebido_centavos / 100:.2f}"
+            if self.valor_total_recebido_centavos is not None
+            else None,
         )
 
     def assinatura(self, assinador: Assinador) -> str:
         template = ""
-        template += self.inscricao_prestador
+        template += str(self.inscricao_prestador).zfill(8)
         template += self.serie_rps.upper() + (5 - len(self.serie_rps)) * " "
         template += str(self.numero_rps).zfill(12)
         template += self.data_emissao.strftime("%Y%m%d").upper()
@@ -312,11 +437,30 @@ class RPS:
             template += "1"
         elif self.tomador_tipo == "CNPJ":
             template += "2"
-        else:
+        elif self.tomador_tipo is None:
             template += "3"
         template += (
-            self.tomador.replace(".", "").replace("-", "").replace("/", "").zfill(14)
+            (self.tomador or "")
+            .replace(".", "")
+            .replace("-", "")
+            .replace("/", "")
+            .zfill(14)
         )
+
+        if self.intermediario is not None:
+            if self.intermediario_tipo == "CPF":
+                template += "1"
+            elif self.intermediario_tipo == "CNPJ":
+                template += "2"
+            template += (
+                (self.intermediario or "")
+                .replace(".", "")
+                .replace("-", "")
+                .replace("/", "")
+                .zfill(14)
+            )
+
+            template += self.iss_retido_intermediario == "true" and "S" or "N"
 
         template_bytes = template.encode("ascii")
 
@@ -324,8 +468,14 @@ class RPS:
         return base64.b64encode(signed_template).decode("ascii")
 
     @property
-    def tomador_tipo(self) -> Literal["CPF", "CNPJ"]:
-        return cpf_ou_cnpj(self.tomador)
+    def tomador_tipo(self) -> Optional[Literal["CPF", "CNPJ"]]:
+        return cpf_ou_cnpj(self.tomador) if self.tomador is not None else None
+
+    @property
+    def intermediario_tipo(self) -> Optional[Literal["CPF", "CNPJ"]]:
+        return (
+            cpf_ou_cnpj(self.intermediario) if self.intermediario is not None else None
+        )
 
 
 @dataclass
