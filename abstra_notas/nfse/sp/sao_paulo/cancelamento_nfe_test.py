@@ -33,7 +33,5 @@ class CancelamentoTest(TestCase):
 
         self.assertEqual(
             resultado,
-            RetornoCancelamentoNFe(
-                sucesso=True,
-            ),
+            RetornoCancelamentoNFe(),
         )

@@ -6,3 +6,7 @@ class Retorno(ABC):
     @abstractmethod
     def ler_xml(xml: str) -> "Retorno":
         raise NotImplementedError
+
+    @property
+    def sucesso(self) -> bool:
+        return True

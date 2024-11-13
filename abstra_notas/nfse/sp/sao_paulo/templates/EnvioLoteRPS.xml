@@ -10,10 +10,10 @@
         <dtInicio>{{dt_inicio}}</dtInicio>
         <dtFim>{{dt_fim}}</dtFim>
         <QtdRPS>{{ qtd_rps }}</QtdRPS>
-        <ValorTotalServicos>{{ valor_total_servico }}</ValorTotalServicos>
-        <ValorTotalDeducoes>{{ valor_toral_deducoes }}</ValorTotalDeducoes>
+        <ValorTotalServicos>{{ valor_total_servicos }}</ValorTotalServicos>
+        <ValorTotalDeducoes>{{ valor_total_deducoes }}</ValorTotalDeducoes>
     </Cabecalho>
-    {% fo rps in lista_rps %}
+    {% for rps in lista_rps %}
     {{ rps|safe }}
     {% endfor %}
 </PedidoEnvioLoteRPS>

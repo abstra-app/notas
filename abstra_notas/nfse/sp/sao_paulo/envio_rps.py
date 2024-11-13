@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from typing import Literal, List, Optional
 from lxml.etree import Element, fromstring, ElementBase
 import base64
+from dateutil.parser import parse
 from abstra_notas.validacoes.email import validar_email
 from abstra_notas.validacoes.cidades import validar_codigo_cidade, normalizar_uf, UF
 from abstra_notas.validacoes.cpfcnpj import normalizar_cpf_ou_cnpj, cpf_ou_cnpj
@@ -11,13 +12,14 @@ from .codigos_de_servico import codigos_de_servico_validos
 from datetime import date
 from .remessa import Remessa
 from .pedido import Pedido
+from .retorno import Retorno
 from .templates import load_template
 from abstra_notas.assinatura import Assinador
 from .erro import Erro
 
 
 @dataclass
-class RetornoEnvioRps:
+class ChaveNFeRPS(Retorno):
     chave_nfe_inscricao_prestador: str
     chave_nfe_numero_nfe: int
     chave_nfe_codigo_verificacao: str
@@ -25,10 +27,33 @@ class RetornoEnvioRps:
     chave_rps_serie_rps: str
     chave_rps_numero_rps: int
 
-    @property
-    def sucesso(self):
-        return True
+    def __post_init__(self):
+        if isinstance(self.chave_nfe_inscricao_prestador, int):
+            self.chave_nfe_inscricao_prestador = str(self.chave_nfe_inscricao_prestador)
 
+        if isinstance(self.chave_rps_inscricao_prestador, int):
+            self.chave_rps_inscricao_prestador = str(self.chave_rps_inscricao_prestador)
+
+    @staticmethod
+    def ler_xml(xml: ElementBase) -> "ChaveNFeRPS":
+        return ChaveNFeRPS(
+            chave_nfe_inscricao_prestador=xml.find(".//ChaveNFe")
+            .find(".//InscricaoPrestador")
+            .text,
+            chave_nfe_codigo_verificacao=xml.find(".//ChaveNFe")
+            .find(".//CodigoVerificacao")
+            .text,
+            chave_nfe_numero_nfe=int(xml.find(".//ChaveNFe").find(".//NumeroNFe").text),
+            chave_rps_inscricao_prestador=xml.find(".//ChaveRPS")
+            .find(".//InscricaoPrestador")
+            .text,
+            chave_rps_numero_rps=int(xml.find(".//ChaveRPS").find(".//NumeroRPS").text),
+            chave_rps_serie_rps=xml.find(".//ChaveRPS").find(".//SerieRPS").text,
+        )
+
+
+@dataclass
+class RetornoEnvioRps(ChaveNFeRPS):
     @staticmethod
     def ler_xml(xml: ElementBase) -> "RetornoEnvioRps":
         sucesso = xml.find(".//Sucesso").text
@@ -38,24 +63,8 @@ class RetornoEnvioRps:
                 descricao=xml.find(".//Descricao").text,
             )
         elif sucesso == "true":
-            return RetornoEnvioRps(
-                chave_nfe_inscricao_prestador=xml.find(".//ChaveNFe")
-                .find(".//InscricaoPrestador")
-                .text,
-                chave_nfe_codigo_verificacao=xml.find(".//ChaveNFe")
-                .find(".//CodigoVerificacao")
-                .text,
-                chave_nfe_numero_nfe=int(
-                    xml.find(".//ChaveNFe").find(".//NumeroNFe").text
-                ),
-                chave_rps_inscricao_prestador=xml.find(".//ChaveRPS")
-                .find(".//InscricaoPrestador")
-                .text,
-                chave_rps_numero_rps=int(
-                    xml.find(".//ChaveRPS").find(".//NumeroRPS").text
-                ),
-                chave_rps_serie_rps=xml.find(".//ChaveRPS").find(".//SerieRPS").text,
-            )
+            chave = ChaveNFeRPS.ler_xml(xml)
+            return RetornoEnvioRps(**chave.__dict__)
 
 
 @dataclass
@@ -225,6 +234,9 @@ class RPS:
     """
 
     def __post_init__(self):
+        if isinstance(self.data_emissao, str):
+            self.data_emissao = parse(self.data_emissao).date()
+
         if self.endereco_cep is not None:
             self.endereco_cep = normalizar_cep(self.endereco_cep)
 
@@ -244,9 +256,14 @@ class RPS:
             ), f"Código de cidade inválido: {self.endereco_cidade}"
 
         if isinstance(self.endereco_tipo_logradouro, str):
-            self.endereco_tipo_logradouro = TipoLogradouro(
-                self.endereco_tipo_logradouro.upper()
-            )
+            if self.endereco_tipo_logradouro.upper() in TipoLogradouro.__members__:
+                self.endereco_tipo_logradouro = TipoLogradouro[
+                    self.endereco_tipo_logradouro.upper()
+                ]
+            else:
+                self.endereco_tipo_logradouro = TipoLogradouro(
+                    self.endereco_tipo_logradouro.upper()
+                )
 
         assert (
             self.aliquota_servicos >= 0 and self.aliquota_servicos <= 1
@@ -495,6 +512,34 @@ class EnvioRPS(RPS, Pedido, Remessa):
 
 
 @dataclass
+class RetornoEnvioRpsLote(Retorno):
+    numero_lote: int
+    inscricao_prestador: int
+    remetente: str
+    data_envio_lote: date
+    qtd_notas_processadas: int
+    tempo_processamento: int
+    valor_total_servicos: int
+    chaves_nfe_rps: List[ChaveNFeRPS]
+
+    @staticmethod
+    def ler_xml(xml: Element) -> "RetornoEnvioRps":
+        return RetornoEnvioRpsLote(
+            numero_lote=int(xml.find(".//NumeroLote").text),
+            inscricao_prestador=int(xml.find(".//InscricaoPrestador").text),
+            remetente=xml.find(".//CPFCNPJRemetente").find(".//CNPJ").text,
+            data_envio_lote=parse(xml.find(".//DataEnvioLote").text).date(),
+            qtd_notas_processadas=int(xml.find(".//QtdNotasProcessadas").text),
+            tempo_processamento=int(xml.find(".//TempoProcessamento").text),
+            valor_total_servicos=int(xml.find(".//ValorTotalServicos").text),
+            chaves_nfe_rps=[
+                ChaveNFeRPS.ler_xml(retorno)
+                for retorno in xml.findall(".//ChaveNFeRPS")
+            ],
+        )
+
+
+@dataclass
 class EnvioLoteRps(Pedido, Remessa):
     transacao: bool
     data_inicio_periodo_transmitido: date
@@ -502,6 +547,20 @@ class EnvioLoteRps(Pedido, Remessa):
     lista_rps: List[RPS]
 
     def __post_init__(self):
+        if isinstance(self.data_fim_periodo_transmitido, str):
+            self.data_fim_periodo_transmitido = parse(
+                self.data_fim_periodo_transmitido
+            ).date()
+
+        if isinstance(self.data_inicio_periodo_transmitido, str):
+            self.data_inicio_periodo_transmitido = parse(
+                self.data_inicio_periodo_transmitido
+            ).date()
+
+        for idx, rps in enumerate(self.lista_rps):
+            if isinstance(rps, dict):
+                self.lista_rps[idx] = RPS(**rps)
+
         assert len(self.lista_rps) > 0, "Deve haver pelo menos um RPS no lote"
         assert len(self.lista_rps) <= 50, "O lote não pode ter mais de 50 RPS"
 
@@ -514,7 +573,7 @@ class EnvioLoteRps(Pedido, Remessa):
             dt_fim=str(self.data_fim_periodo_transmitido),
             qtd_rps=self.quantidade_rps,
             valor_total_servicos=f"{self.valor_total_servicos:.2f}",
-            valor_total_deducoes=f"{self.valor_total_deducoes: .2f}",
+            valor_total_deducoes=f"{self.valor_total_deducoes:.2f}",
             lista_rps=[rps.gerar_string_xml(assinador) for rps in self.lista_rps],
         )
 
@@ -526,15 +585,12 @@ class EnvioLoteRps(Pedido, Remessa):
 
     @property
     def valor_total_servicos(self):
-        return sum(rps.valor_servicos_centavos for rps in self.lista_rps)
+        return sum(rps.valor_servicos_centavos for rps in self.lista_rps) / 100
 
     @property
     def valor_total_deducoes(self):
-        return sum(rps.valor_deducoes_centavos for rps in self.lista_rps)
+        return sum(rps.valor_deducoes_centavos for rps in self.lista_rps) / 100
 
     @property
     def remetente_tipo(self) -> Literal["CPF", "CNPJ"]:
         return cpf_ou_cnpj(self.remetente)
-
-
-class TesteEnvioLoteRps(EnvioLoteRps): ...

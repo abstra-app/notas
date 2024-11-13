@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from .retorno import Retorno
 from lxml.etree import Element, SubElement, ElementBase
 
 
@@ -21,8 +22,7 @@ class Detalhe:
 
 
 @dataclass
-class RetornoConsultaCNPJ:
-    sucesso: bool
+class RetornoConsultaCNPJ(Retorno):
     detalhe: Detalhe
 
     def gerar_xml(self):
@@ -44,4 +44,4 @@ class RetornoConsultaCNPJ:
     def parse_xml(element: ElementBase) -> "RetornoConsultaCNPJ":
         sucesso = element.find("Sucesso").text == "true"
         detalhe = Detalhe.parse_xml(element.find("Detalhe"))
-        return RetornoConsultaCNPJ(sucesso=sucesso, detalhe=detalhe)
+        return RetornoConsultaCNPJ(detalhe=detalhe)

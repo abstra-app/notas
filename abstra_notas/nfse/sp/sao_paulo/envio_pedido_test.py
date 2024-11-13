@@ -4,7 +4,6 @@ from pathlib import Path
 from lxml.etree import fromstring
 from datetime import date
 from .cliente import ClienteMock
-import re
 from abstra_notas.assinatura import AssinadorMock
 from abstra_notas.validacoes.xml_iguais import assert_xml_iguais
 
@@ -84,9 +83,7 @@ class EnvioTest(TestCase):
         assinador = AssinadorMock()
         self.maxDiff = None
         exemplo_path = Path(__file__).parent / "exemplos" / "PedidoEnvioRPS.xml"
-        exemplo_xml = assinador.assinar_xml(
-            fromstring(exemplo_path.read_text(encoding="utf-8"))
-        )
+        assinador.assinar_xml(fromstring(exemplo_path.read_text(encoding="utf-8")))
 
         pedido = EnvioRPS(
             **{k: v for k, v in input_exemplo.items() if k not in parametros_opcionais},
@@ -112,9 +109,7 @@ class EnvioTest(TestCase):
         assinador = AssinadorMock()
         self.maxDiff = None
         exemplo_path = Path(__file__).parent / "exemplos" / "PedidoEnvioRPS.xml"
-        exemplo_xml = assinador.assinar_xml(
-            fromstring(exemplo_path.read_text(encoding="utf-8"))
-        )
+        assinador.assinar_xml(fromstring(exemplo_path.read_text(encoding="utf-8")))
         input_maximo = dict(
             **input_exemplo,
             valor_carga_tributaria_centavos=100,

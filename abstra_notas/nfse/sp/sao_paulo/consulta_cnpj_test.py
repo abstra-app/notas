@@ -34,6 +34,5 @@ class ConsultaTest(TestCase):
             RetornoConsultaCNPJ(
                 emite_nfe=True,
                 inscricao_municipal="39616924",
-                sucesso=True,
             ),
         )

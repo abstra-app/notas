@@ -6,7 +6,7 @@ from .pedido import Pedido
 from lxml.etree import tostring, fromstring, XMLSchema, ElementBase
 from pathlib import Path
 from tempfile import mktemp
-from .envio_rps import EnvioRPS, RetornoEnvioRps
+from .envio_rps import EnvioRPS, RetornoEnvioRps, EnvioLoteRps, RetornoEnvioRpsLote
 from .consulta_cnpj import ConsultaCNPJ, RetornoConsultaCNPJ
 from .cancelamento_nfe import CancelamentoNFe, RetornoCancelamentoNFe
 
@@ -46,6 +46,9 @@ class Cliente:
 
     def gerar_nota(self, pedido: EnvioRPS) -> RetornoEnvioRps:
         return RetornoEnvioRps.ler_xml(self.executar(pedido))
+
+    def gerar_notas_em_lote(self, pedido: EnvioLoteRps) -> RetornoEnvioRpsLote:
+        return RetornoEnvioRpsLote.ler_xml(self.executar(pedido))
 
     def consultar_cnpj(self, pedido: ConsultaCNPJ) -> RetornoConsultaCNPJ:
         return RetornoConsultaCNPJ.ler_xml(self.executar(pedido))

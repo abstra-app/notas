@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RetornoEnvioLoteRPS xmlns="http://www.prefeitura.sp.gov.br/nfe"
 xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">-
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 <Cabecalho xmlns="" Versao="1">
-<Sucesso>true</Sucesso>-
+<Sucesso>true</Sucesso>
 <InformacoesLote>
 <NumeroLote>42686544</NumeroLote>
-<InscricaoPrestador>39617106</InscricaoPrestador>-
+<InscricaoPrestador>39617106</InscricaoPrestador>
 <CPFCNPJRemetente>
   <CNPJ>99999998000228</CNPJ>
 </CPFCNPJRemetente>
@@ -14,24 +14,24 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">-
 <QtdNotasProcessadas>2</QtdNotasProcessadas>
 <TempoProcessamento>1</TempoProcessamento>
 <ValorTotalServicos>
-201</ValorTotalServicos></InformacoesLote></Cabecalho>-
-<ChaveNFeRPS xmlns="">-
+201</ValorTotalServicos></InformacoesLote></Cabecalho>
+<ChaveNFeRPS xmlns="">
 <ChaveNFe>
   <InscricaoPrestador>39617106</InscricaoPrestador>
   <NumeroNFe>3</NumeroNFe>
   <CodigoVerificacao>2QFFXUMK</CodigoVerificacao>
-</ChaveNFe>-
+</ChaveNFe>
 <ChaveRPS>
   <InscricaoPrestador>39617106</InscricaoPrestador>
   <SerieRPS>BB</SerieRPS>
   <NumeroRPS>4102</NumeroRPS>
-</ChaveRPS></ChaveNFeRPS>-
-<ChaveNFeRPS xmlns="">-
+</ChaveRPS></ChaveNFeRPS>
+<ChaveNFeRPS xmlns="">
 <ChaveNFe>
   <InscricaoPrestador>39617106</InscricaoPrestador>
   <NumeroNFe>4</NumeroNFe>
   <CodigoVerificacao>G9TBE9PR</CodigoVerificacao>
-</ChaveNFe>-
+</ChaveNFe>
 <ChaveRPS>
   <InscricaoPrestador>39617106</InscricaoPrestador>
   <SerieRPS>BC</SerieRPS>

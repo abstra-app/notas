@@ -11,7 +11,6 @@ from .erro import Erro
 
 @dataclass
 class RetornoConsultaCNPJ(Retorno):
-    sucesso: bool
     inscricao_municipal: str
     emite_nfe: bool
 
@@ -20,7 +19,6 @@ class RetornoConsultaCNPJ(Retorno):
         sucesso = xml.find(".//Sucesso").text == "true"
         if sucesso:
             return RetornoConsultaCNPJ(
-                sucesso=True,
                 inscricao_municipal=xml.find(".//InscricaoMunicipal").text,
                 emite_nfe=xml.find(".//EmiteNFe").text == "true",
             )

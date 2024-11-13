@@ -35,7 +35,7 @@ def assert_xml_iguais(
     if len(xml1) == 0:
         assert (
             xml1.text == xml2.text
-        ), f"Textos diferentes: {path_str} {xml1.text} != {xml2.text}"
+        ), f"Textos diferentes: {path_str} -> {xml1.tag} {xml1.text} != {xml2.text}"
     else:
         for c1, c2 in zip(xml1, xml2):
             assert_xml_iguais(c1, c2, path + [xml1.tag], ignorar_tags=ignorar_tags)

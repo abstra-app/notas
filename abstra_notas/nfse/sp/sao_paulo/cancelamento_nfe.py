@@ -12,13 +12,11 @@ from .remessa import Remessa
 
 @dataclass
 class RetornoCancelamentoNFe(Retorno):
-    sucesso: bool
-
     @staticmethod
     def ler_xml(xml: str):
         sucesso = xml.find(".//Sucesso").text
         if sucesso == "true":
-            return RetornoCancelamentoNFe(sucesso=True)
+            return RetornoCancelamentoNFe()
         else:
             raise ErroCancelamentoNFe(
                 codigo=int(xml.find(".//Codigo").text),
