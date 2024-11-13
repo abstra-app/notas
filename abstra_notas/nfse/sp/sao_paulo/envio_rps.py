@@ -126,9 +126,11 @@ class RPS:
     P: Exportação de Serviços
     """
 
-    codigo_servico: int
+    codigo_servico: str
     """
     Informe o código do serviço do RPS. Este código deve pertencer à lista de serviços.
+
+    Código de serviço com 4 ou 5 dígitos.
     """
 
     aliquota_servicos: float
@@ -268,6 +270,15 @@ class RPS:
         assert (
             self.aliquota_servicos >= 0 and self.aliquota_servicos <= 1
         ), "A alíquota de serviços deve ser um valor entre 0 e 1"
+
+        if isinstance(self.codigo_servico, int):
+            self.codigo_servico = str(self.codigo_servico).zfill(5)
+        elif isinstance(self.codigo_servico, str):
+            assert len(self.codigo_servico) in [
+                4,
+                5,
+            ], "Código de serviço deve ter 4 ou 5 dígitos"
+
         # assert (
         #     self.codigo_servico in codigos_de_servico_validos
         # ), f"Código de serviço inválido, os códigos válidos são: {codigos_de_servico_validos}"
@@ -449,7 +460,7 @@ class RPS:
         template += self.iss_retido == "true" and "S" or "N"
         template += str(self.valor_servicos_centavos).zfill(15)
         template += str(self.valor_deducoes_centavos).zfill(15)
-        template += str(self.codigo_servico).zfill(5)
+        template += self.codigo_servico.zfill(5)
         if self.tomador_tipo == "CPF":
             template += "1"
         elif self.tomador_tipo == "CNPJ":
@@ -524,6 +535,11 @@ class RetornoEnvioRpsLote(Retorno):
 
     @staticmethod
     def ler_xml(xml: Element) -> "RetornoEnvioRps":
+        if xml.find(".//Sucesso").text == "false":
+            raise ErroEnvioRps(
+                codigo=xml.find(".//Codigo").text,
+                descricao=xml.find(".//Descricao").text,
+            )
         return RetornoEnvioRpsLote(
             numero_lote=int(xml.find(".//NumeroLote").text),
             inscricao_prestador=int(xml.find(".//InscricaoPrestador").text),
@@ -545,6 +561,11 @@ class EnvioLoteRPS(Pedido, Remessa):
     data_inicio_periodo_transmitido: date
     data_fim_periodo_transmitido: date
     lista_rps: List[RPS]
+
+    teste: bool = False
+    """
+    Define se o lote é um teste ou produção.
+    """
 
     def __post_init__(self):
         if isinstance(self.data_fim_periodo_transmitido, str):
@@ -594,3 +615,10 @@ class EnvioLoteRPS(Pedido, Remessa):
     @property
     def remetente_tipo(self) -> Literal["CPF", "CNPJ"]:
         return cpf_ou_cnpj(self.remetente)
+
+    @property
+    def metodo(self) -> str:
+        if self.teste:
+            return "TesteEnvioLoteRPS"
+        else:
+            return "EnvioLoteRPS"

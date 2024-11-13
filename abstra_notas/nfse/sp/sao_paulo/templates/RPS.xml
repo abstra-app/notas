@@ -42,7 +42,9 @@
     {% if inscricao_estadual_tomador %}
         <InscricaoEstadualTomador>{{ inscricao_estadual_tomador }}</InscricaoEstadualTomador>
     {% endif %}
-    <RazaoSocialTomador>{{ razao_social_tomador }}</RazaoSocialTomador>
+    {% if razao_social_tomador %}
+        <RazaoSocialTomador>{{ razao_social_tomador }}</RazaoSocialTomador>
+    {% endif %}
     <EnderecoTomador>
         {% if endereco_tipo_logradouro %}
             <TipoLogradouro>{{ endereco_tipo_logradouro }}</TipoLogradouro>
@@ -76,7 +78,9 @@
             <CEP>{{ endereco_cep }}</CEP>
         {% endif %}
     </EnderecoTomador>
-    <EmailTomador>{{ email_tomador }}</EmailTomador>
+    {% if email_tomador %}
+        <EmailTomador>{{ email_tomador }}</EmailTomador>
+    {% endif %}
     {% if intermediario %}
         <CPFCNPJIntermediario>
             <{{intermediario_tipo}}>{{ intermediario }}</{{intermediario_tipo}}>

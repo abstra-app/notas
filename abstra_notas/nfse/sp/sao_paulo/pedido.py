@@ -13,3 +13,7 @@ class Pedido(ABC):
     @property
     def template(self) -> Template:
         return load_template(self.__class__.__name__)
+
+    @property
+    def metodo(self) -> str:
+        return self.__class__.__name__.replace("Pedido", "")

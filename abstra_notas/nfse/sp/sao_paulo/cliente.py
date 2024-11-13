@@ -35,7 +35,7 @@ class Cliente:
             )
             signed_xml = self.assinador.assinar_xml(xml)
 
-            response: str = getattr(client.service, pedido.__class__.__name__)(
+            response: str = getattr(client.service, pedido.metodo)(
                 1, tostring(signed_xml, encoding=str)
             )
 
