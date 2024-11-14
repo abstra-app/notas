@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<p1:PedidoConsultaNFePeriodo xmlns:p1="http://www.prefeitura.sp.gov.br/nfe" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Cabecalho Versao="1">
+    <CPFCNPJRemetente>
+      <{{remetente_tipo}}>{{remetente}}</{{remetente_tipo}}>
+    </CPFCNPJRemetente>
+    <CPFCNPJ>
+      {% if recebidas_por %}
+        <{{recebidas_por_tipo}}>{{ recebidas_por }}</{{recebidas_por_tipo}}>
+      {% else %}
+        <{{remetente_tipo}}>{{remetente}}</{{remetente_tipo}}>
+      {% endif %}
+    </CPFCNPJ>
+    {% if inscricao_municipal %}
+      <Inscricao>
+        {{inscricao_municipal}}
+      </Inscricao>
+    {% endif %}
+    <dtInicio>{{data_inicio}}</dtInicio>
+    <dtFim>{{data_fim}}</dtFim>
+    <NumeroPagina>{{pagina}}</NumeroPagina>
+  </Cabecalho>
+</p1:PedidoConsultaNFePeriodo>

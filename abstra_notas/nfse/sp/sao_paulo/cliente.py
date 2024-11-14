@@ -9,7 +9,7 @@ from tempfile import mktemp
 from .envio_rps import EnvioRPS, RetornoEnvioRps, EnvioLoteRPS, RetornoEnvioRpsLote
 from .consulta_cnpj import ConsultaCNPJ, RetornoConsultaCNPJ
 from .cancelamento_nfe import CancelamentoNFe, RetornoCancelamentoNFe
-from .consulta import ConsultaNFe, RetornoConsulta
+from .consulta import ConsultaNFe, RetornoConsulta, ConsultaNFePeriodo
 
 
 class Cliente:
@@ -58,6 +58,9 @@ class Cliente:
         return RetornoCancelamentoNFe.ler_xml(self.executar(pedido))
 
     def consultar_nota(self, pedido: ConsultaNFe) -> RetornoConsulta:
+        return RetornoConsulta.ler_xml(self.executar(pedido))
+
+    def consultar_notas_periodo(self, pedido: ConsultaNFePeriodo) -> RetornoConsulta:
         return RetornoConsulta.ler_xml(self.executar(pedido))
 
 

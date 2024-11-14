@@ -8,11 +8,14 @@ from typing import Optional, List
 from lxml.etree import ElementBase, fromstring
 from datetime import date
 from dateutil.parser import parse
+from .validacoes import normalizar_inscricao_municipal, normalizar_codigo_verificacao
+from abstra_notas.validacoes.data import normalizar_data
+from abstra_notas.validacoes.cpfcnpj import normalizar_cpf_ou_cnpj, cpf_ou_cnpj
 
 
 def find_text(xml: ElementBase, xpath: str) -> Optional[str]:
     element = xml.find(xpath)
-    return element.text if element is not None else None
+    return element.text.strip() if element is not None and element.text else None
 
 
 def optional_int(arg: Optional[str]) -> Optional[int]:
@@ -30,6 +33,10 @@ def optional_bool(arg: Optional[str]) -> Optional[bool]:
         return True
     elif arg == "false":
         return False
+
+
+def optional_centavos(arg: Optional[str]) -> Optional[int]:
+    return int(optional_float(arg) * 100) if arg is not None else None
 
 
 def optional_date(arg: Optional[str]) -> Optional[date]:
@@ -58,10 +65,10 @@ class RetornoNFe:
     opcao_simples: int
     codigo_servico: int
     aliquota_servicos: float
-    valor_iss: int
-    valor_credito: float
     iss_retido: bool
     discriminacao: str
+    valor_iss_centavos: int
+    valor_credito_centavos: int
     valor_servicos_centavos: int
     valor_deducoes_centavos: Optional[int] = None
     valor_pis_centavos: Optional[int] = None
@@ -142,19 +149,24 @@ class RetornoNFe:
             status_nfe=find_text(xml, ".//StatusNFe"),
             tributacao_nfe=find_text(xml, ".//TributacaoNFe"),
             opcao_simples=optional_int(find_text(xml, ".//OpcaoSimples")),
-            valor_servicos_centavos=optional_int(find_text(xml, ".//ValorServicos")),
-            valor_deducoes_centavos=optional_int(find_text(xml, ".//ValorDeducoes")),
-            valor_pis_centavos=optional_int(find_text(xml, ".//ValorPIS")),
-            valor_cofins_centavos=optional_int(find_text(xml, ".//ValorCOFINS")),
-            valor_inss_centavos=optional_int(find_text(xml, ".//ValorINSS")),
-            valor_ir_centavos=optional_int(find_text(xml, ".//ValorIR")),
-            valor_csll_centavos=optional_int(find_text(xml, ".//ValorCSLL")),
+            valor_servicos_centavos=optional_centavos(
+                find_text(xml, ".//ValorServicos")
+            ),
+            valor_deducoes_centavos=optional_centavos(
+                find_text(xml, ".//ValorDeducoes")
+            ),
+            valor_pis_centavos=optional_centavos(find_text(xml, ".//ValorPIS")),
+            valor_cofins_centavos=optional_centavos(find_text(xml, ".//ValorCOFINS")),
+            valor_inss_centavos=optional_centavos(find_text(xml, ".//ValorINSS")),
+            valor_ir_centavos=optional_centavos(find_text(xml, ".//ValorIR")),
+            valor_csll_centavos=optional_centavos(find_text(xml, ".//ValorCSLL")),
+            valor_iss_centavos=optional_centavos(find_text(xml, ".//ValorISS")),
+            valor_credito_centavos=optional_centavos(find_text(xml, ".//ValorCredito")),
             codigo_servico=optional_int(find_text(xml, ".//CodigoServico")),
             aliquota_servicos=optional_float(find_text(xml, ".//AliquotaServicos")),
-            valor_iss=optional_int(find_text(xml, ".//ValorISS")),
-            valor_credito=optional_float(find_text(xml, ".//ValorCredito")),
             iss_retido=optional_bool(find_text(xml, ".//ISSRetido")),
-            cpf_cnpj_tomador=find_text(xml, ".//CPFCNPJTomador"),
+            cpf_cnpj_tomador=find_text(xml, ".//CPFCNPJTomador/CPF")
+            or find_text(xml, ".//CPFCNPJTomador/CNPJ"),
             razao_social_tomador=find_text(xml, ".//RazaoSocialTomador"),
             tipo_logradouro_tomador=find_text(xml, ".//EnderecoTomador/TipoLogradouro"),
             logradouro_tomador=find_text(xml, ".//EnderecoTomador/Logradouro"),
@@ -180,6 +192,7 @@ class RetornoConsulta(Retorno):
             lista_nfe = []
             for nfe_xml in xml.findall(".//NFe"):
                 lista_nfe.append(RetornoNFe.ler_xml(nfe_xml))
+
             return RetornoConsulta(lista_nfe=lista_nfe)
         else:
             raise Erro(
@@ -201,28 +214,15 @@ class ConsultaNFe(Pedido, Remessa):
     """
 
     def __post_init__(self):
-        if isinstance(self.chave_nfe_inscricao_prestador, int):
-            self.chave_nfe_inscricao_prestador = str(self.chave_nfe_inscricao_prestador)
-        self.chave_nfe_inscricao_prestador = self.chave_nfe_inscricao_prestador.zfill(8)
-        assert (
-            len(self.chave_nfe_inscricao_prestador) == 8
-        ), f"A inscrição do prestador deve ter 8 caracteres. Recebido: {self.chave_nfe_inscricao_prestador}"
-
-        if isinstance(self.chave_rps_inscricao_prestador, int):
-            self.chave_rps_inscricao_prestador = str(self.chave_rps_inscricao_prestador)
-        self.chave_rps_inscricao_prestador = self.chave_rps_inscricao_prestador.zfill(8)
-        assert (
-            len(self.chave_rps_inscricao_prestador) == 8
-        ), f"A inscrição do prestador deve ter 8 caracteres. Recebido: {self.chave_rps_inscricao_prestador}"
-
-        self.chave_nfe_codigo_verificacao = "".join(
-            filter(str.isalnum, self.chave_nfe_codigo_verificacao)
-        ).upper()
-        assert (
-            self.chave_nfe_codigo_verificacao is None
-            or isinstance(self.chave_nfe_codigo_verificacao, str)
-            and len(self.chave_nfe_codigo_verificacao) == 8
-        ), f"O código de verificação deve ter 8 caracteres. Recebido: {self.chave_nfe_codigo_verificacao}"
+        self.chave_nfe_inscricao_prestador = normalizar_inscricao_municipal(
+            self.chave_nfe_inscricao_prestador
+        )
+        self.chave_rps_inscricao_prestador = normalizar_inscricao_municipal(
+            self.chave_rps_inscricao_prestador
+        )
+        self.chave_nfe_codigo_verificacao = normalizar_codigo_verificacao(
+            self.chave_nfe_codigo_verificacao, optional=True
+        )
 
     def gerar_xml(self, assinador: Assinador):
         xml = self.template.render(
@@ -234,6 +234,76 @@ class ConsultaNFe(Pedido, Remessa):
             chave_rps_serie_rps=self.chave_rps_serie_rps,
             chave_rps_numero_rps=self.chave_rps_numero_rps,
             chave_nfe_codigo_verificacao=self.chave_nfe_codigo_verificacao,
+        )
+        return fromstring(xml.encode("utf-8"))
+
+    @property
+    def classe_retorno(self):
+        return RetornoConsulta.__name__
+
+
+@dataclass
+class ConsultaNFePeriodo(Pedido, Remessa):
+    """
+    Consultar notas fiscais eletrônicas emitidas e/ou recebidas em um período.
+
+    Ao menos um dos parâmetros `recebidas_por` ou `inscricao_municipal` deve ser informado.
+    """
+
+    data_inicio: date
+    data_fim: date
+
+    inscricao_municipal: Optional[str] = None
+    """
+    Parâmetro opcional. (Inscrição Municipal, formatação opcional, ex: 12345678)
+
+    Caso seja informado, a consulta será feita apenas para as notas fiscais emitidas pelo remetente informado.
+    """
+
+    recebidas_por: Optional[str] = None
+    """
+    Parâmetro opcional. (CPF ou CNPJ, formatação opcional, ex: 12345678901 ou 12345678000123)
+    
+    Caso seja informado, a consulta será feita apenas para as notas fiscais recebidas pelo tomador informado.
+
+    Caso não seja informado, a consulta será feita para todas as notas fiscais emitidas pelo remetente.
+    """
+
+    pagina: int = 1
+
+    def __post_init__(self):
+        self.inscricao_municipal = normalizar_inscricao_municipal(
+            self.inscricao_municipal, optional=True
+        )
+        self.data_inicio = normalizar_data(self.data_inicio)
+        self.data_fim = normalizar_data(self.data_fim)
+        self.recebidas_por = normalizar_cpf_ou_cnpj(self.recebidas_por, optional=True)
+        self.remetente = normalizar_cpf_ou_cnpj(self.remetente)
+        self.pagina = int(self.pagina)
+
+        if self.inscricao_municipal is None and self.recebidas_por is None:
+            raise ValueError(
+                "Ao menos um dos parâmetros `recebidas_por` ou `inscricao_municipal` deve ser informado."
+            )
+        elif self.inscricao_municipal is not None and self.recebidas_por is not None:
+            raise ValueError(
+                "Os parâmetros `recebidas_por` e `inscricao_municipal` são mutuamente exclusivos."
+            )
+
+    @property
+    def recebidas_por_tipo(self):
+        return cpf_ou_cnpj(self.recebidas_por, optional=True)
+
+    def gerar_xml(self, assinador: Assinador):
+        xml = self.template.render(
+            remetente=self.remetente,
+            remetente_tipo=self.remetente_tipo,
+            inscricao_municipal=self.inscricao_municipal,
+            data_inicio=self.data_inicio,
+            data_fim=self.data_fim,
+            pagina=self.pagina,
+            recebidas_por=self.recebidas_por,
+            recebidas_por_tipo=self.recebidas_por_tipo,
         )
         return fromstring(xml.encode("utf-8"))
 
