@@ -10,6 +10,7 @@ from .cancelamento_nfe import (
     CancelamentoNFe,
     RetornoCancelamentoNFe,
 )
+from .consulta import ConsultaNFe, RetornoConsulta
 from .erro import Erro
 from .cliente import Cliente
 
@@ -28,6 +29,9 @@ __all__ = [
     # EnvioLoteRPS
     "EnvioLoteRPS",
     "RetornoEnvioRpsLote",
+    # ConsultaNFe
+    "ConsultaNFe",
+    "RetornoConsulta",
     # RPS
     "RPS",
     # Erro
