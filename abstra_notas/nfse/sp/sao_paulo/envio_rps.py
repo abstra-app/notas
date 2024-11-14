@@ -8,7 +8,6 @@ from abstra_notas.validacoes.cidades import validar_codigo_cidade, normalizar_uf
 from abstra_notas.validacoes.cpfcnpj import normalizar_cpf_ou_cnpj, cpf_ou_cnpj
 from abstra_notas.validacoes.cep import normalizar_cep
 from abstra_notas.validacoes.tipo_logradouro import TipoLogradouro
-from .codigos_de_servico import codigos_de_servico_validos
 from datetime import date
 from .remessa import Remessa
 from .pedido import Pedido

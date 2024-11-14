@@ -64,7 +64,3 @@ class CancelamentoNFe(Pedido, Remessa):
 
         signed_template = assinador.assinar_bytes_rsa_sh1(template_bytes)
         return base64.b64encode(signed_template).decode("ascii")
-
-    @property
-    def remetente_tipo(self) -> Literal["CPF", "CNPJ"]:
-        return cpf_ou_cnpj(self.remetente)

@@ -1,4 +1,4 @@
-from lxml.etree import fromstring, ElementBase, tostring
+from lxml.etree import ElementBase
 from typing import List
 
 

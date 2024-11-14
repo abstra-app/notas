@@ -1,6 +1,5 @@
 from abstra_notas.nfse.sp.sao_paulo import Cliente, EnvioLoteRPS, RPS
-from abstra_notas.validacoes.tipo_logradouro import TipoLogradouro
-from datetime import date, timedelta
+from datetime import date
 from dotenv import load_dotenv
 from os import getenv
 from pathlib import Path

@@ -8,7 +8,9 @@ A integração é feita atraves da [Nota do Milhão](https://notadomilhao.prefei
 
 - [Gerar nota](/abstra_notas/nfse/sp/sao_paulo/exemplos/gerar_nota.py)
 - [Gerar notas em lote](/abstra_notas/nfse/sp/sao_paulo/exemplos/gerar_notas_em_lote.py)
-- [Consultar CNPJ](/abstra_notas/nfse/sp/sao_paulo/exemplos/consulta_cnpj.py)
 - [Cancelar nota](/abstra_notas/nfse/sp/sao_paulo/exemplos/cancelamento_nfe.py)
-- Consultar nota (Em breve)
-- Envio de lote (Em breve)
+- [Consultar CNPJ](/abstra_notas/nfse/sp/sao_paulo/exemplos/consulta_cnpj.py)
+- [Consultar nota emitida (por RPS)](/abstra_notas/nfse/sp/sao_paulo/exemplos/consultar_nota.py)
+- Consultar notas emitidas (por lote) (Em breve)
+- Consultar notas emitidas (por período) (Em breve)
+- Consultar notas recebidas (Em breve)

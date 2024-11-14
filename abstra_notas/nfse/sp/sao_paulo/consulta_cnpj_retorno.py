@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from .retorno import Retorno
 from lxml.etree import Element, SubElement, ElementBase
+from .erro import Erro
 
 
 @dataclass
@@ -43,5 +44,10 @@ class RetornoConsultaCNPJ(Retorno):
     @staticmethod
     def parse_xml(element: ElementBase) -> "RetornoConsultaCNPJ":
         sucesso = element.find("Sucesso").text == "true"
+        if not sucesso:
+            raise Erro(
+                codigo=int(element.find("Codigo").text),
+                descricao=element.find("Descricao").text,
+            )
         detalhe = Detalhe.parse_xml(element.find("Detalhe"))
         return RetornoConsultaCNPJ(detalhe=detalhe)

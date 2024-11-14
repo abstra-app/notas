@@ -6,7 +6,7 @@ from cryptography.hazmat.primitives.serialization.pkcs12 import (
 from cryptography.hazmat.backends import default_backend
 from pathlib import Path
 from tempfile import NamedTemporaryFile
-from lxml.etree import Element, tostring, fromstring, ElementBase
+from lxml.etree import tostring, fromstring, ElementBase
 import xmlsec
 
 

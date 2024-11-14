@@ -1,10 +1,8 @@
 from unittest import TestCase
 from .consulta_cnpj import ConsultaCNPJ, RetornoConsultaCNPJ
 from pathlib import Path
-from lxml.etree import XMLSchema, fromstring
-from datetime import date
+from lxml.etree import fromstring
 from .cliente import ClienteMock
-import re
 from abstra_notas.assinatura import AssinadorMock
 from abstra_notas.validacoes.xml_iguais import assert_xml_iguais
 

@@ -136,14 +136,3 @@ class ConsultaTest(TestCase):
                 ]
             ),
         )
-
-    def test_consulta_nfe_invalida(self):
-        assinador = AssinadorMock()
-        pedido = ConsultaNFe(
-            remetente="99999997000100",
-            chave_nfe_inscricao_prestador="00000000",
-            chave_nfe_numero_nfe=0,
-            chave_rps_inscricao_prestador="00000000",
-            chave_rps_serie_rps="AA",
-            chave_rps_numero_rps=0,
-        )
