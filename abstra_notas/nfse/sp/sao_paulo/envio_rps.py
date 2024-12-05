@@ -241,9 +241,9 @@ class RPS:
         if self.endereco_cep is not None:
             self.endereco_cep = normalizar_cep(self.endereco_cep)
 
-        assert self.endereco_bairro is None or len(
-            self.endereco_bairro
-        ) <= 30, "O bairro deve ter no máximo 30 caracteres"
+        assert (
+            self.endereco_bairro is None or len(self.endereco_bairro) <= 30
+        ), "O bairro deve ter no máximo 30 caracteres"
 
         if self.endereco_uf is not None:
             if isinstance(self.endereco_uf, str):

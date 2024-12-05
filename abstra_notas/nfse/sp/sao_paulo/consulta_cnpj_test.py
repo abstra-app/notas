@@ -1,5 +1,5 @@
 from unittest import TestCase
-from .consulta_cnpj import ConsultaCNPJ, RetornoConsultaCNPJ
+from .consulta_cnpj import ConsultaCNPJ, RetornoConsultaCNPJ, RetornoConsultaCNPJDetalhe
 from pathlib import Path
 from lxml.etree import fromstring
 from .cliente import ClienteMock
@@ -30,7 +30,11 @@ class ConsultaTest(TestCase):
         self.assertEqual(
             resultado,
             RetornoConsultaCNPJ(
-                emite_nfe=True,
-                inscricao_municipal="39616924",
+                detalhes=[
+                    RetornoConsultaCNPJDetalhe(
+                        emite_nfe=True,
+                        inscricao_municipal="39616924",
+                    )
+                ]
             ),
         )

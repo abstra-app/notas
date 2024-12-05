@@ -17,8 +17,9 @@ pedido = ConsultaCNPJ(
 retorno = cliente.consultar_cnpj(pedido)
 
 try:
-    print(f"Inscrição Municipal: {retorno.inscricao_municipal}")
-    print(f"Emite NFe: {retorno.emite_nfe}")
+    for detalhe in retorno.detalhes:
+        print(f"Inscrição Municipal: {detalhe.inscricao_municipal}")
+        print(f"Emite NFe: {detalhe.emite_nfe}")
 except Erro as e:
     print(f"Código: {e.codigo}")
     print(f"Descrição: {e.descricao}")
