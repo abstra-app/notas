@@ -1,0 +1,21 @@
+<PedidoConsultaNFe xmlns="http://www.rio.rj.gov.br/nfe">
+  <Cabecalho Versao="1">
+    <CPFCNPJRemetente>
+      <{{ remetente_tipo }}>{{ remetente }}</{{ remetente_tipo }}>
+    </CPFCNPJRemetente>
+  </Cabecalho>
+  <Detalhe>
+    <ChaveNFe>
+      <InscricaoPrestador>{{ chave_nfe_inscricao_prestador }}</InscricaoPrestador>
+      <NumeroNFe>{{ chave_nfe_numero_nfe }}</NumeroNFe>
+      {% if chave_nfe_codigo_verificacao %}
+      <CodigoVerificacao>{{ chave_nfe_codigo_verificacao }}</CodigoVerificacao>
+      {% endif %}
+    </ChaveNFe>
+    <ChaveRPS>
+      <InscricaoPrestador>{{ chave_rps_inscricao_prestador }}</InscricaoPrestador>
+      <SerieRPS>{{ chave_rps_serie_rps }}</SerieRPS>
+      <NumeroRPS>{{ chave_rps_numero_rps }}</NumeroRPS>
+    </ChaveRPS>
+  </Detalhe>
+</PedidoConsultaNFe>
