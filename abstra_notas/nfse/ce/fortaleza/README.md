@@ -58,6 +58,47 @@ resultado = cliente.gerar_nota(pedido)
 print(f"NFSe gerada: {resultado.numero_nfse}")
 ```
 
+## Validação de Layout XML
+
+A biblioteca inclui validação dos layouts XML gerados contra os XSDs oficiais de Fortaleza:
+
+```python
+from abstra_notas.nfse.ce.fortaleza.exemplos.validacao_xsd import validar_xml_contra_xsd
+from lxml import etree
+
+# Gerar XML
+xml_element = pedido.gerar_xml(assinador)
+xml_str = etree.tostring(xml_element, encoding='unicode', pretty_print=True)
+
+# Validar contra XSD
+if validar_xml_contra_xsd(xml_str, 'PedidoEnvioRPS_v01.xsd'):
+    print("XML válido!")
+else:
+    print("XML inválido!")
+```
+
+### XSDs Disponíveis
+
+- `PedidoEnvioRPS_v01.xsd` - Envio de RPS único ou lote
+- `ConsultaNfsePorRps_v01.xsd` - Consulta de NFSe por RPS  
+- `CancelamentoNfse_v01.xsd` - Cancelamento de NFSe
+- `ConsultaCnpj_v01.xsd` - Consulta de CNPJ
+
+## Testes Automatizados
+
+A implementação inclui testes unitários que validam:
+
+- ✅ Criação de objetos RPS e pedidos
+- ✅ Geração de XMLs bem formados
+- ✅ Validação contra XSDs específicos de Fortaleza
+- ✅ Normalização de dados (CNPJ, CEP, etc.)
+- ✅ Todos os fluxos de negócio (envio, consulta, cancelamento)
+
+Execute os testes com:
+```bash
+python -m pytest abstra_notas/nfse/ce/fortaleza/test_fortaleza.py -v
+```
+
 ## Códigos de Serviço
 
 Fortaleza utiliza a lista de serviços conforme a legislação municipal. Consulte a lista oficial de códigos de serviço no site da Prefeitura de Fortaleza.
