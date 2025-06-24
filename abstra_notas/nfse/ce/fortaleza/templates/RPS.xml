@@ -1,0 +1,102 @@
+<ns:Rps xmlns:ns="http://www.fortaleza.ce.gov.br/iss">
+    <ns:InfRps>
+        <ns:IdentificacaoRps>
+            <ns:Numero>{{ numero_rps }}</ns:Numero>
+            <ns:Serie>{{ serie_rps }}</ns:Serie>
+            <ns:Tipo>{{ tipo_rps }}</ns:Tipo>
+        </ns:IdentificacaoRps>
+        <ns:DataEmissao>{{ data_emissao }}</ns:DataEmissao>
+        <ns:NaturezaOperacao>{{ natureza_operacao }}</ns:NaturezaOperacao>
+        <ns:OptanteSimplesNacional>2</ns:OptanteSimplesNacional>
+        <ns:IncentivadorCultural>2</ns:IncentivadorCultural>
+        <ns:Status>1</ns:Status>
+        <ns:Servico>
+            <ns:Valores>
+                <ns:ValorServicos>{{ valor_servicos }}</ns:ValorServicos>
+                {% if valor_deducoes and valor_deducoes != '0.00' %}
+                <ns:ValorDeducoes>{{ valor_deducoes }}</ns:ValorDeducoes>
+                {% endif %}
+                {% if valor_pis %}
+                <ns:ValorPis>{{ valor_pis }}</ns:ValorPis>
+                {% endif %}
+                {% if valor_cofins %}
+                <ns:ValorCofins>{{ valor_cofins }}</ns:ValorCofins>
+                {% endif %}
+                {% if valor_inss %}
+                <ns:ValorInss>{{ valor_inss }}</ns:ValorInss>
+                {% endif %}
+                {% if valor_ir %}
+                <ns:ValorIr>{{ valor_ir }}</ns:ValorIr>
+                {% endif %}
+                {% if valor_csll %}
+                <ns:ValorCsll>{{ valor_csll }}</ns:ValorCsll>
+                {% endif %}
+                <ns:IssRetido>{{ '1' if iss_retido else '2' }}</ns:IssRetido>
+                <ns:BaseCalculo>{{ valor_servicos }}</ns:BaseCalculo>
+                <ns:Aliquota>{{ aliquota_servicos }}</ns:Aliquota>
+            </ns:Valores>
+            <ns:CodigoTributacaoMunicipio>{{ codigo_servico }}</ns:CodigoTributacaoMunicipio>
+            <ns:Discriminacao>{{ discriminacao }}</ns:Discriminacao>
+            <ns:CodigoMunicipio>2304400</ns:CodigoMunicipio>
+        </ns:Servico>
+        <ns:Prestador>
+            <ns:Cnpj>{{ remetente if remetente_tipo == '2' else '' }}</ns:Cnpj>
+            {% if remetente_tipo == '1' %}
+            <ns:Cpf>{{ remetente }}</ns:Cpf>
+            {% endif %}
+            <ns:InscricaoMunicipal>{{ inscricao_prestador }}</ns:InscricaoMunicipal>
+        </ns:Prestador>
+        {% if tomador_cnpj_cpf %}
+        <ns:Tomador>
+            <ns:IdentificacaoTomador>
+                <ns:CpfCnpj>
+                    {% if tomador_tipo == '2' %}
+                    <ns:Cnpj>{{ tomador_cnpj_cpf }}</ns:Cnpj>
+                    {% else %}
+                    <ns:Cpf>{{ tomador_cnpj_cpf }}</ns:Cpf>
+                    {% endif %}
+                </ns:CpfCnpj>
+                {% if tomador_inscricao_municipal %}
+                <ns:InscricaoMunicipal>{{ tomador_inscricao_municipal }}</ns:InscricaoMunicipal>
+                {% endif %}
+            </ns:IdentificacaoTomador>
+            {% if tomador_razao_social %}
+            <ns:RazaoSocial>{{ tomador_razao_social }}</ns:RazaoSocial>
+            {% endif %}
+            {% if tomador_endereco_logradouro %}
+            <ns:Endereco>
+                <ns:Endereco>{{ tomador_endereco_logradouro }}</ns:Endereco>
+                {% if tomador_endereco_numero %}
+                <ns:Numero>{{ tomador_endereco_numero }}</ns:Numero>
+                {% endif %}
+                {% if tomador_endereco_complemento %}
+                <ns:Complemento>{{ tomador_endereco_complemento }}</ns:Complemento>
+                {% endif %}
+                {% if tomador_endereco_bairro %}
+                <ns:Bairro>{{ tomador_endereco_bairro }}</ns:Bairro>
+                {% endif %}
+                {% if tomador_endereco_cidade %}
+                <ns:CodigoMunicipio>{{ tomador_endereco_cidade }}</ns:CodigoMunicipio>
+                {% endif %}
+                {% if tomador_endereco_uf %}
+                <ns:Uf>{{ tomador_endereco_uf }}</ns:Uf>
+                {% endif %}
+                {% if tomador_endereco_cep %}
+                <ns:Cep>{{ tomador_endereco_cep }}</ns:Cep>
+                {% endif %}
+            </ns:Endereco>
+            {% endif %}
+            {% if tomador_telefone or tomador_email %}
+            <ns:Contato>
+                {% if tomador_telefone %}
+                <ns:Telefone>{{ tomador_telefone }}</ns:Telefone>
+                {% endif %}
+                {% if tomador_email %}
+                <ns:Email>{{ tomador_email }}</ns:Email>
+                {% endif %}
+            </ns:Contato>
+            {% endif %}
+        </ns:Tomador>
+        {% endif %}
+    </ns:InfRps>
+</ns:Rps>

@@ -8,6 +8,7 @@ Biblioteca de emissão de notas fiscais eletrônicas para empresas brasileiras.
 ## Listagem de estados
 
 - [São Paulo](/abstra_notas/nfse/sp/README.md)
+- [Ceará](/abstra_notas/nfse/ce/README.md)
 - Rio de Janeiro (Em breve)
 - Minas Gerais (Em breve)
 - Paraná (Em breve)
@@ -17,7 +18,6 @@ Biblioteca de emissão de notas fiscais eletrônicas para empresas brasileiras.
 - Distrito Federal (Em breve)
 - Goiás (Em breve)
 - Pernambuco (Em breve)
-- Ceará (Em breve)
 - Espírito Santo (Em breve)
 - Mato Grosso (Em breve)
 - Mato Grosso do Sul (Em breve)

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://www.w3.org/2003/05/soap-envelope"
+           xmlns:tns="http://www.w3.org/2003/05/soap-envelope"
+           xmlns:iss="http://www.fortaleza.ce.gov.br/iss"
+           elementFormDefault="qualified">
+
+  <!-- Definição do envelope SOAP -->
+  <xs:element name="Envelope">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Header" minOccurs="0"/>
+        <xs:element name="Body">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="RecepcionarLoteRps" type="iss:TipoRecepcionarLoteRps"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- Tipo RecepcionarLoteRps -->
+  <xs:complexType name="TipoRecepcionarLoteRps">
+    <xs:sequence>
+      <xs:element name="LoteRps" type="iss:TipoLoteRps"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Tipo LoteRps -->
+  <xs:complexType name="TipoLoteRps">
+    <xs:sequence>
+      <xs:element name="NumeroLote" type="xs:string"/>
+      <xs:element name="Cnpj" type="xs:string" minOccurs="0"/>
+      <xs:element name="Cpf" type="xs:string" minOccurs="0"/>
+      <xs:element name="InscricaoMunicipal" type="xs:string" minOccurs="0"/>
+      <xs:element name="QuantidadeRps" type="xs:int"/>
+      <xs:element name="ListaRps">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="Rps" type="tns:TipoRps" maxOccurs="50"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Tipo RPS -->
+  <xs:complexType name="TipoRps">
+    <xs:sequence>
+      <xs:element name="InfRps">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="IdentificacaoRps">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Numero" type="xs:int"/>
+                  <xs:element name="Serie" type="xs:string"/>
+                  <xs:element name="Tipo" type="xs:string"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="DataEmissao" type="xs:date"/>
+            <xs:element name="NaturezaOperacao" type="xs:string"/>
+            <xs:element name="OptanteSimplesNacional" type="xs:string"/>
+            <xs:element name="IncentivadorCultural" type="xs:string"/>
+            <xs:element name="Status" type="xs:string"/>
+            <xs:element name="Servico" type="tns:TipoServico"/>
+            <xs:element name="Prestador" type="tns:TipoPrestador"/>
+            <xs:element name="Tomador" type="tns:TipoTomador" minOccurs="0"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Tipo Serviço -->
+  <xs:complexType name="TipoServico">
+    <xs:sequence>
+      <xs:element name="Valores">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="ValorServicos" type="xs:decimal"/>
+            <xs:element name="ValorDeducoes" type="xs:decimal" minOccurs="0"/>
+            <xs:element name="ValorPis" type="xs:decimal" minOccurs="0"/>
+            <xs:element name="ValorCofins" type="xs:decimal" minOccurs="0"/>
+            <xs:element name="ValorInss" type="xs:decimal" minOccurs="0"/>
+            <xs:element name="ValorIr" type="xs:decimal" minOccurs="0"/>
+            <xs:element name="ValorCsll" type="xs:decimal" minOccurs="0"/>
+            <xs:element name="IssRetido" type="xs:string"/>
+            <xs:element name="BaseCalculo" type="xs:decimal"/>
+            <xs:element name="Aliquota" type="xs:decimal"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="CodigoTributacaoMunicipio" type="xs:string"/>
+      <xs:element name="Discriminacao" type="xs:string"/>
+      <xs:element name="CodigoMunicipio" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Tipo Prestador -->
+  <xs:complexType name="TipoPrestador">
+    <xs:sequence>
+      <xs:element name="Cnpj" type="xs:string" minOccurs="0"/>
+      <xs:element name="Cpf" type="xs:string" minOccurs="0"/>
+      <xs:element name="InscricaoMunicipal" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Tipo Tomador -->
+  <xs:complexType name="TipoTomador">
+    <xs:sequence>
+      <xs:element name="IdentificacaoTomador" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="CpfCnpj">
+              <xs:complexType>
+                <xs:choice>
+                  <xs:element name="Cpf" type="xs:string"/>
+                  <xs:element name="Cnpj" type="xs:string"/>
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="InscricaoMunicipal" type="xs:string" minOccurs="0"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="RazaoSocial" type="xs:string" minOccurs="0"/>
+      <xs:element name="Endereco" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="Endereco" type="xs:string" minOccurs="0"/>
+            <xs:element name="Numero" type="xs:string" minOccurs="0"/>
+            <xs:element name="Complemento" type="xs:string" minOccurs="0"/>
+            <xs:element name="Bairro" type="xs:string" minOccurs="0"/>
+            <xs:element name="CodigoMunicipio" type="xs:string" minOccurs="0"/>
+            <xs:element name="Uf" type="xs:string" minOccurs="0"/>
+            <xs:element name="Cep" type="xs:string" minOccurs="0"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Contato" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="Telefone" type="xs:string" minOccurs="0"/>
+            <xs:element name="Email" type="xs:string" minOccurs="0"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+</xs:schema>

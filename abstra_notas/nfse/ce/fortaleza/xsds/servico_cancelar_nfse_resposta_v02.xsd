@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<xsd:schema elementFormDefault="qualified"
+	targetNamespace="http://www.ginfes.com.br/servico_cancelar_nfse_resposta" 
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+	xmlns:ds="http://www.w3.org/2000/09/xmldsig#" 
+	xmlns:tns="http://www.ginfes.com.br/servico_cancelar_nfse_resposta" 
+	xmlns:tipos="http://www.ginfes.com.br/tipos">
+	<xsd:import schemaLocation="xmldsig-core-schema_v02.xsd" namespace="http://www.w3.org/2000/09/xmldsig#"></xsd:import>
+	<xsd:import schemaLocation="tipos_v02.xsd" namespace="http://www.ginfes.com.br/tipos"></xsd:import>		
+	<xsd:element name="CancelarNfseResposta">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="Sucesso" type="tipos:TsSucesso" maxOccurs="1" minOccurs="1" />
+				<xsd:element name="DataHora" type="tipos:TsDataHora"  maxOccurs="1" minOccurs="1" />
+				<xsd:element name="MensagemRetorno" type="tipos:tcMensagemRetorno" maxOccurs="1" minOccurs="1" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>
