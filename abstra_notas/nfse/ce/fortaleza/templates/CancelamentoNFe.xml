@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soap:Envelope 
+    xmlns:soap="http://www.w3.org/2003/05/soap-envelope" 
+    xmlns:ns="http://www.fortaleza.ce.gov.br/iss">
+    <soap:Header/>
+    <soap:Body>
+        <ns:CancelarNfse>
+            <ns:Pedido>
+                <ns:InfPedidoCancelamento>
+                    <ns:IdentificacaoNfse>
+                        <ns:Numero>{{ numero_nfse }}</ns:Numero>
+                        <ns:Cnpj>{{ remetente if remetente_tipo == '2' else '' }}</ns:Cnpj>
+                        {% if remetente_tipo == '1' %}
+                        <ns:Cpf>{{ remetente }}</ns:Cpf>
+                        {% endif %}
+                        <ns:InscricaoMunicipal>{{ inscricao_prestador }}</ns:InscricaoMunicipal>
+                        <ns:CodigoMunicipio>2304400</ns:CodigoMunicipio>
+                    </ns:IdentificacaoNfse>
+                    <ns:CodigoCancelamento>{{ codigo_cancelamento }}</ns:CodigoCancelamento>
+                </ns:InfPedidoCancelamento>
+            </ns:Pedido>
+        </ns:CancelarNfse>
+    </soap:Body>
+</soap:Envelope>
