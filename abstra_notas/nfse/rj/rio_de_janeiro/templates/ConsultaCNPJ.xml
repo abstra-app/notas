@@ -1,0 +1,10 @@
+<p1:PedidoConsultaCNPJ xmlns:p1="http://www.rio.rj.gov.br/nfe" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Cabecalho Versao="1">
+    <CPFCNPJRemetente>
+      <{{ remetente_tipo }}>{{ remetente }}</{{ remetente_tipo }}>
+    </CPFCNPJRemetente>
+  </Cabecalho>
+  <CNPJContribuinte>
+    <{{ contribuinte_tipo }}>{{ contribuinte }}</{{ contribuinte_tipo }}>
+  </CNPJContribuinte>
+</p1:PedidoConsultaCNPJ>
