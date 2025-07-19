@@ -1,9 +1,0 @@
-<PedidoEnvioRPS xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.rio.rj.gov.br/nfe">
-  <Cabecalho Versao="1" xmlns="">
-    <CPFCNPJRemetente>
-      <{{ remetente_tipo }}>{{ remetente }}</{{ remetente_tipo }}>
-    </CPFCNPJRemetente>
-  </Cabecalho>
-  {{ rps|safe }}
-</PedidoEnvioRPS>
