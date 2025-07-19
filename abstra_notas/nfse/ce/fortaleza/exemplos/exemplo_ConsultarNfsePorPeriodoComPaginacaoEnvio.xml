@@ -1,0 +1,29 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:prod="http://producao.issfortaleza.com.br/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <prod:consultarNfse>
+         <consultarNfseEnvio><![CDATA[<?xml version="1.0" encoding="ISO-8859-1"?>
+<ConsultarNfseEnvio xmlns="http://www.ginfes.com.br/servico_consultar_nfse_envio_v03.xsd" xmlns:tipos="http://www.ginfes.com.br/tipos_v03.xsd">
+    <Prestador>
+        <tipos:Cnpj>12345678901234</tipos:Cnpj> <!-- Tag obrigatória. CNPJ do prestador -->
+        <tipos:InscricaoMunicipal>12345</tipos:InscricaoMunicipal> <!-- Tag obrigatória. Não coloque o dígito verificador e não é necessário colocar zero à esquerda -->
+    </Prestador>
+    <PeriodoEmissao>
+        <DataInicial>2021-06-01</DataInicial>
+        <DataFinal>2021-06-30</DataFinal>
+    </PeriodoEmissao>
+	<!-- assine o arquivo com certificado ICP Brasil dos tipos A1, A3 e de servidor -->
+    <Signature xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo>
+<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />
+<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />
+<Reference URI="">
+<Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />
+<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" /></Transforms>
+<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+<DigestValue>?</DigestValue></Reference></SignedInfo>
+<SignatureValue>?</SignatureValue><KeyInfo><X509Data><X509Certificate>?</X509Certificate></X509Data></KeyInfo></Signature>
+</ConsultarNfseEnvio>]]></consultarNfseEnvio>
+         <numeroPagina>1</numeroPagina> <!-- informe o número da página. O sistema retorna 500 notas por página -->
+      </prod:consultarNfse>
+   </soapenv:Body>
+</soapenv:Envelope>

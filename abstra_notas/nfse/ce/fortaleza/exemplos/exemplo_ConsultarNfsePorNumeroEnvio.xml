@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Este serviço devolve a nota a partir do número -->
+<ns2:ConsultarNfseEnvio xmlns:ns2="http://www.ginfes.com.br/servico_consultar_nfse_envio_v03.xsd" xmlns="http://www.ginfes.com.br/tipos_v03.xsd" xmlns:ns3="http://www.w3.org/2000/09/xmldsig#">
+	<ns2:Prestador>
+		<Cnpj>12345678901234</Cnpj> <!-- Tag obrigatória. CNPJ do prestador -->
+		<InscricaoMunicipal>12345</InscricaoMunicipal> <!-- Tag obrigatória. Não coloque o dígito verificador e não é necessário colocar zero à esquerda -->
+	</ns2:Prestador>
+	<ns2:NumeroNfse>123456</ns2:NumeroNfse> <!-- Tag obrigatória -->
+	<!-- assine o arquivo com certificado ICP Brasil dos tipos A1, A3 e de servidor -->
+    <Signature xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo>
+<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+<Reference URI="">
+<Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/></Transforms>
+<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+<DigestValue>?</DigestValue></Reference></SignedInfo>
+<SignatureValue>?</SignatureValue><KeyInfo><X509Data><X509Certificate>?</X509Certificate></X509Data></KeyInfo></Signature>
+</ns2:ConsultarNfseEnvio>
