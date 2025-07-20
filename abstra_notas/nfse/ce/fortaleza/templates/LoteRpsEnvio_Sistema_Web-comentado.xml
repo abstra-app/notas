@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<EnviarLoteRpsEnvio xmlns:ns2="http://www.ginfes.com.br/tipos" xmlns="http://www.ginfes.com.br/servico_enviar_lote_rps_envio" xmlns:ns3="http://www.w3.org/2000/09/xmldsig#">
+    <NumeroLote>124025</NumeroLote> <!-- Tag obrigatória. O controle do número do lote fica a cargo do contribuinte -->
+    <Cnpj>01234567891234</Cnpj> <!-- Tag obrigatória. CNPJ do prestador -->
+    <InscricaoMunicipal>123456</InscricaoMunicipal> <!-- Tag obrigatória. Inscrição do prestador. Não coloque dígito verificador e nem zero à esquerda -->
+    <QuantidadeRps>1</QuantidadeRps> <!-- Tag obrigatória. O lote pode ter entre 1 e 50 RPS -->
+    <ListaRps> <!-- Tag obrigatória. Deve constar apenas uma vez no lote e para cada RPS, abra a tag RPS abaixo -->
+        <Rps> <!-- Tag obrigatória. O número de ocorrências deve bater com a quantidade informada na tag QuantidadeRps -->
+            <ns2:IdentificacaoRps> <!-- Tag obrigatória -->
+                <ns2:Numero>6005586</ns2:Numero> <!-- Tag obrigatória. O controle do número do RPS fica a cargo do contribuinte -->
+                <ns2:Serie>2014</ns2:Serie> <!-- Tag obrigatória. O controle da série do RPS fica a cargo do contribuinte. Pode ter letras e/ou números -->
+                <ns2:Tipo>1</ns2:Tipo> <!-- Tag obrigatória. 1 - RPS; 2 - Nota Fiscal Conjugada (Mista); 3 – Cupom; -->
+            </ns2:IdentificacaoRps>
+            <ns2:DataEmissao>2014-11-03T07:50:46</ns2:DataEmissao> <!-- Tag obrigatória. A data da emissão determina a competência  -->
+            <!-- 
+				Tag obrigatória. Consulte o Manual da ABRASF (link para download http://www.sefin.fortaleza.ce.gov.br/downloads/arquivos/manuais_ABRASF_1.0.zip) para saber as opções 
+				de natureza de operação. 1 - Tributação no Município de Fortaleza
+			-->
+			<ns2:NaturezaOperacao>1</ns2:NaturezaOperacao>
+			<!-- 
+				Tag opcional. Se não houver (por exemplo, na tributação Normal), não coloque a tag. Consulte o Manual da ABRASF (link para download 
+				http://www.sefin.fortaleza.ce.gov.br/downloads/arquivos/manuais_ABRASF_1.0.zip) para saber as opções de regime especial de tributação
+			-->
+            <ns2:RegimeEspecialTributacao>1</ns2:RegimeEspecialTributacao>
+            <ns2:OptanteSimplesNacional>2</ns2:OptanteSimplesNacional> <!-- Tag obrigatória. Valor 1 para optante e 2 para não optante do simples nacional -->
+            <ns2:IncentivadorCultural>2</ns2:IncentivadorCultural> <!-- Tag obrigatória. Valor 1 para verdadeiro e 2 para falso -->
+            <ns2:Status>1</ns2:Status> <!-- Tag obrigatória. Valor 1 para normal e 2 para gerar uma nota cancelada -->
+            <ns2:Servico>
+				<!-- todos os valores monetários abaixo devem ficar no padrão americano sem separação de milhar. Exemplo: R$3.214,54 fica 3214.54; R$9.875.415,79 fica 9875415.79 -->
+                <ns2:Valores> 
+                    <ns2:ValorServicos>5418.58</ns2:ValorServicos> <!-- Tag obrigatória -->
+                    <ns2:ValorDeducoes>4768.35</ns2:ValorDeducoes> <!-- Tag opcional. Somente pode ser utilizada em casos específicos -->
+                    <ns2:ValorPis>0.00</ns2:ValorPis> <!-- Tag opcional -->
+					<ns2:ValorCofins>0.00</ns2:ValorCofins> <!-- Tag opcional -->
+					<ns2:ValorInss>0.00</ns2:ValorInss> <!-- Tag opcional -->
+					<ns2:ValorIr>0.00</ns2:ValorIr> <!-- Tag opcional -->
+					<ns2:ValorCsll>0.00</ns2:ValorCsll> <!-- Tag opcional -->
+					<!-- Tag obrigatória. Valor 1 para ISS Retido e 2 para não retido. Para saber se o tomador de Fortaleza é substituto, consulte o cartão de ISS dele no site da SEFIN -->
+                    <ns2:IssRetido>2</ns2:IssRetido>
+                    <ns2:ValorIss>19.51</ns2:ValorIss> <!-- Tag opcional. Se o ISS não for retido, preencha esta tag com o valor. Caso contrário, use a tag ValorIssRetido abaixo -->
+					<ns2:ValorIssRetido>0.00</ns2:ValorIssRetido> <!-- Tag opcional. Se o ISS for retido, preencha esta tag com o valor. Caso contrário, use a tag ValorIss acima -->
+                    <ns2:OutrasRetencoes>0.00</ns2:OutrasRetencoes> <!-- Tag opcional -->
+                    <ns2:BaseCalculo>650.23</ns2:BaseCalculo> <!-- Tag opcional. Base de Cálculo = Valor Total de Serviços - Valor de Deduções - Desconto Incondicionado -->
+                    <ns2:Aliquota>0.03</ns2:Aliquota> <!-- Tag opcional. A alíquota deve estar no formato decimal. 3% fica como 0.03 -->
+                    <!-- Tag opcional. Valor Líquido = Valor Total de Serviços - PIS - COFINS - INSS - IR - CSLL - Outras Retenções - ISS Retido - Desc. Incondicionado - Desc. Condicionado -->
+					<ns2:ValorLiquidoNfse>5418.58</ns2:ValorLiquidoNfse>
+                    <ns2:DescontoCondicionado>0.00</ns2:DescontoCondicionado> <!-- Tag opcional -->
+                    <ns2:DescontoIncondicionado>0.00</ns2:DescontoIncondicionado> <!-- Tag opcional -->
+				</ns2:Valores>
+				<!-- Tag obrigatória. Consulte o item da lista relativo à CNAE escolhida consultando o documento com a lista de CNAEs de Fortaleza disponível na seção Layouts e 
+					Documentos da página inicial do sistema -->
+                <ns2:ItemListaServico>9.99</ns2:ItemListaServico> 
+				<!-- Tag obrigatória. Consulte a tabela de CNAEs de Fortaleza disponível na seção Layouts e Documentos da página inicial do sistema -->
+                <ns2:CodigoTributacaoMunicipio>999999999</ns2:CodigoTributacaoMunicipio>
+				<ns2:Discriminacao>texto</ns2:Discriminacao> <!-- Tag obrigatória. Máximo de 2000 caracteres -->
+                <ns2:MunicipioPrestacaoServico>2304400</ns2:MunicipioPrestacaoServico> <!-- Tag obrigatória. De acordo com tabela do IBGE. Código de Fortaleza: 2304400 -->
+            </ns2:Servico>
+            <ns2:Prestador> <!-- Tag obrigatória. -->
+                <ns2:Cnpj>01234567891234</ns2:Cnpj> <!-- Tag obrigatória. CNPJ do prestador. Deve bater com o CNPJ informado no cabeçalho -->
+                <ns2:InscricaoMunicipal>999999</ns2:InscricaoMunicipal> <!-- Tag opcional. Inscrição do prestador. Não deve conter o dígito verificador e bater com a inscrição do cabeçalho -->
+            </ns2:Prestador>
+            <ns2:Tomador> <!-- Se quiser emitir para um tomador PF ou estrangeiro sem informar qualquer dado, abra e feche a tag Tomador sem colocar qualquer conteúdo dentro -->
+                <ns2:IdentificacaoTomador> <!-- Tag opcional. É possível emitir sem informar CPF, CNPJ e inscrição municipal. Neste caso, o sistema assume que a nota foi para pessoa física -->
+                    <ns2:CpfCnpj> <!-- Tag CpfCnpj opcional. É possível emitir sem informar CPF ou CNPJ. Neste caso o sistema assume que a nota foi emitida para uma pessoa física -->
+                        <ns2:Cnpj>01234567891234</ns2:Cnpj> <!-- Use a tag Cnpj para tomadores pessoa jurídica e a tag Cpf para tomadores pessoa física -->
+                    </ns2:CpfCnpj>
+					<ns2:InscricaoMunicipal>999999</ns2:InscricaoMunicipal> <!-- Tag opcional. Somente para tomadores de Fortaleza. Não coloque o dígito verificador -->
+                </ns2:IdentificacaoTomador>
+                <ns2:RazaoSocial>RAZÃO SOCIAL</ns2:RazaoSocial> <!-- Tag obrigatória para tomador pessoa jurídica -->
+				<!-- Tag obrigatória para tomador pessoa jurídica. Se o tomador for pessoa física e esta tag for colocada, as tags internas <Endereco>, <Numero>, <Bairro>, <CodigoMunicipio>, <Uf> e <Cep> dever tem o conteúdo informado -->
+                <ns2:Endereco> 
+                    <ns2:Endereco>AV PRESIDENTE CASTELO BRANCO</ns2:Endereco> <!-- Tag obrigatória -->
+                    <ns2:Numero>999</ns2:Numero> <!-- Tag obrigatória -->
+					<ns2:Complemento>APARTAMENTO 302</ns2:Complemento> <!-- Tag opcional -->
+                    <ns2:Bairro>MOURA BRASIL</ns2:Bairro> <!-- Tag obrigatória -->
+                    <ns2:Cidade>2304400</ns2:Cidade> <!-- Tag obrigatória -->
+                    <ns2:Estado>CE</ns2:Estado> <!-- Tag obrigatória -->
+                    <ns2:Cep>60010000</ns2:Cep> <!-- Tag obrigatória -->
+                </ns2:Endereco>
+				<ns2:Contato> <!-- Tag obrigatória para tomador pessoa jurídica -->
+					<ns2:Telefone>(85) 3101-0001</ns2:Telefone> <!-- Tag obrigatória para tomador pessoa jurídica -->
+					<ns2:Email>email@exemplo.com.br</ns2:Email> <!-- Tag obrigatória para tomador pessoa jurídica. Preencha o email do tomador para que ele receba o link de visualização da nota -->
+				</ns2:Contato>
+            </ns2:Tomador>
+        </Rps>
+    </ListaRps>
+	<!-- não é preciso assinar lote enviado através do sistema web -->
+</EnviarLoteRpsEnvio>

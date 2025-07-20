@@ -8,7 +8,7 @@ def normalizar_cnpj(cnpj: str) -> str:
         validar = True
         digitos_verificadores = cnpj[12:]
     else:
-        raise CnpjInvalido("Quantidade de caracteres incorreto.")
+        raise CnpjInvalido(f"Quantidade de caracteres incorreto: '{cnpj}'. Deve conter 14 dígitos.")
 
     cnpj = cnpj[:12]
 
@@ -26,7 +26,7 @@ def normalizar_cnpj(cnpj: str) -> str:
         dig_11 = int(cnpj[10]) * 8
         dig_12 = int(cnpj[11]) * 9
     except IndexError:
-        raise CnpjInvalido("Quantidade de caracteres incorreto.")
+        raise CnpjInvalido(f"Quantidade de caracteres incorreto: '{cnpj}'. Deve conter 14 dígitos.")
 
     dig_1_ao_12_somados = (
         dig_1
@@ -103,7 +103,7 @@ def normalizar_cnpj(cnpj: str) -> str:
         if digitos_verificadores == cnpj_validado[12:]:
             return cnpj_normalizado
         else:
-            raise CnpjInvalido("Os dígitos verificadores estão incorretos.")
+            raise CnpjInvalido(f"Os dígitos verificadores estão incorretos: '{digitos_verificadores}'.")
     else:
         return cnpj_normalizado
 

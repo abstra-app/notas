@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ConsultarNfseEnvio xmlns="http://www.ginfes.com.br/servico_consultar_nfse_envio_v03.xsd">
+	<Prestador>
+		<tipos:Cnpj xmlns:tipos="http://www.ginfes.com.br/tipos_v03.xsd">{{prestador_cnpj}}</tipos:Cnpj>
+		<tipos:InscricaoMunicipal xmlns:tipos="http://www.ginfes.com.br/tipos_v03.xsd">{{prestador_inscricao_municipal}}</tipos:InscricaoMunicipal>
+	</Prestador>
+	{% if data_inicial and data_final %}
+	<PeriodoEmissao>
+		<DataInicial>{{data_inicial}}</DataInicial>
+		<DataFinal>{{data_final}}</DataFinal>
+	</PeriodoEmissao>
+	{% endif %}
+
+	{% if numero_nfse %}
+	<NumeroNfse>{{numero_nfse}}</NumeroNfse>
+	{% endif %}
+
+	{% if numero_rps and serie_rps and tipo_rps %}
+	<IdentificacaoRps xmlns:tipos="http://www.ginfes.com.br/tipos_v03.xsd">
+		<tipos:Numero>{{numero_rps}}</tipos:Numero>
+		<tipos:Serie>{{serie_rps}}</tipos:Serie>
+		<tipos:Tipo>{{tipo_rps}}</tipos:Tipo>
+	</IdentificacaoRps>
+	{% endif %}
+</ConsultarNfseEnvio>

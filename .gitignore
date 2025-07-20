@@ -77,6 +77,7 @@ target/
 
 # Jupyter Notebook
 .ipynb_checkpoints
+*.ipynb
 
 # IPython
 profile_default/
@@ -168,3 +169,5 @@ cython_debug/
 *.application
 *.key
 *.pfx
+
+credenciais

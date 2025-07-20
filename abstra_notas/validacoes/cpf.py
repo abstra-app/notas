@@ -8,7 +8,7 @@ def normalizar_cpf(cpf: str) -> str:
         validar = True
         digitos_verificadores = cpf[9:]
     else:
-        raise CpfInvalido("Quantidade de caracteres incorreto.")
+        raise CpfInvalido(f"Quantidade de caracteres incorreto: '{cpf}'. Deve conter 11 dígitos.")
 
     cpf = cpf[:9]
 
@@ -23,7 +23,7 @@ def normalizar_cpf(cpf: str) -> str:
         dig_8 = int(cpf[7]) * 8
         dig_9 = int(cpf[8]) * 9
     except IndexError:
-        raise CpfInvalido("Quantidade de caracteres incorreto.")
+        raise CpfInvalido(f"Quantidade de caracteres incorreto: '{cpf}'. Deve conter 11 dígitos.")
 
     dig_1_ao_9_somados = (
         dig_1 + dig_2 + dig_3 + dig_4 + dig_5 + dig_6 + dig_7 + dig_8 + dig_9
@@ -73,7 +73,7 @@ def normalizar_cpf(cpf: str) -> str:
         if digitos_verificadores == cpf_validado[9:]:
             return cpf_normalizado
         else:
-            raise CpfInvalido("Os dígitos verificadores estão incorretos.")
+            raise CpfInvalido(f"Os dígitos verificadores estão incorretos: '{cpf}'.")
     else:
         return cpf_normalizado
 

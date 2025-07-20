@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<tns:CancelarNfseEnvio xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
+    xmlns:n1="http://www.altova.com/samplexml/other-namespace"
+    xmlns:tipos="http://www.ginfes.com.br/tipos"
+    xmlns:tns="http://www.ginfes.com.br/servico_cancelar_nfse_envio"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.ginfes.com.br/servico_cancelar_nfse_envio_v02.xsd">
+    <tns:Prestador>
+        <tipos:Cnpj>{{prestador_cnpj}}</tipos:Cnpj> <!-- Tag obrigatória. CNPJ do prestador -->
+        <tipos:InscricaoMunicipal>{{prestador_inscricao_municipal}}</tipos:InscricaoMunicipal> <!-- Tag obrigatória. Não coloque
+        o dígito verificador e não é necessário colocar zero à esquerda -->
+    </tns:Prestador>
+    <tns:NumeroNfse>{{ numero_nfse }}</tns:NumeroNfse> <!-- Tag obrigatória -->
+</tns:CancelarNfseEnvio>

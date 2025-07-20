@@ -1,0 +1,123 @@
+<EnviarLoteRpsEnvio xmlns="http://www.ginfes.com.br/servico_enviar_lote_rps_envio_v03.xsd" xmlns:tipos="http://www.ginfes.com.br/tipos_v03.xsd">
+	<LoteRps Id="{{lote_id}}">
+		<tipos:NumeroLote>{{numero_lote}}</tipos:NumeroLote>
+		<tipos:Cnpj>{{prestador_cnpj}}</tipos:Cnpj>
+		<tipos:InscricaoMunicipal>{{prestador_inscricao_municipal}}</tipos:InscricaoMunicipal>
+		<tipos:QuantidadeRps>{{quantidade_rps}}</tipos:QuantidadeRps>
+		<tipos:ListaRps>
+			{% for rps in lista_rps %}
+			<tipos:Rps Id="{{ rps.id }}">
+				<tipos:InfRps>
+					<tipos:IdentificacaoRps>
+						<tipos:Numero>{{ rps.numero }}</tipos:Numero>
+						<tipos:Serie>{{ rps.serie }}</tipos:Serie>
+						<tipos:Tipo>{{ rps.tipo.value }}</tipos:Tipo>
+					</tipos:IdentificacaoRps>
+					<tipos:DataEmissao>{{ rps.data_emissao_iso8601 }}</tipos:DataEmissao>
+					<tipos:NaturezaOperacao>{{ rps.natureza_operacao.value }}</tipos:NaturezaOperacao>
+					{% if rps.regime_especial_tributacao is not none %}
+					<tipos:RegimeEspecialTributacao>{{ rps.regime_especial_tributacao.value }}</tipos:RegimeEspecialTributacao>
+					{% endif %}
+					<tipos:OptanteSimplesNacional>{{ rps.optante_simples_nacional_value }}</tipos:OptanteSimplesNacional>
+					<tipos:IncentivadorCultural>{{ rps.incentivador_cultural_value }}</tipos:IncentivadorCultural>
+					<tipos:Status>{{ rps.status.value }}</tipos:Status>
+					<tipos:Servico>
+						<tipos:Valores>
+							<tipos:ValorServicos>{{ rps.servico.valores.valor_servico }}</tipos:ValorServicos>
+							{% if rps.servico.valores.valor_deducoes is not none %}
+							<tipos:ValorDeducoes>{{ rps.servico.valores.valor_deducoes }}</tipos:ValorDeducoes>
+							{% endif %}
+							{% if rps.servico.valores.valor_pis is not none %}
+							<tipos:ValorPis>{{ rps.servico.valores.valor_pis }}</tipos:ValorPis>
+							{% endif %}
+							{% if rps.servico.valores.valor_cofins is not none %}
+							<tipos:ValorCofins>{{ rps.servico.valores.valor_cofins }}</tipos:ValorCofins>
+							{% endif %}
+							{% if rps.servico.valores.valor_inss is not none %}
+							<tipos:ValorInss>{{ rps.servico.valores.valor_inss }}</tipos:ValorInss>
+							{% endif %}
+							{% if rps.servico.valores.valor_ir is not none %}
+							<tipos:ValorIr>{{ rps.servico.valores.valor_ir }}</tipos:ValorIr>
+							{% endif %}
+							{% if rps.servico.valores.valor_csll is not none %}
+							<tipos:ValorCsll>{{ rps.servico.valores.valor_csll }}</tipos:ValorCsll>
+							{% endif %}
+							<tipos:IssRetido>{{ rps.servico.valores.iss_retido_str }}</tipos:IssRetido>
+							{% if rps.servico.valores.valor_iss is not none %}
+							<tipos:ValorIss>{{ rps.servico.valores.valor_iss }}</tipos:ValorIss>
+							{% endif %}
+							{% if rps.servico.valores.valor_iss_retido is not none %}
+							<tipos:ValorIssRetido>{{ rps.servico.valores.valor_iss_retido }}</tipos:ValorIssRetido>
+							{% endif %}
+							{% if rps.servico.valores.outras_retencoes is not none %}
+							<tipos:OutrasRetencoes>{{ rps.servico.valores.outras_retencoes }}</tipos:OutrasRetencoes>
+							{% endif %}
+							{% if rps.servico.valores.base_calculo is not none %}
+							<tipos:BaseCalculo>{{ rps.servico.valores.base_calculo }}</tipos:BaseCalculo>
+							{% endif %}
+							{% if rps.servico.valores.aliquota_iss is not none %}
+							<tipos:Aliquota>{{ rps.servico.valores.aliquota_iss_value }}</tipos:Aliquota>
+							{% endif %}
+							{% if rps.servico.valores.valor_liquido_nfse is not none %}
+							<tipos:ValorLiquidoNfse>{{ rps.servico.valores.valor_liquido_nfse }}</tipos:ValorLiquidoNfse>
+							{% endif %}
+							{% if rps.servico.valores.valor_desconto_incondicionado is not none %}
+							<tipos:DescontoIncondicionado>{{ rps.servico.valores.valor_desconto_incondicionado }}</tipos:DescontoIncondicionado>
+							{% endif %}
+							{% if rps.servico.valores.valor_desconto_condicionado is not none %}
+							<tipos:DescontoCondicionado>{{ rps.servico.valores.valor_desconto_condicionado }}</tipos:DescontoCondicionado>
+							{% endif %}
+						</tipos:Valores>
+						<tipos:ItemListaServico>{{ rps.servico.item_lista_servico }}</tipos:ItemListaServico>
+						{% if rps.servico.codigo_tributacao_municipio is not none %}
+						<tipos:CodigoTributacaoMunicipio>{{ rps.servico.codigo_tributacao_municipio }}</tipos:CodigoTributacaoMunicipio>
+						{% endif %}
+						<tipos:Discriminacao>{{ rps.servico.discriminacao }}</tipos:Discriminacao>
+						<tipos:CodigoMunicipio>{{ rps.servico.codigo_municipio }}</tipos:CodigoMunicipio>
+					</tipos:Servico>
+					<tipos:Prestador>
+						<tipos:Cnpj>{{ rps.prestador_cnpj }}</tipos:Cnpj>
+						<tipos:InscricaoMunicipal>{{ rps.prestador_inscricao_municipal }}</tipos:InscricaoMunicipal>
+					</tipos:Prestador>
+					<tipos:Tomador>
+						<tipos:IdentificacaoTomador>
+							<tipos:CpfCnpj>
+								{% if rps.tomador_cnpj %}
+								<tipos:Cnpj>{{ rps.tomador_cnpj }}</tipos:Cnpj>
+								{% elif rps.tomador_cpf %}
+								<tipos:Cpf>{{ rps.tomador_cpf }}</tipos:Cpf>
+								{% endif %}
+							</tipos:CpfCnpj>
+							{% if rps.tomador_inscricao_municipal %}
+							<tipos:InscricaoMunicipal>{{ rps.tomador_inscricao_municipal }}</tipos:InscricaoMunicipal>
+							{% endif %}
+						</tipos:IdentificacaoTomador>
+						{% if rps.tomador_razao_social %}
+						<tipos:RazaoSocial>{{ rps.tomador_razao_social }}</tipos:RazaoSocial>
+						{% endif %}
+						 {% if rps.tomador_endereco %}
+						<tipos:Endereco>
+							<tipos:Endereco>{{ rps.tomador_endereco.logradouro }}</tipos:Endereco>
+							<tipos:Numero>{{ rps.tomador_endereco.numero }}</tipos:Numero>
+							{% if rps.tomador_endereco.complemento %}
+							<tipos:Complemento>{{ rps.tomador_endereco.complemento }}</tipos:Complemento>
+							{% endif %}
+							<tipos:Bairro>{{ rps.tomador_endereco.bairro }}</tipos:Bairro>
+							<tipos:CodigoMunicipio>{{ rps.tomador_endereco.codigo_municipio }}</tipos:CodigoMunicipio>
+							<tipos:Uf>{{ rps.tomador_endereco.uf }}</tipos:Uf>
+							<tipos:Cep>{{ rps.tomador_endereco.cep }}</tipos:Cep>
+						</tipos:Endereco>
+						{% endif %}
+						{% if rps.tomador_contato %}
+						<tipos:Contato>
+							<tipos:Telefone>{{ rps.tomador_contato.telefone }}</tipos:Telefone>
+							<tipos:Email>{{ rps.tomador_contato.email }}</tipos:Email>
+						</tipos:Contato>
+						{% endif %}
+					</tipos:Tomador>
+				</tipos:InfRps>
+			</tipos:Rps>
+			{% endfor %}
+		</tipos:ListaRps>
+	</LoteRps>
+</EnviarLoteRpsEnvio>
