@@ -7,7 +7,6 @@ from abstra_notas.validacoes.cpf import normalizar_cpf
 from abstra_notas.validacoes.cidades import normalizar_uf
 from abstra_notas.validacoes.cep import normalizar_cep
 from abstra_notas.validacoes.telefone import normalizar_telefone
-from abstra_notas.validacoes.data import normalizar_data
 from abstra_notas.validacoes.email import validar_email
 from typing import List, Optional
 from lxml.etree import ElementBase
@@ -149,7 +148,7 @@ class Valores:
         Retorna a alíquota do ISS como string formatada.
         """
         if self.aliquota_iss is not None:
-            return f"{self.aliquota_iss:.2f}"
+            return self.aliquota_iss
         return None
 
 
@@ -158,7 +157,7 @@ class Valores:
         """
         Retorna True se o ISS foi retido, False caso contrário.
         """
-        return self.valor_iss_retido_centavos is not None
+        return self.valor_iss_retido_centavos is not None and self.valor_iss_retido_centavos > 0
 
     @property
     def iss_retido_str(self):
@@ -422,7 +421,7 @@ class Contato:
         Normaliza o telefone e o email.
         """
         try:
-            self.telefone = normalizar_telefone(self.telefone)
+            self.telefone = "".join(c for c in self.telefone if c.isdigit())
         except ValueError as e:
             warning(e)
 
@@ -1147,13 +1146,8 @@ class EnviarLoteRpsEnvio(Envio[EnviarLoteRpsResposta]):
     def nome_operacao(self):
         return "RecepcionarLoteRpsV3"
     
-    def resposta(self, xml: ElementBase) -> CompNfse:
-        if find_element(xml, 'ListaMensagemRetorno') is not None:
-            mensagens = find_all_elements(xml, 'MensagemRetorno')
-            lista_mensagem_retorno = [MensagemRetorno.from_xml(m) for m in mensagens]
-            raise Exception(f"Erro ao enviar lote RPS: {lista_mensagem_retorno}")
-        else:
-            return CompNfse.from_xml(xml)
+    def resposta(self, xml: ElementBase) -> EnviarLoteRpsResposta:
+        return EnviarLoteRpsResposta.from_xml(xml)
 
 @dataclass
 class CancelarNfseResposta:

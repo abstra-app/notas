@@ -1,123 +1,125 @@
-<EnviarLoteRpsEnvio xmlns="http://www.ginfes.com.br/servico_enviar_lote_rps_envio_v03.xsd" xmlns:tipos="http://www.ginfes.com.br/tipos_v03.xsd">
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<EnviarLoteRpsEnvio xmlns="http://www.ginfes.com.br/servico_enviar_lote_rps_envio_v03.xsd" xmlns:ns3="http://www.ginfes.com.br/tipos_v03.xsd">
 	<LoteRps Id="{{lote_id}}">
-		<tipos:NumeroLote>{{numero_lote}}</tipos:NumeroLote>
-		<tipos:Cnpj>{{prestador_cnpj}}</tipos:Cnpj>
-		<tipos:InscricaoMunicipal>{{prestador_inscricao_municipal}}</tipos:InscricaoMunicipal>
-		<tipos:QuantidadeRps>{{quantidade_rps}}</tipos:QuantidadeRps>
-		<tipos:ListaRps>
+		<ns3:NumeroLote>{{numero_lote}}</ns3:NumeroLote>
+		<ns3:Cnpj>{{prestador_cnpj}}</ns3:Cnpj>
+		<ns3:InscricaoMunicipal>{{prestador_inscricao_municipal}}</ns3:InscricaoMunicipal>
+		<ns3:QuantidadeRps>{{quantidade_rps}}</ns3:QuantidadeRps>
+		<ns3:ListaRps>
 			{% for rps in lista_rps %}
-			<tipos:Rps Id="{{ rps.id }}">
-				<tipos:InfRps>
-					<tipos:IdentificacaoRps>
-						<tipos:Numero>{{ rps.numero }}</tipos:Numero>
-						<tipos:Serie>{{ rps.serie }}</tipos:Serie>
-						<tipos:Tipo>{{ rps.tipo.value }}</tipos:Tipo>
-					</tipos:IdentificacaoRps>
-					<tipos:DataEmissao>{{ rps.data_emissao_iso8601 }}</tipos:DataEmissao>
-					<tipos:NaturezaOperacao>{{ rps.natureza_operacao.value }}</tipos:NaturezaOperacao>
+			<ns3:Rps>
+				<ns3:InfRps>
+					<ns3:IdentificacaoRps>
+						<ns3:Numero>{{ rps.numero }}</ns3:Numero>
+						<ns3:Serie>{{ rps.serie }}</ns3:Serie>
+						<ns3:Tipo>{{ rps.tipo.value }}</ns3:Tipo>
+					</ns3:IdentificacaoRps>
+					<ns3:DataEmissao>{{ rps.data_emissao_iso8601 }}</ns3:DataEmissao>
+					<ns3:NaturezaOperacao>{{ rps.natureza_operacao.value }}</ns3:NaturezaOperacao>
 					{% if rps.regime_especial_tributacao is not none %}
-					<tipos:RegimeEspecialTributacao>{{ rps.regime_especial_tributacao.value }}</tipos:RegimeEspecialTributacao>
+					<ns3:RegimeEspecialTributacao>{{ rps.regime_especial_tributacao.value }}</ns3:RegimeEspecialTributacao>
 					{% endif %}
-					<tipos:OptanteSimplesNacional>{{ rps.optante_simples_nacional_value }}</tipos:OptanteSimplesNacional>
-					<tipos:IncentivadorCultural>{{ rps.incentivador_cultural_value }}</tipos:IncentivadorCultural>
-					<tipos:Status>{{ rps.status.value }}</tipos:Status>
-					<tipos:Servico>
-						<tipos:Valores>
-							<tipos:ValorServicos>{{ rps.servico.valores.valor_servico }}</tipos:ValorServicos>
+					<ns3:OptanteSimplesNacional>{{ rps.optante_simples_nacional_value }}</ns3:OptanteSimplesNacional>
+					<ns3:IncentivadorCultural>{{ rps.incentivador_cultural_value }}</ns3:IncentivadorCultural>
+					<ns3:Status>{{ rps.status.value }}</ns3:Status>
+					<ns3:Servico>
+						<ns3:Valores>
+							<ns3:ValorServicos>{{ rps.servico.valores.valor_servico }}</ns3:ValorServicos>
 							{% if rps.servico.valores.valor_deducoes is not none %}
-							<tipos:ValorDeducoes>{{ rps.servico.valores.valor_deducoes }}</tipos:ValorDeducoes>
+							<ns3:ValorDeducoes>{{ rps.servico.valores.valor_deducoes }}</ns3:ValorDeducoes>
 							{% endif %}
 							{% if rps.servico.valores.valor_pis is not none %}
-							<tipos:ValorPis>{{ rps.servico.valores.valor_pis }}</tipos:ValorPis>
+							<ns3:ValorPis>{{ rps.servico.valores.valor_pis }}</ns3:ValorPis>
 							{% endif %}
 							{% if rps.servico.valores.valor_cofins is not none %}
-							<tipos:ValorCofins>{{ rps.servico.valores.valor_cofins }}</tipos:ValorCofins>
+							<ns3:ValorCofins>{{ rps.servico.valores.valor_cofins }}</ns3:ValorCofins>
 							{% endif %}
 							{% if rps.servico.valores.valor_inss is not none %}
-							<tipos:ValorInss>{{ rps.servico.valores.valor_inss }}</tipos:ValorInss>
+							<ns3:ValorInss>{{ rps.servico.valores.valor_inss }}</ns3:ValorInss>
 							{% endif %}
 							{% if rps.servico.valores.valor_ir is not none %}
-							<tipos:ValorIr>{{ rps.servico.valores.valor_ir }}</tipos:ValorIr>
+							<ns3:ValorIr>{{ rps.servico.valores.valor_ir }}</ns3:ValorIr>
 							{% endif %}
 							{% if rps.servico.valores.valor_csll is not none %}
-							<tipos:ValorCsll>{{ rps.servico.valores.valor_csll }}</tipos:ValorCsll>
+							<ns3:ValorCsll>{{ rps.servico.valores.valor_csll }}</ns3:ValorCsll>
 							{% endif %}
-							<tipos:IssRetido>{{ rps.servico.valores.iss_retido_str }}</tipos:IssRetido>
+							<ns3:IssRetido>{{ rps.servico.valores.iss_retido_str }}</ns3:IssRetido>
 							{% if rps.servico.valores.valor_iss is not none %}
-							<tipos:ValorIss>{{ rps.servico.valores.valor_iss }}</tipos:ValorIss>
+							<ns3:ValorIss>{{ rps.servico.valores.valor_iss }}</ns3:ValorIss>
 							{% endif %}
 							{% if rps.servico.valores.valor_iss_retido is not none %}
-							<tipos:ValorIssRetido>{{ rps.servico.valores.valor_iss_retido }}</tipos:ValorIssRetido>
+							<ns3:ValorIssRetido>{{ rps.servico.valores.valor_iss_retido }}</ns3:ValorIssRetido>
 							{% endif %}
 							{% if rps.servico.valores.outras_retencoes is not none %}
-							<tipos:OutrasRetencoes>{{ rps.servico.valores.outras_retencoes }}</tipos:OutrasRetencoes>
+							<ns3:OutrasRetencoes>{{ rps.servico.valores.outras_retencoes }}</ns3:OutrasRetencoes>
 							{% endif %}
 							{% if rps.servico.valores.base_calculo is not none %}
-							<tipos:BaseCalculo>{{ rps.servico.valores.base_calculo }}</tipos:BaseCalculo>
+							<ns3:BaseCalculo>{{ rps.servico.valores.base_calculo }}</ns3:BaseCalculo>
 							{% endif %}
 							{% if rps.servico.valores.aliquota_iss is not none %}
-							<tipos:Aliquota>{{ rps.servico.valores.aliquota_iss_value }}</tipos:Aliquota>
+							<ns3:Aliquota>{{ rps.servico.valores.aliquota_iss_value }}</ns3:Aliquota>
 							{% endif %}
 							{% if rps.servico.valores.valor_liquido_nfse is not none %}
-							<tipos:ValorLiquidoNfse>{{ rps.servico.valores.valor_liquido_nfse }}</tipos:ValorLiquidoNfse>
+							<ns3:ValorLiquidoNfse>{{ rps.servico.valores.valor_liquido_nfse }}</ns3:ValorLiquidoNfse>
 							{% endif %}
 							{% if rps.servico.valores.valor_desconto_incondicionado is not none %}
-							<tipos:DescontoIncondicionado>{{ rps.servico.valores.valor_desconto_incondicionado }}</tipos:DescontoIncondicionado>
+							<ns3:DescontoIncondicionado>{{ rps.servico.valores.valor_desconto_incondicionado }}</ns3:DescontoIncondicionado>
 							{% endif %}
 							{% if rps.servico.valores.valor_desconto_condicionado is not none %}
-							<tipos:DescontoCondicionado>{{ rps.servico.valores.valor_desconto_condicionado }}</tipos:DescontoCondicionado>
+							<ns3:DescontoCondicionado>{{ rps.servico.valores.valor_desconto_condicionado }}</ns3:DescontoCondicionado>
 							{% endif %}
-						</tipos:Valores>
-						<tipos:ItemListaServico>{{ rps.servico.item_lista_servico }}</tipos:ItemListaServico>
+						</ns3:Valores>
+						<ns3:ItemListaServico>{{ rps.servico.item_lista_servico }}</ns3:ItemListaServico>
 						{% if rps.servico.codigo_tributacao_municipio is not none %}
-						<tipos:CodigoTributacaoMunicipio>{{ rps.servico.codigo_tributacao_municipio }}</tipos:CodigoTributacaoMunicipio>
+						<ns3:CodigoCnae>{{ rps.servico.codigo_tributacao_municipio[:-2] }}</ns3:CodigoCnae>
+						<ns3:CodigoTributacaoMunicipio>{{ rps.servico.codigo_tributacao_municipio }}</ns3:CodigoTributacaoMunicipio>
 						{% endif %}
-						<tipos:Discriminacao>{{ rps.servico.discriminacao }}</tipos:Discriminacao>
-						<tipos:CodigoMunicipio>{{ rps.servico.codigo_municipio }}</tipos:CodigoMunicipio>
-					</tipos:Servico>
-					<tipos:Prestador>
-						<tipos:Cnpj>{{ rps.prestador_cnpj }}</tipos:Cnpj>
-						<tipos:InscricaoMunicipal>{{ rps.prestador_inscricao_municipal }}</tipos:InscricaoMunicipal>
-					</tipos:Prestador>
-					<tipos:Tomador>
-						<tipos:IdentificacaoTomador>
-							<tipos:CpfCnpj>
+						<ns3:Discriminacao>{{ rps.servico.discriminacao }}</ns3:Discriminacao>
+						<ns3:CodigoMunicipio>{{ rps.servico.codigo_municipio }}</ns3:CodigoMunicipio>
+					</ns3:Servico>
+					<ns3:Prestador>
+						<ns3:Cnpj>{{ rps.prestador_cnpj }}</ns3:Cnpj>
+						<ns3:InscricaoMunicipal>{{ rps.prestador_inscricao_municipal }}</ns3:InscricaoMunicipal>
+					</ns3:Prestador>
+					<ns3:Tomador>
+						<ns3:IdentificacaoTomador>
+							<ns3:CpfCnpj>
 								{% if rps.tomador_cnpj %}
-								<tipos:Cnpj>{{ rps.tomador_cnpj }}</tipos:Cnpj>
+								<ns3:Cnpj>{{ rps.tomador_cnpj }}</ns3:Cnpj>
 								{% elif rps.tomador_cpf %}
-								<tipos:Cpf>{{ rps.tomador_cpf }}</tipos:Cpf>
+								<ns3:Cpf>{{ rps.tomador_cpf }}</ns3:Cpf>
 								{% endif %}
-							</tipos:CpfCnpj>
+							</ns3:CpfCnpj>
 							{% if rps.tomador_inscricao_municipal %}
-							<tipos:InscricaoMunicipal>{{ rps.tomador_inscricao_municipal }}</tipos:InscricaoMunicipal>
+							<ns3:InscricaoMunicipal>{{ rps.tomador_inscricao_municipal }}</ns3:InscricaoMunicipal>
 							{% endif %}
-						</tipos:IdentificacaoTomador>
+						</ns3:IdentificacaoTomador>
 						{% if rps.tomador_razao_social %}
-						<tipos:RazaoSocial>{{ rps.tomador_razao_social }}</tipos:RazaoSocial>
+						<ns3:RazaoSocial>{{ rps.tomador_razao_social }}</ns3:RazaoSocial>
 						{% endif %}
 						 {% if rps.tomador_endereco %}
-						<tipos:Endereco>
-							<tipos:Endereco>{{ rps.tomador_endereco.logradouro }}</tipos:Endereco>
-							<tipos:Numero>{{ rps.tomador_endereco.numero }}</tipos:Numero>
+						<ns3:Endereco>
+							<ns3:Endereco>{{ rps.tomador_endereco.logradouro }}</ns3:Endereco>
+							<ns3:Numero>{{ rps.tomador_endereco.numero }}</ns3:Numero>
 							{% if rps.tomador_endereco.complemento %}
-							<tipos:Complemento>{{ rps.tomador_endereco.complemento }}</tipos:Complemento>
+							<ns3:Complemento>{{ rps.tomador_endereco.complemento }}</ns3:Complemento>
 							{% endif %}
-							<tipos:Bairro>{{ rps.tomador_endereco.bairro }}</tipos:Bairro>
-							<tipos:CodigoMunicipio>{{ rps.tomador_endereco.codigo_municipio }}</tipos:CodigoMunicipio>
-							<tipos:Uf>{{ rps.tomador_endereco.uf }}</tipos:Uf>
-							<tipos:Cep>{{ rps.tomador_endereco.cep }}</tipos:Cep>
-						</tipos:Endereco>
+							<ns3:Bairro>{{ rps.tomador_endereco.bairro }}</ns3:Bairro>
+							<ns3:CodigoMunicipio>{{ rps.tomador_endereco.codigo_municipio }}</ns3:CodigoMunicipio>
+							<ns3:Uf>{{ rps.tomador_endereco.uf }}</ns3:Uf>
+							<ns3:Cep>{{ rps.tomador_endereco.cep }}</ns3:Cep>
+						</ns3:Endereco>
 						{% endif %}
 						{% if rps.tomador_contato %}
-						<tipos:Contato>
-							<tipos:Telefone>{{ rps.tomador_contato.telefone }}</tipos:Telefone>
-							<tipos:Email>{{ rps.tomador_contato.email }}</tipos:Email>
-						</tipos:Contato>
+						<ns3:Contato>
+							<ns3:Telefone>{{ rps.tomador_contato.telefone }}</ns3:Telefone>
+							<ns3:Email>{{ rps.tomador_contato.email }}</ns3:Email>
+						</ns3:Contato>
 						{% endif %}
-					</tipos:Tomador>
-				</tipos:InfRps>
-			</tipos:Rps>
+					</ns3:Tomador>
+				</ns3:InfRps>
+			</ns3:Rps>
 			{% endfor %}
-		</tipos:ListaRps>
+		</ns3:ListaRps>
 	</LoteRps>
 </EnviarLoteRpsEnvio>

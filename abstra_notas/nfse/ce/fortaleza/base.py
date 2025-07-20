@@ -8,6 +8,8 @@ from lxml.etree import tostring, fromstring, ElementBase
 from pathlib import Path
 from typing import Generic, TypeVar
 from tempfile import mktemp
+# import xmlschema
+from xmlschema import XMLSchema
 
 T = TypeVar('T', bound='Envio')
 
@@ -44,9 +46,6 @@ class Envio(ABC, Generic[T]):
             certfile.write_bytes(assinador.cert_pem_bytes)
             url = "https://iss.fortaleza.ce.gov.br/grpfor-iss/ServiceGinfesImplService?wsdl"
             xml = self.gerar_xml()
-            request_tmp_path = Path(mktemp())
-            request_tmp_path.write_text(tostring(xml, encoding=str), encoding="utf-8")
-            print(f"Request saved to: {request_tmp_path}")
             session = Session()
             session.cert = (certfile, keyfile)
             session.verify = False
@@ -55,10 +54,27 @@ class Envio(ABC, Generic[T]):
             client = Client(
                 url, transport=transport, settings=settings, plugins=[history]
             )
-            signed_xml = assinador.assinar_xml(xml)
+
+            # Assina o XML
+            xml_assinado = assinador.assinar_xml(xml)
+
+            request_tmp_path = Path(mktemp())
+            request_tmp_path.write_text(tostring(xml_assinado, encoding=str), encoding="utf-8")
+            print(f"Request saved to: {request_tmp_path}")
+            # Enable local schema validation to debug E317
+            # schema_file = Path(__file__).parent / "schemas" / "servico_enviar_lote_rps_envio_v03.xsd"
+            # if schema_file.exists():
+            #     try:
+            #         XMLSchema(schema_file).validate(xml_assinado)
+            #         print("✅ Local schema validation passed")
+            #     except Exception as e:
+            #         print(f"❌ Local schema validation failed: {e}")
+            # else:
+            #     print(f"Warning: Local schema file not found: {schema_file}")
+
 
             response: str = getattr(client.service, self.nome_operacao())(
-                1, tostring(signed_xml, encoding=str)
+                1, tostring(xml_assinado, encoding=str)
             )
 
             response_temp_path = Path(mktemp())
