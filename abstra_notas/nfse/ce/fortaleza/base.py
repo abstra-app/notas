@@ -72,10 +72,16 @@ class Envio(ABC, Generic[T]):
             # else:
             #     print(f"Warning: Local schema file not found: {schema_file}")
 
-
-            response: str = getattr(client.service, self.nome_operacao())(
-                1, tostring(xml_assinado, encoding=str)
-            )
+            
+            if self.nome_operacao() == "CancelarNfse":
+                response: str = getattr(client.service, self.nome_operacao())(
+                    tostring(xml_assinado, encoding=str)
+                )
+            else:
+                cabecalho = cabecalho = '<?xml version="1.0" encoding="UTF-8"?><cabecalho xmlns="http://www.ginfes.com.br/cabecalho_v03.xsd" versao="3"><versaoDados>3</versaoDados></cabecalho>'
+                response: str = getattr(client.service, self.nome_operacao())(
+                    cabecalho, tostring(xml_assinado, encoding=str)
+                )
 
             response_temp_path = Path(mktemp())
             response_temp_path.write_text(response, encoding="utf-8")

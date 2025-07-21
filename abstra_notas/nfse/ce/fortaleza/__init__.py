@@ -13,7 +13,6 @@ from lxml.etree import ElementBase
 from logging import warning
 from enum import Enum
 
-
 def find_element(parent: ElementBase, tag_name: str):
     """
     Busca um elemento ignorando namespace.
@@ -1165,17 +1164,20 @@ class CancelarNfseResposta:
     data_hora: datetime
     mensagem_retorno: MensagemRetorno
 
+
     @classmethod
     def from_xml(cls, xml: ElementBase):
         """
         Método para criar uma instância de CancelarNfseResposta a partir de um elemento XML.
         """
+
         return cls(
             sucesso=find_text(xml, 'Sucesso', 'false') == 'true',
             data_hora=datetime.fromisoformat(find_text(xml, 'DataHora', '')),
             mensagem_retorno=MensagemRetorno.from_xml(find_element(xml, 'MensagemRetorno'))
         )
 
+@dataclass
 class CancelarNfseEnvio(Envio[CancelarNfseResposta]):
     prestador_cnpj: str
     prestador_inscricao_municipal: str
@@ -1188,7 +1190,6 @@ class CancelarNfseEnvio(Envio[CancelarNfseResposta]):
 
         self.prestador_cnpj = normalizar_cnpj(self.prestador_cnpj)
         self.numero_nfse = str(self.numero_nfse).strip()
-        assert len(self.numero_nfse) == 15, "O número da NFS-e deve ter exatamente 15 caracteres."
     
     def nome_operacao(self):
         return "CancelarNfse"
