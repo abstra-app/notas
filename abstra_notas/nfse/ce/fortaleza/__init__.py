@@ -1195,3 +1195,60 @@ class CancelarNfseEnvio(Envio[CancelarNfseResposta]):
 
     def resposta(self, xml: ElementBase) -> CancelarNfseResposta:
         return CancelarNfseResposta.from_xml(xml)
+    
+
+@dataclass
+class ConsultarSituacaoLoteRpsResposta:
+    """
+    <xsd:element name="ConsultarLoteRpsResposta">
+		<xsd:complexType>
+			<xsd:choice>
+				<xsd:element name="ListaNfse" minOccurs="1" maxOccurs="1">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="CompNfse" maxOccurs="unbounded" type="tipos:tcCompNfse" minOccurs="1"/>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element ref="tipos:ListaMensagemRetorno" minOccurs="1" maxOccurs="1"/>
+			</xsd:choice>
+		</xsd:complexType>
+	</xsd:element>
+    """
+    comp_nfse: List[CompNfse]
+
+    @classmethod
+    def from_xml(cls, xml: ElementBase):
+        """
+        Método para criar uma instância de ConsultarSituacaoLoteRpsResposta a partir de um elemento XML.
+        """
+        comp_nfse_elements = find_all_elements(xml, 'CompNfse')
+        comp_nfse_list = [CompNfse.from_xml(comp) for comp in comp_nfse_elements]
+        
+        return cls(comp_nfse=comp_nfse_list)
+
+
+
+@dataclass
+class ConsultarSituacaoLoteRpsEnvio(Envio[EnviarLoteRpsResposta]):
+    """
+    Classe para consultar a situação de um lote de RPS enviado.
+    """
+    
+    prestador_cnpj: str
+    prestador_inscricao_municipal: str
+    protocolo: str
+
+    def __post_init__(self):
+        """
+        Valida os dados após a inicialização da classe.
+        """
+        self.prestador_cnpj = normalizar_cnpj(self.prestador_cnpj)
+        self.protocolo = str(self.protocolo).strip()
+        assert len(self.protocolo) > 0, "O protocolo não pode ser vazio."
+
+    def nome_operacao(self):
+        return "ConsultarSituacaoLoteRpsV3"
+
+    def resposta(self, xml: ElementBase) -> EnviarLoteRpsResposta:
+        return EnviarLoteRpsResposta.from_xml(xml)
