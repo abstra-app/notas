@@ -79,6 +79,7 @@ def find_all_elements(parent: ElementBase, tag_name: str):
         return result
 
 
+
 class TipoRps(Enum):
     """
     Tipo de RPS.
@@ -352,6 +353,43 @@ class RegimeEspecialTributacao(Enum):
     microempresario_individual = '5'
     microempresario_e_empresa_de_pequeno_porte = '6'
 
+
+class SituacaoLoteRps(Enum):
+    """
+    Situação do lote de RPS.
+    1 - Não Recebido
+    2 - Não Processado  
+    3 - Processado com Erro
+    4 - Processado com Sucesso
+    """
+    nao_recebido = '1'
+    nao_processado = '2'
+    processado_com_erro = '3'
+    processado_com_sucesso = '4'
+    
+    @property
+    def descricao(self) -> str:
+        """
+        Retorna a descrição legível da situação do lote.
+        """
+        descricoes = {
+            '1': 'Não Recebido',
+            '2': 'Não Processado',
+            '3': 'Processado com Erro',
+            '4': 'Processado com Sucesso'
+        }
+        return descricoes.get(self.value, f'Situação desconhecida: {self.value}')
+    
+    @classmethod
+    def from_value(cls, value: str) -> 'SituacaoLoteRps':
+        """
+        Cria uma instância de SituacaoLoteRps a partir do valor string.
+        """
+        for situacao in cls:
+            if situacao.value == str(value):
+                return situacao
+        raise ValueError(f"Valor inválido para SituacaoLoteRps: {value}")
+    
 
 @dataclass
 class Endereco:
@@ -805,64 +843,6 @@ class CompNfse:
         
         return cls(nfse=nfse, cancelamento=cancelamento, substituicao=substituicao)
 
-@dataclass
-class ConsultarNfseResposta:
-    """
-    <xsd:element name="ConsultarNfseResposta">
-		<xsd:complexType>
-			<xsd:choice>
-				<xsd:element name="ListaNfse" minOccurs="1" maxOccurs="1">
-					<xsd:complexType>
-						<xsd:sequence>
-							<xsd:element name="CompNfse" maxOccurs="unbounded" type="tipos:tcCompNfse" minOccurs="0"/>
-						</xsd:sequence>
-					</xsd:complexType>
-				</xsd:element>
-				<xsd:element ref="tipos:ListaMensagemRetorno" minOccurs="1" maxOccurs="1"/>
-			</xsd:choice>
-		</xsd:complexType>
-        """
-    comp_nfse: List[CompNfse]
-
-    @classmethod
-    def from_xml(cls, xml: ElementBase):
-        """
-        Método para criar uma instância de ConsultarNfseResposta a partir de um elemento XML.
-        """
-        comp_nfse_elements = find_all_elements(xml, 'CompNfse')
-        comp_nfse_list = [CompNfse.from_xml(comp) for comp in comp_nfse_elements]
-        
-        return cls(comp_nfse=comp_nfse_list)
-        
-
-
-@dataclass
-class ConsultarNfseEnvio(Envio[ConsultarNfseResposta]):
-    """
-    Classe para consultar NFS-e por período de envio.
-    """
-    
-    prestador_cnpj: str
-    prestador_inscricao_municipal: str
-    data_inicial: Optional[datetime] = None
-    data_final: Optional[datetime] = None
-    numero_nfse: Optional[int] = None
-
-    def __post_init__(self):
-        """
-        Valida os dados após a inicialização da classe.
-        """
-
-        self.prestador_cnpj = normalizar_cnpj(self.prestador_cnpj)
-        self.data_inicial = normalizar_data(self.data_inicial)
-        self.data_final = normalizar_data(self.data_final)
-
-    
-    def nome_operacao(self):
-        return "ConsultarNfseV3"
-    
-    def resposta(self, xml: ElementBase) -> ConsultarNfseResposta:
-        return ConsultarNfseResposta.from_xml(xml)
 
 class NaturezaOperacao(Enum):
     """
@@ -991,6 +971,65 @@ class MensagemRetorno:
             correcao=find_text(xml, 'Correcao', None),
         )
 
+
+@dataclass
+class ConsultarNfseResposta:
+    """
+    <xsd:element name="ConsultarNfseResposta">
+		<xsd:complexType>
+			<xsd:choice>
+				<xsd:element name="ListaNfse" minOccurs="1" maxOccurs="1">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="CompNfse" maxOccurs="unbounded" type="tipos:tcCompNfse" minOccurs="0"/>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element ref="tipos:ListaMensagemRetorno" minOccurs="1" maxOccurs="1"/>
+			</xsd:choice>
+		</xsd:complexType>
+        """
+    comp_nfse: List[CompNfse]
+
+    @classmethod
+    def from_xml(cls, xml: ElementBase):
+        """
+        Método para criar uma instância de ConsultarNfseResposta a partir de um elemento XML.
+        """
+        comp_nfse_elements = find_all_elements(xml, 'CompNfse')
+        comp_nfse_list = [CompNfse.from_xml(comp) for comp in comp_nfse_elements]
+        
+        return cls(comp_nfse=comp_nfse_list)
+        
+
+
+@dataclass
+class ConsultarNfseEnvio(Envio[ConsultarNfseResposta]):
+    """
+    Classe para consultar NFS-e por período de envio.
+    """
+    
+    prestador_cnpj: str
+    prestador_inscricao_municipal: str
+    data_inicial: Optional[datetime] = None
+    data_final: Optional[datetime] = None
+    numero_nfse: Optional[int] = None
+
+    def __post_init__(self):
+        """
+        Valida os dados após a inicialização da classe.
+        """
+
+        self.prestador_cnpj = normalizar_cnpj(self.prestador_cnpj)
+        self.data_inicial = normalizar_data(self.data_inicial)
+        self.data_final = normalizar_data(self.data_final)
+
+    
+    def nome_operacao(self):
+        return "ConsultarNfseV3"
+    
+    def resposta(self, xml: ElementBase) -> ConsultarNfseResposta:
+        return ConsultarNfseResposta.from_xml(xml)
 
 @dataclass
 class EnviarLoteRpsResposta:
@@ -1201,6 +1240,77 @@ class CancelarNfseEnvio(Envio[CancelarNfseResposta]):
 @dataclass
 class ConsultarSituacaoLoteRpsResposta:
     """
+    <xsd:element name="ConsultarSituacaoLoteRpsResposta">
+		<xsd:complexType>
+			<xsd:choice>
+				<xsd:sequence>
+					<xsd:element name="NumeroLote" type="tipos:tsNumeroLote" minOccurs="1" maxOccurs="1"/>
+					<xsd:element name="Situacao" type="tipos:tsSituacaoLoteRps" minOccurs="1" maxOccurs="1"/>
+				</xsd:sequence>
+				<xsd:element ref="tipos:ListaMensagemRetorno" minOccurs="1" maxOccurs="1"/>
+			</xsd:choice>
+		</xsd:complexType>
+	</xsd:element>
+    """
+    numero_lote: Optional[str]
+    situacao: Optional[str]
+    lista_mensagem_retorno: Optional[List[MensagemRetorno]]
+
+    @classmethod
+    def from_xml(cls, xml: ElementBase):
+        """
+        Método para criar uma instância de ConsultarSituacaoLoteRpsResposta a partir de um elemento XML.
+        """
+        if find_element(xml, 'ListaMensagemRetorno') is not None:
+            mensagens = find_all_elements(xml, 'MensagemRetorno')
+            lista_mensagem_retorno = [MensagemRetorno.from_xml(m) for m in mensagens]
+            return cls(numero_lote=None, situacao=None, lista_mensagem_retorno=lista_mensagem_retorno)
+        
+        # Converte o código numérico para descrição legível
+        situacao_codigo = find_text(xml, 'Situacao', None)
+        situacao_descricao = None
+        if situacao_codigo:
+            try:
+                situacao_enum = SituacaoLoteRps.from_value(situacao_codigo)
+                situacao_descricao = situacao_enum.descricao
+            except ValueError:
+                situacao_descricao = f"Situação desconhecida: {situacao_codigo}"
+        
+        return cls(
+            numero_lote=find_text(xml, 'NumeroLote', None),
+            situacao=situacao_descricao,
+            lista_mensagem_retorno=None
+        )
+
+
+
+@dataclass
+class ConsultarSituacaoLoteRpsEnvio(Envio[ConsultarSituacaoLoteRpsResposta]):
+    """
+    Classe para consultar a situação de um lote de RPS enviado.
+    """
+    
+    prestador_cnpj: str
+    prestador_inscricao_municipal: str
+    protocolo: str
+
+    def __post_init__(self):
+        """
+        Valida os dados após a inicialização da classe.
+        """
+        self.prestador_cnpj = normalizar_cnpj(self.prestador_cnpj)
+        self.protocolo = str(self.protocolo).strip()
+        assert len(self.protocolo) > 0, "O protocolo não pode ser vazio."
+
+    def nome_operacao(self):
+        return "ConsultarSituacaoLoteRpsV3"
+
+    def resposta(self, xml: ElementBase) -> ConsultarSituacaoLoteRpsResposta:
+        return ConsultarSituacaoLoteRpsResposta.from_xml(xml)
+    
+@dataclass
+class ConsultarLoteRpsResposta:
+    """
     <xsd:element name="ConsultarLoteRpsResposta">
 		<xsd:complexType>
 			<xsd:choice>
@@ -1221,19 +1331,17 @@ class ConsultarSituacaoLoteRpsResposta:
     @classmethod
     def from_xml(cls, xml: ElementBase):
         """
-        Método para criar uma instância de ConsultarSituacaoLoteRpsResposta a partir de um elemento XML.
+        Método para criar uma instância de ConsultarLoteRpsResposta a partir de um elemento XML.
         """
         comp_nfse_elements = find_all_elements(xml, 'CompNfse')
         comp_nfse_list = [CompNfse.from_xml(comp) for comp in comp_nfse_elements]
         
         return cls(comp_nfse=comp_nfse_list)
-
-
-
+    
 @dataclass
-class ConsultarSituacaoLoteRpsEnvio(Envio[EnviarLoteRpsResposta]):
+class ConsultarLoteRpsEnvio(Envio[ConsultarLoteRpsResposta]):
     """
-    Classe para consultar a situação de um lote de RPS enviado.
+    Classe para consultar um lote de RPS enviado.
     """
     
     prestador_cnpj: str
@@ -1249,7 +1357,7 @@ class ConsultarSituacaoLoteRpsEnvio(Envio[EnviarLoteRpsResposta]):
         assert len(self.protocolo) > 0, "O protocolo não pode ser vazio."
 
     def nome_operacao(self):
-        return "ConsultarSituacaoLoteRpsV3"
+        return "ConsultarLoteRpsV3"
 
-    def resposta(self, xml: ElementBase) -> EnviarLoteRpsResposta:
-        return EnviarLoteRpsResposta.from_xml(xml)
+    def resposta(self, xml: ElementBase) -> ConsultarLoteRpsResposta:
+        return ConsultarLoteRpsResposta.from_xml(xml)

@@ -169,7 +169,6 @@ cython_debug/
 *.application
 *.key
 *.pfx
-*.xml
 *.toml
 
 credenciais
