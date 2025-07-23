@@ -60,17 +60,6 @@ class Envio(ABC, Generic[T]):
 
             request_tmp_path = Path(mktemp())
             request_tmp_path.write_text(tostring(xml_assinado, encoding=str), encoding="utf-8")
-            print(f"Request saved to: {request_tmp_path}")
-            # Enable local schema validation to debug E317
-            # schema_file = Path(__file__).parent / "schemas" / "servico_enviar_lote_rps_envio_v03.xsd"
-            # if schema_file.exists():
-            #     try:
-            #         XMLSchema(schema_file).validate(xml_assinado)
-            #         print("✅ Local schema validation passed")
-            #     except Exception as e:
-            #         print(f"❌ Local schema validation failed: {e}")
-            # else:
-            #     print(f"Warning: Local schema file not found: {schema_file}")
 
             
             if self.nome_operacao() == "CancelarNfse":

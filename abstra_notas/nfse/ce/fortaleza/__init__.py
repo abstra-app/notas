@@ -17,11 +17,8 @@ def find_element(parent: ElementBase, tag_name: str):
     """
     Busca um elemento ignorando namespace.
     """
-    print(f"Buscando elemento: '{tag_name}'")
-    # Busca primeiro sem namespace
     element = parent.find(tag_name)
     if element is not None:
-        print(f"Encontrado '{tag_name}' sem namespace")
         return element
     
     # Se não encontrou, busca com qualquer namespace usando xpath
@@ -29,20 +26,16 @@ def find_element(parent: ElementBase, tag_name: str):
         xpath = f".//*[local-name()='{tag_name}']"
         elements = parent.xpath(xpath)
         if elements:
-            print(f"Encontrado '{tag_name}' com XPath")
             return elements[0]
         else:
-            print(f"XPath não encontrou '{tag_name}'")
+            pass
     except Exception as e:
         print(f"Erro no XPath para '{tag_name}': {e}")
         
     # Fallback: busca por todos os filhos e verifica o nome local
-    print(f"Usando fallback para '{tag_name}'")
     for elem in parent.iter():
-        if elem.tag.split('}')[-1] == tag_name:  # Remove namespace do tag
-            print(f"Fallback encontrou '{tag_name}' - tag completa: {elem.tag}")
+        if elem.tag.split('}')[-1] == tag_name: 
             return elem
-    print(f"Fallback não encontrou '{tag_name}'")
     return None
 
 
@@ -73,9 +66,8 @@ def find_all_elements(parent: ElementBase, tag_name: str):
         # Fallback: busca por todos os elementos e filtra pelo nome local
         result = []
         for elem in parent.iter():
-            if elem.tag.split('}')[-1] == tag_name:  # Remove namespace do tag
+            if elem.tag.split('}')[-1] == tag_name: 
                 result.append(elem)
-        print(f"Fallback encontrou {len(result)} elementos para '{tag_name}'")
         return result
 
 
@@ -353,19 +345,95 @@ class RegimeEspecialTributacao(Enum):
     microempresario_individual = '5'
     microempresario_e_empresa_de_pequeno_porte = '6'
 
+    def __repr__(self) -> str:
+        """
+        Retorna a descrição legível para repr() também.
+        """
+        descricoes = {
+            '1': 'Microempresa Municipal',
+            '2': 'Estimativa',
+            '3': 'Sociedade de Profissionais',
+            '4': 'Cooperativa',
+            '5': 'Microempresário Individual',
+            '6': 'Microempresário e Empresa de Pequeno Porte'
+        }
+        return f"'{descricoes.get(self.value, f'Regime desconhecido: {self.value}')}'"
+
+    @property
+    def descricao(self) -> str:
+        """
+        Retorna a descrição legível do regime especial de tributação.
+        """
+        descricoes = {
+            '1': 'Microempresa Municipal',
+            '2': 'Estimativa',
+            '3': 'Sociedade de Profissionais',
+            '4': 'Cooperativa',
+            '5': 'Microempresário Individual',
+            '6': 'Microempresário e Empresa de Pequeno Porte'
+        }
+        return descricoes.get(self.value, f'Regime desconhecido: {self.value}')
+
+class NaturezaOperacao(Enum):
+    """
+    Código de natureza da operação.
+    """
+    tributacao_no_municipio = '1'
+    tributacao_fora_do_municipio = '2'
+    isencao = '3'
+    imune = '4'
+    exigibilidade_suspensa_por_decisao_judicial = '5'
+    exigibilidade_suspensa_por_procedimento_administrativo = '6'
+
+    def __repr__(self) -> str:
+        """
+        Retorna a descrição legível para repr() também.
+        """
+        descricoes = {
+            '1': 'Tributação no Município',
+            '2': 'Tributação Fora do Município',
+            '3': 'Isenção',
+            '4': 'Imune',
+            '5': 'Exigibilidade Suspensa por Decisão Judicial',
+            '6': 'Exigibilidade Suspensa por Procedimento Administrativo'
+        }
+        return f"'{descricoes.get(self.value, f'Natureza desconhecida: {self.value}')}'"
+
+    @property
+    def descricao(self) -> str:
+        """
+        Retorna a descrição legível da natureza da operação.
+        """
+        descricoes = {
+            '1': 'Tributação no Município',
+            '2': 'Tributação Fora do Município',
+            '3': 'Isenção',
+            '4': 'Imune',
+            '5': 'Exigibilidade Suspensa por Decisão Judicial',
+            '6': 'Exigibilidade Suspensa por Procedimento Administrativo'
+        }
+        return descricoes.get(self.value, f'Natureza desconhecida: {self.value}')
 
 class SituacaoLoteRps(Enum):
     """
     Situação do lote de RPS.
-    1 - Não Recebido
-    2 - Não Processado  
-    3 - Processado com Erro
-    4 - Processado com Sucesso
     """
     nao_recebido = '1'
     nao_processado = '2'
     processado_com_erro = '3'
     processado_com_sucesso = '4'
+    
+    def __repr__(self) -> str:
+        """
+        Retorna a descrição legível para repr() também.
+        """
+        descricoes = {
+            '1': 'Não Recebido',
+            '2': 'Não Processado',
+            '3': 'Processado com Erro',
+            '4': 'Processado com Sucesso'
+        }
+        return f"'{descricoes.get(self.value, f'Situação desconhecida: {self.value}')}'"
     
     @property
     def descricao(self) -> str:
@@ -654,7 +722,7 @@ class Nfse:
     data_emissao: datetime
     identificacao_rps: Optional[IdentificacaoRps]
     data_emissao_rps: Optional[datetime]
-    natureza_operacao: Optional[str]
+    natureza_operacao: Optional[NaturezaOperacao]
     regime_especial_tributacao: Optional[RegimeEspecialTributacao]
     optante_simples_nacional: Optional[bool]
     incentivador_cultural: Optional[bool]
@@ -700,7 +768,7 @@ class Nfse:
             data_emissao=datetime.fromisoformat(find_text(xml, 'DataEmissao', '')),
             identificacao_rps=IdentificacaoRps.from_xml(find_element(xml, 'IdentificacaoRps')) if find_element(xml, 'IdentificacaoRps') is not None else None,
             data_emissao_rps=datetime.fromisoformat(find_text(xml, 'DataEmissaoRps', '')) if find_element(xml, 'DataEmissaoRps') is not None else None,
-            natureza_operacao=find_text(xml, 'NaturezaOperacao', ''),
+            natureza_operacao=NaturezaOperacao(find_text(xml, 'NaturezaOperacao', '')) if find_element(xml, 'NaturezaOperacao') is not None else None,
             regime_especial_tributacao=RegimeEspecialTributacao(find_text(xml, 'RegimeEspecialTributacao', '')) if find_element(xml, 'RegimeEspecialTributacao') is not None else None,
             optante_simples_nacional=find_text(xml, 'OptanteSimplesNacional', 'N') == 'S',
             incentivador_cultural=find_text(xml, 'IncentivadorCultural', 'N') == 'S',
@@ -844,16 +912,7 @@ class CompNfse:
         return cls(nfse=nfse, cancelamento=cancelamento, substituicao=substituicao)
 
 
-class NaturezaOperacao(Enum):
-    """
-    Código de natureza da operação.
-    """
-    tributacao_no_municipio = '1'
-    tributacao_fora_do_municipio = '2'
-    isencao = '3'
-    imune = '4'
-    exigibilidade_suspensa_por_decisao_judicial = '5'
-    exigibilidade_suspensa_por_procedimento_administrativo = '6'
+
 
 @dataclass
 class Rps:
