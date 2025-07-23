@@ -74,7 +74,7 @@ class Envio(ABC, Generic[T]):
 
             response_temp_path = Path(mktemp())
             response_temp_path.write_text(response, encoding="utf-8")
-            print(f"Response saved to: {response_temp_path}")
+            #print(f"Response saved to: {response_temp_path}")
             xml_resposta =  fromstring(response.encode("utf-8"))
             return self.resposta(xml_resposta)
         finally:

@@ -2,13 +2,13 @@
 <!-- Este serviço devolve a nota a partir dos dados do RPS -->
 <ConsultarNfseRpsEnvio xmlns="http://www.ginfes.com.br/servico_consultar_nfse_rps_envio_v03.xsd">
 	<IdentificacaoRps xmlns:tipos="http://www.ginfes.com.br/tipos_v03.xsd"> <!-- Tag obrigatória -->
-		<tipos:Numero>105</tipos:Numero> <!-- Tag obrigatória -->
-		<tipos:Serie>1</tipos:Serie> <!-- Tag obrigatória -->
-		<tipos:Tipo>1</tipos:Tipo> <!-- Tag obrigatória -->
+		<tipos:Numero>{{rps_numero}}</tipos:Numero> <!-- Tag obrigatória -->
+		<tipos:Serie>{{rps_serie}}</tipos:Serie> <!-- Tag obrigatória -->
+		<tipos:Tipo>{{rps_tipo}}</tipos:Tipo> <!-- Tag obrigatória -->
 	</IdentificacaoRps>
 	<Prestador xmlns:tipos="http://www.ginfes.com.br/tipos_v03.xsd">
-		<tipos:Cnpj>12345678901234</tipos:Cnpj> <!-- Tag obrigatória. CNPJ do prestador -->
-		<tipos:InscricaoMunicipal>123456</tipos:InscricaoMunicipal> <!-- Tag obrigatória. Não coloque o dígito verificador e não é necessário colocar zero à esquerda -->
+		<tipos:Cnpj>{{prestador_cnpj}}</tipos:Cnpj> <!-- Tag obrigatória. CNPJ do prestador -->
+		<tipos:InscricaoMunicipal>{{prestador_inscricao_municipal}}</tipos:InscricaoMunicipal> <!-- Tag obrigatória. Não coloque o dígito verificador e não é necessário colocar zero à esquerda -->
 	</Prestador>
 	<!-- assine o arquivo com certificado ICP Brasil dos tipos A1, A3 e de servidor -->
 	<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">

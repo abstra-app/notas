@@ -6,7 +6,7 @@ from abstra_notas.validacoes.data import normalizar_data
 from abstra_notas.validacoes.cpf import normalizar_cpf
 from abstra_notas.validacoes.cidades import normalizar_uf
 from abstra_notas.validacoes.cep import normalizar_cep
-from abstra_notas.validacoes.telefone import normalizar_telefone
+from abstra_notas.validacoes.telefone import normalizar_validar_telefone
 from abstra_notas.validacoes.email import validar_email
 from typing import List, Optional
 from lxml.etree import ElementBase
@@ -345,34 +345,6 @@ class RegimeEspecialTributacao(Enum):
     microempresario_individual = '5'
     microempresario_e_empresa_de_pequeno_porte = '6'
 
-    def __repr__(self) -> str:
-        """
-        Retorna a descrição legível para repr() também.
-        """
-        descricoes = {
-            '1': 'Microempresa Municipal',
-            '2': 'Estimativa',
-            '3': 'Sociedade de Profissionais',
-            '4': 'Cooperativa',
-            '5': 'Microempresário Individual',
-            '6': 'Microempresário e Empresa de Pequeno Porte'
-        }
-        return f"'{descricoes.get(self.value, f'Regime desconhecido: {self.value}')}'"
-
-    @property
-    def descricao(self) -> str:
-        """
-        Retorna a descrição legível do regime especial de tributação.
-        """
-        descricoes = {
-            '1': 'Microempresa Municipal',
-            '2': 'Estimativa',
-            '3': 'Sociedade de Profissionais',
-            '4': 'Cooperativa',
-            '5': 'Microempresário Individual',
-            '6': 'Microempresário e Empresa de Pequeno Porte'
-        }
-        return descricoes.get(self.value, f'Regime desconhecido: {self.value}')
 
 class NaturezaOperacao(Enum):
     """
@@ -385,69 +357,21 @@ class NaturezaOperacao(Enum):
     exigibilidade_suspensa_por_decisao_judicial = '5'
     exigibilidade_suspensa_por_procedimento_administrativo = '6'
 
-    def __repr__(self) -> str:
-        """
-        Retorna a descrição legível para repr() também.
-        """
-        descricoes = {
-            '1': 'Tributação no Município',
-            '2': 'Tributação Fora do Município',
-            '3': 'Isenção',
-            '4': 'Imune',
-            '5': 'Exigibilidade Suspensa por Decisão Judicial',
-            '6': 'Exigibilidade Suspensa por Procedimento Administrativo'
-        }
-        return f"'{descricoes.get(self.value, f'Natureza desconhecida: {self.value}')}'"
-
-    @property
-    def descricao(self) -> str:
-        """
-        Retorna a descrição legível da natureza da operação.
-        """
-        descricoes = {
-            '1': 'Tributação no Município',
-            '2': 'Tributação Fora do Município',
-            '3': 'Isenção',
-            '4': 'Imune',
-            '5': 'Exigibilidade Suspensa por Decisão Judicial',
-            '6': 'Exigibilidade Suspensa por Procedimento Administrativo'
-        }
-        return descricoes.get(self.value, f'Natureza desconhecida: {self.value}')
 
 class SituacaoLoteRps(Enum):
     """
     Situação do lote de RPS.
+    -    1 - Não Recebido
+    -    2 - Não Processado  
+    -    3 - Processado com Erro
+    -    4 - Processado com Sucesso
     """
     nao_recebido = '1'
     nao_processado = '2'
     processado_com_erro = '3'
     processado_com_sucesso = '4'
     
-    def __repr__(self) -> str:
-        """
-        Retorna a descrição legível para repr() também.
-        """
-        descricoes = {
-            '1': 'Não Recebido',
-            '2': 'Não Processado',
-            '3': 'Processado com Erro',
-            '4': 'Processado com Sucesso'
-        }
-        return f"'{descricoes.get(self.value, f'Situação desconhecida: {self.value}')}'"
-    
-    @property
-    def descricao(self) -> str:
-        """
-        Retorna a descrição legível da situação do lote.
-        """
-        descricoes = {
-            '1': 'Não Recebido',
-            '2': 'Não Processado',
-            '3': 'Processado com Erro',
-            '4': 'Processado com Sucesso'
-        }
-        return descricoes.get(self.value, f'Situação desconhecida: {self.value}')
-    
+
     @classmethod
     def from_value(cls, value: str) -> 'SituacaoLoteRps':
         """
@@ -525,10 +449,7 @@ class Contato:
         """
         Normaliza o telefone e o email.
         """
-        try:
-            self.telefone = "".join(c for c in self.telefone if c.isdigit())
-        except ValueError as e:
-            warning(e)
+        self.telefone = normalizar_validar_telefone(self.telefone)
 
         assert validar_email(self.email), f"Email '{self.email}' inválido. Verifique o formato do email."
 
@@ -1420,3 +1341,63 @@ class ConsultarLoteRpsEnvio(Envio[ConsultarLoteRpsResposta]):
 
     def resposta(self, xml: ElementBase) -> ConsultarLoteRpsResposta:
         return ConsultarLoteRpsResposta.from_xml(xml)
+    
+
+@dataclass
+class ConsultarNfsePorRpsResposta:
+    """
+    <xsd:element name="ConsultarNfseRpsResposta">
+		<xsd:complexType>
+			<xsd:choice>
+				<xsd:element name="CompNfse" type="tipos:tcCompNfse" minOccurs="1" maxOccurs="1"/>
+				<xsd:element ref="tipos:ListaMensagemRetorno" minOccurs="1" maxOccurs="1"/>
+			</xsd:choice>
+		</xsd:complexType>
+	</xsd:element>
+    """
+    comp_nfse: Optional[CompNfse] = None
+    lista_mensagem_retorno: Optional[List[MensagemRetorno]] = None
+
+    @classmethod
+    def from_xml(cls, xml: ElementBase):
+        """
+        Método para criar uma instância de ConsultarNfsePorRpsResposta a partir de um elemento XML.
+        """
+        if find_element(xml, 'ListaMensagemRetorno') is not None:
+            mensagens = find_all_elements(xml, 'MensagemRetorno')
+            lista_mensagem_retorno = [MensagemRetorno.from_xml(m) for m in mensagens]
+            return cls(comp_nfse=None, lista_mensagem_retorno=lista_mensagem_retorno)
+        
+        comp_nfse = CompNfse.from_xml(find_element(xml, 'CompNfse'))
+        return cls(comp_nfse=comp_nfse, lista_mensagem_retorno=None)
+    
+
+@dataclass
+class ConsultarNfsePorRpsEnvio(Envio[ConsultarNfsePorRpsResposta]):
+    """
+    Classe para consultar uma NFS-e por RPS.
+
+    """
+    prestador_cnpj: str
+    prestador_inscricao_municipal: str
+    rps_numero: str
+    rps_serie: str
+    rps_tipo: TipoRps
+
+    def __post_init__(self):
+        """
+        Valida os dados após a inicialização da classe.
+        """
+        self.prestador_cnpj = normalizar_cnpj(self.prestador_cnpj)
+        self.rps_numero = str(self.rps_numero).strip()
+        self.rps_serie = str(self.rps_serie).strip()
+        assert len(self.rps_numero) > 0, "O número do RPS não pode ser vazio."
+        assert len(self.rps_serie) > 0, "A série do RPS não pode ser vazia."
+        assert self.rps_tipo in TipoRps, "Tipo de RPS inválido."
+
+    def nome_operacao(self):
+        return "ConsultarNfsePorRpsV3"
+    
+    def resposta(self, xml: ElementBase) -> ConsultarNfsePorRpsResposta:
+        return ConsultarNfsePorRpsResposta.from_xml(xml)
+
