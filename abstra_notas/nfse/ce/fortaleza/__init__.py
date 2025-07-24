@@ -227,27 +227,28 @@ class Valores:
             return f"{(self.desconto_condicionado_centavos) / 100:.2f}"
         return None
 
+
     @classmethod
     def from_xml(cls, xml: ElementBase):
         """
         Método para criar uma instância de Valores a partir de um elemento XML.
         """
         return cls(
-            valor_servico_centavos=int(find_text(xml, 'ValorServicos', '0').replace('.', '').replace(',', '')),
-            valor_deducoes_centavos=int(find_text(xml, 'ValorDeducoes', '0').replace('.', '').replace(',', '')) if find_element(xml, 'ValorDeducoes') is not None else None,
-            valor_pis_centavos=int(find_text(xml, 'ValorPis', '0').replace('.', '').replace(',', '')) if find_element(xml, 'ValorPis') is not None else None,
-            valor_cofins_centavos=int(find_text(xml, 'ValorCofins', '0').replace('.', '').replace(',', '')) if find_element(xml, 'ValorCofins') is not None else None,
-            valor_inss_centavos=int(find_text(xml, 'ValorInss', '0').replace('.', '').replace(',', '')) if find_element(xml, 'ValorInss') is not None else None,
-            valor_ir_centavos=int(find_text(xml, 'ValorIr', '0').replace('.', '').replace(',', '')) if find_element(xml, 'ValorIr') is not None else None,
-            valor_csll_centavos=int(find_text(xml, 'ValorCsll', '0').replace('.', '').replace(',', '')) if find_element(xml, 'ValorCsll') is not None else None,
-            valor_iss_centavos=int(find_text(xml, 'ValorIss', '0').replace('.', '').replace(',', '')) if find_element(xml, 'ValorIss') is not None else None,
-            valor_iss_retido_centavos=int(find_text(xml, 'ValorIssRetido', '0').replace('.', '').replace(',', '')) if find_element(xml, 'ValorIssRetido') is not None else None,
-            outras_retencoes_centavos=int(find_text(xml, 'OutrasRetencoes', '0').replace('.', '').replace(',', '')) if find_element(xml, 'OutrasRetencoes') is not None else None,
-            base_calculo_centavos=int(find_text(xml, 'BaseCalculo', '0').replace('.', '').replace(',', '')) if find_element(xml, 'BaseCalculo') is not None else None,
+            valor_servico_centavos=int(float(find_text(xml, 'ValorServicos', '0')) * 100),
+            valor_deducoes_centavos=int(float(find_text(xml, 'ValorDeducoes', '0')) * 100) if find_element(xml, 'ValorDeducoes') is not None else None,
+            valor_pis_centavos=int(float(find_text(xml, 'ValorPis', '0')) * 100) if find_element(xml, 'ValorPis') is not None else None,
+            valor_cofins_centavos=int(float(find_text(xml, 'ValorCofins', '0')) * 100) if find_element(xml, 'ValorCofins') is not None else None,
+            valor_inss_centavos=int(float(find_text(xml, 'ValorInss', '0')) * 100) if find_element(xml, 'ValorInss') is not None else None,
+            valor_ir_centavos=int(float(find_text(xml, 'ValorIr', '0')) * 100) if find_element(xml, 'ValorIr') is not None else None,
+            valor_csll_centavos=int(float(find_text(xml, 'ValorCsll', '0')) * 100) if find_element(xml, 'ValorCsll') is not None else None,
+            valor_iss_centavos=int(float(find_text(xml, 'ValorIss', '0')) * 100) if find_element(xml, 'ValorIss') is not None else None,
+            valor_iss_retido_centavos=int(float(find_text(xml, 'ValorIssRetido', '0')) * 100) if find_element(xml, 'ValorIssRetido') is not None else None,
+            outras_retencoes_centavos=int(float(find_text(xml, 'OutrasRetencoes', '0')) * 100) if find_element(xml, 'OutrasRetencoes') is not None else None,
+            base_calculo_centavos=int(float(find_text(xml, 'BaseCalculo', '0')) * 100) if find_element(xml, 'BaseCalculo') is not None else None,
             aliquota_iss=float(find_text(xml, 'Aliquota', '0.00').replace(',', '.')) if find_element(xml, 'Aliquota') is not None else None,
-            valor_liquido_nfse_centavos=int(find_text(xml, 'ValorLiquidoNfse', '0').replace('.', '').replace(',', '')) if find_element(xml, 'ValorLiquidoNfse') is not None else None,
-            desconto_incondicionado_centavos=int(find_text(xml, 'DescontoIncondicionado', '0').replace('.', '').replace(',', '')) if find_element(xml, 'DescontoIncondicionado') is not None else None,
-            desconto_condicionado_centavos=int(find_text(xml, 'DescontoCondicionado', '0').replace('.', '').replace(',', '')) if find_element(xml, 'DescontoCondicionado') is not None else None,
+            valor_liquido_nfse_centavos=int(float(find_text(xml, 'ValorLiquidoNfse', '0')) * 100) if find_element(xml, 'ValorLiquidoNfse') is not None else None,
+            desconto_incondicionado_centavos=int(float(find_text(xml, 'DescontoIncondicionado', '0')) * 100) if find_element(xml, 'DescontoIncondicionado') is not None else None,
+            desconto_condicionado_centavos=int(float(find_text(xml, 'DescontoCondicionado', '0')) * 100) if find_element(xml, 'DescontoCondicionado') is not None else None,
         )
 
 
@@ -697,7 +698,7 @@ class Nfse:
             nfse_substituida=find_text(xml, 'NfseSubstituida', None),
             outras_informacoes=find_text(xml, 'OutrasInformacoes', None),
             servico=DadosServico.from_xml(find_element(xml, 'Servico')) if find_element(xml, 'Servico') is not None else None,
-            valor_credito_centavos=int(find_text(xml, 'ValorCredito', '0').replace('.', '').replace(',', '')) if find_element(xml, 'ValorCredito') is not None else None,
+            valor_credito_centavos=int(float(find_text(xml, 'ValorCredito', '0')) * 100) if find_element(xml, 'ValorCredito') is not None else None,
             prestador_servico=DadosPrestador.from_xml(find_element(xml, 'PrestadorServico')) if find_element(xml, 'PrestadorServico') is not None else None,
             tomador_servico=DadosTomador.from_xml(find_element(xml, 'TomadorServico')) if find_element(xml, 'TomadorServico') is not None else None,
             intermediario_servico=IdentificacaoIntermediarioServico.from_xml(find_element(xml, 'IntermediarioServico')) if find_element(xml, 'IntermediarioServico') is not None else None,
@@ -970,16 +971,22 @@ class ConsultarNfseResposta:
 		</xsd:complexType>
         """
     comp_nfse: List[CompNfse]
+    lista_mensagem_retorno: Optional[List[MensagemRetorno]] = None
 
     @classmethod
     def from_xml(cls, xml: ElementBase):
         """
         Método para criar uma instância de ConsultarNfseResposta a partir de um elemento XML.
         """
+        if find_element(xml, 'ListaMensagemRetorno') is not None:
+            mensagens = find_all_elements(xml, 'MensagemRetorno')
+            lista_mensagem_retorno = [MensagemRetorno.from_xml(m) for m in mensagens]
+            return cls(comp_nfse=[], lista_mensagem_retorno=lista_mensagem_retorno)
+
         comp_nfse_elements = find_all_elements(xml, 'CompNfse')
         comp_nfse_list = [CompNfse.from_xml(comp) for comp in comp_nfse_elements]
         
-        return cls(comp_nfse=comp_nfse_list)
+        return cls(comp_nfse=comp_nfse_list, lista_mensagem_retorno=None)
         
 
 
@@ -1181,7 +1188,7 @@ class CancelarNfseResposta:
 
     sucesso: bool
     data_hora: datetime
-    mensagem_retorno: MensagemRetorno
+    mensagem_retorno: Optional[MensagemRetorno] = None
 
 
     @classmethod
@@ -1190,10 +1197,17 @@ class CancelarNfseResposta:
         Método para criar uma instância de CancelarNfseResposta a partir de um elemento XML.
         """
 
+        if find_element(xml, 'MensagemRetorno') is not None:
+            return cls(
+                sucesso=False,
+                data_hora=datetime.fromisoformat(find_text(xml, 'DataHora', '')),
+                mensagem_retorno=MensagemRetorno.from_xml(find_element(xml, 'MensagemRetorno'))
+            )
+
         return cls(
             sucesso=find_text(xml, 'Sucesso', 'false') == 'true',
             data_hora=datetime.fromisoformat(find_text(xml, 'DataHora', '')),
-            mensagem_retorno=MensagemRetorno.from_xml(find_element(xml, 'MensagemRetorno'))
+            mensagem_retorno=None
         )
 
 @dataclass

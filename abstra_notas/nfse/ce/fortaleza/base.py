@@ -10,6 +10,8 @@ from typing import Generic, TypeVar
 from tempfile import mktemp
 # import xmlschema
 from xmlschema import XMLSchema
+import warnings
+
 
 T = TypeVar('T', bound='Envio')
 
@@ -36,7 +38,7 @@ class Envio(ABC, Generic[T]):
         return Path(__file__).parent / "schemas" / f"{self.nome_operacao()}.xsd"
 
 
-    def executar(self, caminho_pfx: Path, senha_pfx: str) -> T:
+    def executar(self, caminho_pfx: Path, senha_pfx: str, homologacao=False) -> T:
         assinador = Assinador(caminho_pfx, senha_pfx)
         try:
             history = HistoryPlugin()
@@ -44,13 +46,25 @@ class Envio(ABC, Generic[T]):
             keyfile.write_bytes(assinador.private_key_pem_bytes)
             certfile = Path(mktemp())
             certfile.write_bytes(assinador.cert_pem_bytes)
-            url = "https://iss.fortaleza.ce.gov.br/grpfor-iss/ServiceGinfesImplService?wsdl"
+
             xml = self.gerar_xml()
             session = Session()
             session.cert = (certfile, keyfile)
             session.verify = False
             settings = Settings(strict=True, xml_huge_tree=True)
             transport = Transport(session=session, cache=None)
+
+            if homologacao:
+                warnings.warn(
+                "ATENÇÃO: Para usar o ambiente de homologação, você deve primeiro ativar "
+                "o ambiente de homologação no site da Prefeitura de Fortaleza "
+                "(https://iss.fortaleza.ce.gov.br/grpfor) na seção 'Controle de Acesso'.",
+                UserWarning,
+                stacklevel=2
+            )
+                url= "http://isshomo.sefin.fortaleza.ce.gov.br/grpfor-iss/ServiceGinfesImplService?wsdl"
+            else:
+                url = "https://iss.fortaleza.ce.gov.br/grpfor-iss/ServiceGinfesImplService?wsdl"
             client = Client(
                 url, transport=transport, settings=settings, plugins=[history]
             )
