@@ -1008,10 +1008,12 @@ class ConsultarNfseEnvio(Envio[ConsultarNfseResposta]):
         """
 
         self.prestador_cnpj = normalizar_cnpj(self.prestador_cnpj)
-        self.data_inicial = normalizar_data(self.data_inicial)
-        self.data_final = normalizar_data(self.data_final)
 
-    
+        if self.data_inicial:
+            self.data_inicial = normalizar_data(self.data_inicial)
+        if self.data_final:
+            self.data_final = normalizar_data(self.data_final)
+
     def nome_operacao(self):
         return "ConsultarNfseV3"
     

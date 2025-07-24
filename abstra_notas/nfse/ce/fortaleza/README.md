@@ -10,7 +10,8 @@ A integração é feita através do webservice da Prefeitura Municipal de Fortal
 
 - [Enviar lote de RPS (gerar notas)](/abstra_notas/nfse/ce/fortaleza/exemplos_py/enviar_lote_rps.py)
 - [Cancelar NFSe](/abstra_notas/nfse/ce/fortaleza/exemplos_py/cancelar_nfse.py)
-- [Consultar NFSe por período](/abstra_notas/nfse/ce/fortaleza/exemplos_py/consultar_nfse_periodo.py)
+- [Consultar NFSe por período](/abstra_notas/nfse/ce/fortaleza/exemplos_py/consultar_nfse.py)
+- [Consultar NFSe por número](/abstra_notas/nfse/ce/fortaleza/exemplos_py/consultar_nfse_por_numero.py)
 - [Consultar NFSe por RPS](/abstra_notas/nfse/ce/fortaleza/exemplos_py/consultar_nfse_por_rps.py)
 - [Consultar situação do lote RPS](/abstra_notas/nfse/ce/fortaleza/exemplos_py/consultar_situacao_lote.py)
 - [Consultar lote RPS](/abstra_notas/nfse/ce/fortaleza/exemplos_py/consultar_lote_rps.py)
@@ -46,7 +47,7 @@ Confira os [exemplos completos com configuração](/abstra_notas/nfse/ce/fortale
 
 - Configuração via arquivo .env
 - Tratamento de erros
-- Documentação detalhada
+- Documentação
 - Exemplos prontos para uso
 
 ## Exemplo de Uso Básico
@@ -84,11 +85,3 @@ resposta_homolog = envio.executar(
 - Os valores monetários devem ser informados em centavos
 - As datas devem seguir o formato ISO 8601 (AAAA-MM-DDTHH:MM:SS)
 - O webservice utiliza autenticação via certificado digital A1
-
-## Funcionalidades Específicas
-
-### Controle de Ambiente
-
-- **Desenvolvimento/Testes**: Use sempre `homologacao=True`
-- **Produção**: Use `homologacao=False` ou omita o parâmetro
-- **URLs são selecionadas automaticamente** conforme o ambiente escolhido
