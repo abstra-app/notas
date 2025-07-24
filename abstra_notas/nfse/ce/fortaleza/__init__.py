@@ -1252,7 +1252,7 @@ class ConsultarSituacaoLoteRpsResposta:
         if situacao_codigo:
             try:
                 situacao_enum = SituacaoLoteRps.from_value(situacao_codigo)
-                situacao_descricao = situacao_enum.descricao
+                situacao_descricao = situacao_enum
             except ValueError:
                 situacao_descricao = f"Situação desconhecida: {situacao_codigo}"
         
