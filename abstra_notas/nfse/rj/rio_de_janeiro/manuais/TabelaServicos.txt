@@ -1,0 +1,1204 @@
+Codigo  	Descricao
+01      	Servicos de informatica e congeneres.
+01.01   	Analise e desenvolvimento de sistemas.
+01.01.01	Analise de sistemas, 
+01.01.02	Desenvolvimento de sistemas
+01.01.04	Geracao de programa de computador sob encomenda
+01.02   	Programacao.
+01.02.01	Programacao
+01.03   	Processamento, armazenamento ou hospedagem de dados, textos, imagens, videos, paginas eletronicas, aplicativos e sistemas de informacao, entre outros formatos, e congeneres.
+01.03.02	Provimento de acesso a internet
+01.03.03	Provimento de voz sobre internet
+01.03.04	Provimento de conteudo para a internet
+01.03.05	Provimento de servico de aplicacao
+01.03.07	Servicos de data center, parque tecnologico ou congeneres
+01.03.08	Processamento de dados, textos, imagens, videos, paginas eletronicas, aplicativos ou sistemas de informacao, entre outros formatos, e congeneres
+01.03.09	Armazenamento ou hospedagem de dados, textos, imagens, videos, paginas eletronicas, aplicativos ou sistemas de informacao, entre outros formatos, e congeneres
+01.04   	Elaboracao de programas de computadores, inclusive de jogos eletr�nicos, independentemente da arquitetura construtiva da maquina em que o programa ser� executado, incluindo tablets, smartphones e congeneres.
+01.04.01	Elaboracao de programa de computadores
+01.04.02	Elaboracao de jogo eletr�nico
+01.04.03	Elaboracao de programa de computador sob encomenda, n�o derivado de software preexistente, cujo desenvolvimento se d� integralmente no Brasil e cujos direitos autorais permane�am reservados ao contratante do servico, desde que atendidos os demais requisitos previstos no art. 8� da Instru��o Normativa SMF n� 16, de 02 de julho de 2012
+01.05   	Licenciamento ou cess�o de direito de uso de programas de computa��o.
+01.05.01	Licenciamento de uso de programa de computa��o
+01.05.02	Cess�o de direito de uso de programa de computa��o
+01.06   	Assessoria e consultoria em informatica.
+01.06.01	Assessoria ou consultoria em informatica
+01.07   	Suporte t�cnico em informatica, inclusive instala��o, configura��o e manuten��o de programas de computa��o e bancos de dados.
+01.07.01	Suporte t�cnico em informatica
+01.07.02	Instala��o e/ou configura��o de programa de computa��o e/ou banco de dados
+01.07.03	Manuten��o de programa de computa��o e/ou banco de dados
+01.07.04	Customiza��o de programa de computador
+01.07.05	Atualiza��o de software
+01.08   	Planejamento, confec��o, manuten��o e atualiza��o de paginas eletronicas.
+01.08.01	Projeto de paginas eletronicas
+01.08.02	Confec��o ou desenvolvimento de paginas eletronicas
+01.08.03	Manuten��o e/ou atualiza��o de paginas eletronicas
+01.09   	Disponibiliza��o, sem cess�o definitiva, de conteudos de �udio, v�deo, imagem e texto por meio da internet, respeitada a imunidade de livros, jornais e peri�dicos (exceto a distribui��o de conteudos pelas prestadoras de servico de Acesso Condicionado, de que trata a Lei no 12.485, de 12 de setembro de 2011, sujeita ao ICMS).
+01.09.01	Disponibiliza��o, sem cess�o definitiva, de conteudos de �udio, v�deo, imagem ou texto por meio da internet, para pessoas jur�dicas
+01.09.02	Disponibiliza��o, sem cess�o definitiva, de conteudos de �udio, v�deo, imagem ou texto por meio da internet, para pessoas naturais
+02      	Servicos de pesquisas e desenvolvimento de qualquer natureza.
+02.01   	Servicos de pesquisas e desenvolvimento de qualquer natureza.
+02.01.01	Pesquisa e desenvolvimento (P&D)
+02.01.02	Pesquisa de mercado ou de opini�o p�blica
+02.01.03	Pesquisa de opini�o p�blica
+02.01.04	Pesquisa de mercado
+02.01.05	Desenvolvimento de projetos de cr�ditos de carbono
+03      	Servicos prestados mediante loca��o, cess�o de direito de uso e congeneres.
+03.02   	Cess�o de direito de uso de marcas e de sinais de propaganda.
+03.02.01	Cess�o de direito de uso de sinais de propaganda
+03.02.02	Cess�o de direito de uso de marca
+03.02.04	Servicos relativos � ind�stria cinematogr�fica, correspondentes a receitas de licenciamento para exibi��o da obra cinematogr�fica, exclusivamente vinculados a filme brasileiro, natural ou de enredo
+03.02.05	Servicos relativos � ind�stria cinematogr�fica, correspondentes a receitas de licenciamento para exibi��o da obra cinematogr�fica, vinculados a filme estrangeiro
+03.02.06	Servicos prestados mediante loca��o, cess�o de direito de uso e congeneres, n�o especificados em outros c�digos, exceto loca��o de bens m�veis pura e simples, nos termos da Instru��o Normativa SMF N� 15, de 12/01/2012
+03.03   	Explora��o de sal�es de festas, centro de conven��es, escrit�rios virtuais, stands, quadras esportivas, est�dios, gin�sios, audit�rios, casas de espet�culos, parques de divers�es, canchas e congeneres, para realiza��o de eventos ou neg�cios de qualquer natureza.
+03.03.01	Explora��o de sal�o de festas
+03.03.02	Explora��o de centro de conven��es
+03.03.03	Explora��o de escrit�rio virtual
+03.03.04	Explora��o de stand
+03.03.05	Explora��o de quadra esportiva
+03.03.06	Explora��o de est�dio
+03.03.07	Explora��o de gin�sio
+03.03.08	Explora��o de audit�rio
+03.03.09	Explora��o de casa de espet�culos
+03.03.10	Explora��o de parque de divers�es
+03.03.11	Explora��o de cancha, campo para pr�tica esportiva, pista para corrida de animais e congeneres
+03.04   	Loca��o, subloca��o, arrendamento, direito de passagem ou permiss�o de uso, compartilhado ou n�o, de ferrovia, rodovia, postes, cabos, dutos e condutos de qualquer natureza
+03.04.01	Loca��o, subloca��o, arrendamento, direito de passagem ou permiss�o de uso, compartilhado ou n�o, de ferrovias
+03.04.02	Loca��o, subloca��o, arrendamento, direito de passagem ou permiss�o de uso, compartilhado ou n�o, de rodovias
+03.04.03	Loca��o, subloca��o, arrendamento, direito de passagem ou permiss�o de uso, compartilhado ou n�o, de postes
+03.04.04	Loca��o, subloca��o, arrendamento, direito de passagem ou permiss�o de uso, compartilhado ou n�o, de cabos
+03.04.05	Loca��o, subloca��o, arrendamento, direito de passagem ou permiss�o de uso, compartilhado ou n�o, de dutos ou condutos de qualquer natureza
+03.04.06	Loca��o, subloca��o ou arrendamento de condutos em geral
+03.04.07	Cess�o de direitos sobre ferrovia
+03.04.08	Cess�o de direitos sobre rodovia
+03.04.09	Cess�o de direitos sobre postes
+03.04.10	Cess�o de direitos sobre cabos
+03.04.11	Cess�o de direitos sobre dutos
+03.04.12	Cess�o de direitos sobre condutos em geral
+03.05   	Cess�o de andaimes, palcos, coberturas e outras estruturas de uso tempor�rio.
+03.05.01	Cess�o de andaimes
+03.05.02	Cess�o de palco
+03.05.03	Cess�o de estrutura de uso tempor�rio
+04      	Servicos de sa�de, assist�ncia m�dica e congeneres.
+04.01   	Medicina e biomedicina.
+04.01.01	Medicina
+04.01.02	Biomedicina
+04.02   	Analises cl�nicas, patologia, eletricidade m�dica, radioterapia, quimioterapia, ultra-sonografia, resson�ncia magn�tica, radiologia, tomografia e congeneres.
+04.02.01	Analises cl�nicas, patologia ou cong�nere
+04.02.02	Eletricidade m�dica ou cong�nere
+04.02.03	Radioterapia ou cong�nere
+04.02.04	Quimioterapia ou cong�nere
+04.02.05	Ultra-sonografia, resson�ncia magn�tica, radiologia, tomografia ou cong�nere
+04.02.06	Hemoterapia
+04.02.07	Litotripsia
+04.02.08	Exames m�dicos e de sa�de em geral
+04.03   	Hospitais, cl�nicas, laborat�rios, sanat�rios, manic�mios, casas de sa�de, prontos-socorros, ambulat�rios e         congeneres.
+04.03.01	Servicos prestados por hospital
+04.03.02	Servicos de sa�de ou de assist�ncia m�dica prestados por hospital apto a efetuar interna��es
+04.03.03	Servicos prestados por cl�nica 
+04.03.04	Servicos de sa�de ou de assist�ncia m�dica prestados por cl�nica apta a efetuar interna��es
+04.03.05	Servicos de laborat�rio
+04.03.06	Servicos prestados por sanat�rio
+04.03.07	Servicos de sa�de ou de assist�ncia m�dica prestados por sanat�rio apto a efetuar interna��es
+04.03.08	Servicos prestados por manic�mio
+04.03.09	Servicos de sa�de ou de assist�ncia m�dica prestados por manic�mio apto a efetuar interna��es
+04.03.10	Servicos prestados por casa de sa�de
+04.03.11	Servicos de sa�de ou de assist�ncia m�dica prestados por casa de sa�de apta a efetuar interna��es
+04.03.12	Servicos prestados por pronto-socorro
+04.03.13	Servicos de sa�de ou de assist�ncia m�dica prestados por pronto-socorro apto a efetuar interna��es
+04.03.14	Servicos prestados por ambulat�rios
+04.03.15	Servicos prestados por posto de vacina��o
+04.04   	Instrumenta��o cir�rgica.
+04.04.01	Instrumenta��o cir�rgica
+04.05   	Acupuntura.
+04.05.01	Acupuntura
+04.06   	Enfermagem, inclusive Servicos auxiliares.
+04.06.01	Enfermagem 
+04.06.02	Enfermagem - Servicos auxiliares
+04.07   	Servicos farmac�uticos.
+04.07.01	Servicos farmac�uticos
+04.08   	Terapia ocupacional, fisioterapia e fonoaudiologia.
+04.08.01	Terapia ocupacional
+04.08.02	Fisioterapia
+04.08.03	Fonoaudiologia
+04.09   	Terapias de qualquer esp�cie destinadas ao tratamento f�sico, org�nico e mental.
+04.09.01	Terapias de qualquer esp�cie destinadas ao tratamento f�sico, org�nico ou mental
+04.10   	Nutri��o.
+04.10.01	Nutri��o
+04.11   	Obstetr�cia.
+04.11.01	Obstetr�cia
+04.12   	Odontologia.
+04.12.01	Odontologia
+04.13   	Ort�ptica.
+04.13.01	Ort�ptica
+04.14   	Pr�teses sob encomenda.
+04.14.01	Confec��o de pr�teses
+04.15   	PsicAnalise.
+04.15.01	PsicAnalise
+04.16   	Psicologia.
+04.16.01	Psicologia
+04.17   	Casas de repouso e de recupera��o, creches, asilos e congeneres
+04.17.01	Servicos de casa de repouso, de recupera��o, asilo ou cong�nere
+04.17.02	Servicos de creches ou cong�nere
+04.18   	Insemina��o artificial, fertiliza��o in vitro e congeneres.
+04.18.01	Insemina��o artificial, fertiliza��o in vitro ou cong�nere
+04.18.02	Reprodu��o assistida
+04.19   	Bancos de sangue, leite, pele, olhos, �vulos, s�men e congeneres.
+04.19.01	Servicos de banco de sangue ou cong�nere
+04.19.02	Servicos de banco de leite, cord�es umbilicais, pele, olhos, demais �rg�os ou tecidos ou cong�nere
+04.19.03	Servicos de banco de �vulos, s�mem ou cong�nere
+04.20   	Coleta de sangue, leite, tecidos, s�men, �rg�os e materiais biol�gicos de qualquer esp�cie.
+04.20.01	Coleta de sangue
+04.20.02	Coleta de leite, tecidos, s�men, �rg�os ou materiais biol�gicos de qualquer esp�cie
+04.21   	Unidade de atendimento, assist�ncia ou tratamento m�vel e congeneres.
+04.21.01	Servicos de unidade de atendimento, assist�ncia ou tratamento m�ve, ou cong�nere
+04.22   	Planos de medicina de grupo ou individual e conv�nios para presta��o de assist�ncia m�dica, hospitalar, odontol�gica e congeneres. 
+04.22.01	Plano de medicina de grupo ou cong�nere
+04.22.02	Plano de medicina individual ou cong�nere
+04.22.03	Conv�nio para presta��o de assist�ncia m�dica, hospitalar, odontol�gica e congeneres
+04.23   	Outros planos de sa�de que se cumpram atrav�s de Servicos de terceiros contratados, credenciados, cooperados ou apenas pagos pelo operador do plano mediante indica��o do benefici�rio.
+04.23.01	Plano de sa�de cumprido atrav�s de Servicos de terceiros contratados, credenciados, cooperados ou apenas pagos pelo operador do plano mediante indica��o do benefici�rio
+05      	Servicos de medicina e assist�ncia veterin�ria e congeneres.
+05.01   	Medicina veterin�ria e zootecnia.
+05.01.01	Medicina veterin�ria
+05.01.02	Zootecnia
+05.02   	Hospitais, cl�nicas, ambulat�rios, prontos-socorros e congeneres, na �rea veterin�ria.
+05.02.01	Servicos prestados por hospital veterin�rio
+05.02.02	Servicos prestados por cl�nica veterin�ria
+05.02.03	Servicos prestados por ambulat�rio veterin�rio
+05.02.04	Servicos prestados por pronto-socorro veterin�rio
+05.02.05	Servicos prestados por unidade de atendimento n�o especificada, na �rea veterin�ria
+05.03   	Laborat�rios de Analise na �rea veterin�ria
+05.03.01	Servicos de laborat�rios de Analise, na �rea veterin�ria
+05.04   	Insemina��o artificial, fertiliza��o in vitro e congeneres.
+05.04.01	Insemina��o artificial, fertiliza��o in vitro ou cong�nere, na �rea veterin�ria
+05.04.02	Reprodu��o animal assistida
+05.05   	Bancos de sangue e de �rg�os e congeneres.
+05.05.01	Servicos de banco de sangue animal ou cong�nere
+05.05.02	Servicos de banco de �rg�os de animais ou cong�nere
+05.06   	Coleta de sangue, leite, tecidos, s�men, �rg�os e materiais biol�gicos de qualquer esp�cie.
+05.06.01	Coleta de sangue, leite, tecidos, s�men, �rg�os ou materiais biol�gicos de qualquer esp�cie, de animais
+05.06.02	Manejo de animais
+05.07   	Unidade de atendimento, assist�ncia ou tratamento m�vel e congeneres.
+05.07.01	Servicos de unidade de atendimento, assist�ncia ou tratamento m�vel, ou cong�nere, para animais
+05.08   	Guarda, tratamento, amestramento, embelezamento, alojamento e congeneres.
+05.08.01	Guarda,  alojamento ou servico cong�nere, para animais
+05.08.02	Tratamento, embelezamento, tosquia ou servico cong�nere, para animais
+05.08.03	Amestramento de animais
+05.09   	Planos de atendimento e assist�ncia m�dico-veterin�ria.
+05.09.01	Plano de atendimento e assist�ncia m�dico-veterin�ria
+06      	Servicos de cuidados pessoais, est�tica, atividades f�sicas e congeneres.
+06.01   	Barbearia, cabeleireiros, manicuros, pedicuros e congeneres
+06.01.01	Barbearia ou servico cong�nere
+06.01.02	Servicos de cabeleireiro ou cong�nere
+06.01.03	Servicos de cabeleireiro, manicuro ou pedicuro
+06.01.04	Servicos t�picos de sal�es de beleza - cortes de cabelo, maquiagem, Servicos de manicuro, pedicuro e outros
+06.01.20	Sal�o-parceiro optante pelo Simples Nacional (LF n� 12.592/2012) - Servicos de cabeleireiros, barbeiros, manicuros, pedicuros e maquiadores
+06.01.21	Profissional-parceiro - cabeleireiro (LF n� 12.592/2012)
+06.01.22	Profissional-parceiro - barbeiro (LF n� 12.592/2012)
+06.01.23	Profissional-parceiro -manicuro (LF n� 12.592/2012)
+06.01.24	Profissional-parceiro -pedicuro (LF n� 12.592/2012)
+06.01.25	 profissional-parceiro -maquiador (LF n� 12.592/2012)
+06.02   	Esteticistas, tratamento de pele, depila��o e congeneres
+06.02.01	Servicos de esteticistas, tratamento de pele, depila��o ou cong�nere
+06.02.20	Sal�o-parceiro optante pelo Simples Nacional (LF n� 12.592/2012) -Servicos de esteticistas e depiladores
+06.02.21	 profissional-parceiro - esteticista (LF n� 12.592/2012)
+06.02.22	 profissional-parceiro - depilador (LF n� 12.592/2012)
+06.03   	Banhos, duchas, sauna, massagens e congeneres
+06.03.01	Banhos, duchas, sauna, massagens ou servico cong�nere
+06.03.02	Explora��o de sanit�rios
+06.04   	Gin�stica, dan�a, esportes, nata��o, artes marciais e demais atividades f�sicas.
+06.04.01	Aulas de gin�stica
+06.04.02	Aulas de dan�a
+06.04.03	Aulas de esportes
+06.04.04	Aulas de nata��o
+06.04.05	Aulas de artes marciais
+06.04.06	Servicos de academia de gin�stica
+06.04.07	Servicos de academia de dan�a
+06.04.08	Servicos de academia de esportes
+06.04.09	Servicos de academia de nata��o
+06.04.10	Servicos de academia de artes marciais
+06.04.11	Servicos relativos � pr�tica de atividades f�sicas
+06.05   	Centros de emagrecimento, spa e congeneres
+06.05.01	Servicos de centro de emagrecimento, spa ou cong�nere
+06.06   	aplicacao de tatuagens, piercings e congeneres.
+06.06.01	aplicacao de tatuagens, piercings e congeneres
+07      	Servicos relativos a engenharia, arquitetura, geologia, urbanismo, constru��o civil, manuten��o, limpeza, meio ambiente, saneamento e congeneres.
+07.01   	Engenharia, agronomia, agrimensura, arquitetura, geologia, urbanismo, paisagismo e congeneres.
+07.01.01	Engenharia
+07.01.02	Agronomia
+07.01.03	Agrimensura ou cong�nere
+07.01.04	Arquitetura
+07.01.05	Geologia
+07.01.06	Urbanismo ou cong�nere
+07.01.07	Paisagismo ou cong�nere
+07.01.08	Acompanhamento e fiscaliza��o da execu��o de Servicos de engenharia, arquitetura ou urbanismo
+07.01.09	Engenharia consultiva - acompanhamento e  fiscaliza��o da execu��o de Servicos de engenharia, arquitetura e urbanismo (relacionados com obras de constru��o civil, hidr�ulicas, de escoramento  ou de conten��o de encostas)
+07.02   	Execu��o, por administra��o, empreitada ou subempreitada, de obras de constru��o civil, hidr�ulica ou el�trica e de outras obras semelhantes, inclusive sondagem, perfura��o de po�os, escava��o, drenagem e irriga��o, terraplanagem, pavimenta��o, concretagem e a instala��o e montagem de produtos, pe�as e equipamentos (exceto o fornecimento de mercadorias produzidas pelo prestador de Servicos fora do local da presta��o dos Servicos, que fica sujeito ao ICMS).
+07.02.11	Execu��o, por empreitada ou subempreitada, de obras hidr�ulicas
+07.02.13	Execu��o, por administra��o, de obras hidr�ulicas
+07.02.15	Execu��o, por empreitada ou subempreitada, de obras el�tricas
+07.02.17	Execu��o, por administra��o, de obras el�tricas
+07.02.19	Obras assemelhadas a  obras de constru��o civil, hidr�ulicas ou el�tricas
+07.02.21	Constru��o de empreendimentos habitacionais de interesse social e de arrendamento residencial assim entendidos aqueles expressamente reconhecidos pela Secretaria Municipal de Habita��o como inseridos na pol�tica habitacional municipal, estadual e federal, destinados � popula��o com renda de at� dez sal�rios m�nimos, conforme a Lei n� 5.065, de 10 de julho de 2009
+07.02.22	Sondagem
+07.02.23	Perfura��o de po�os
+07.02.24	Escava��o
+07.02.25	Drenagem
+07.02.26	Irriga��o
+07.02.27	Terraplanagem
+07.02.28	Pavimenta��o
+07.02.29	Concretagem de funda��es ou conten��es
+07.02.30	Concretagem, exceto funda��es ou conten��es
+07.02.31	Instala��o de equipamentos, incluindo elevadores ou congeneres
+07.02.32	Montagem de equipamentos, incluindo elevadores ou congeneres
+07.02.33	Instala��o de pe�as
+07.02.34	Montagem de pe�as
+07.02.35	Montagem de f�rmas in loco de funda��es ou conten��es
+07.02.36	Montagem de f�rmas in loco, exceto funda��es ou conten��es
+07.02.37	Servicos de arma��o in loco de funda��es ou conten��es
+07.02.38	Servicos de arma��o in loco, exceto funda��es ou conten��es
+07.02.39	Confec��o de f�rmas sob encomenda de funda��es ou conten��es
+07.02.40	Confec��o de f�rmas sob encomenda, exceto funda��es ou conten��es
+07.02.41	Confec��o de produtos de concreto sob encomenda
+07.02.42	Confec��o de arma��es met�licas sob encomenda de funda��es ou conten��es
+07.02.43	Confec��o de arma��es met�licas sob encomenda, exceto funda��es ou conten��es
+07.02.44	Instala��o el�trica, incluindo redes de computadores ou congeneres
+07.02.45	Instala��o hidr�ulica, incluindo lou�as, metais ou congeneres
+07.02.46	Instala��o contra inc�ndio
+07.02.47	Confec��o de arma��es met�licas sob encomenda
+07.02.48	Confec��o de produtos de gesso sob encomenda
+07.02.49	Confec��o de produtos de cimento sob encomenda
+07.02.50	Confec��o de produtos de fibrocimento sob encomenda
+07.02.51	Assentamento de alvenaria
+07.02.52	Coloca��o ou instala��o de assoalhos
+07.02.53	Coloca��o ou instala��o de revestimentos em paredes
+07.02.54	Servicos de pintura ou congeneres
+07.02.55	Coloca��o ou instala��o de vidros
+07.02.56	Coloca��o ou instala��o de esquadrias met�licas
+07.02.57	Coloca��o ou instala��o de esquadrias de madeira
+07.02.58	Coloca��o ou instala��o de ferragens de portas ou congeneres
+07.02.59	Coloca��o ou instala��o de divis�rias
+07.02.60	Coloca��o ou instala��o de placas de gesso
+07.02.61	Recupera��o de pisos ou congeneres
+07.02.62	Raspagem de pisos ou congeneres
+07.02.63	Polimento de pisos ou congeneres
+07.02.64	Lustra��o de pisos ou congeneres
+07.02.65	Calafeta��o
+07.02.69	Impermeabilliza��o - constru��o civil
+07.02.70	Execu��o de obra de constru��o civil, hidr�ulica, el�trica ou semelhante, vinculada a im�vel situado na �rea delimitada na Opera��o Urbana Consorciada da Regi�o do Porto do Rio de Janeiro, nos termos da Lei Complementar n� 101, de 23 de novembro de 2009 � isen��o institu�da pela Lei n� 5.128, de 16 de dezembro de 2009
+07.02.72	Execu��o de obra de constru��o civil por empreitada global
+07.02.98	Execu��o, por empreitada ou subempreitada, de obras de constru��o civil, n�o enquadr�vel nos c�digos anteriores
+07.02.99	Execu��o, por administra��o, de obras de constru��o civil, n�o enquadr�vel nos c�digos anteriores
+07.03   	Elaboracao de planos diretores, estudos de viabilidade, estudos organizacionais e outros, relacionados com obras e Servicos de engenharia; Elaboracao de anteprojetos, projetos b�sicos e projetos executivos para trabalhos de engenharia.
+07.03.01	Elaboracao de planos diretores relacionados com Servicos de engenharia n�o relacionados a obras de constru��o civil
+07.03.02	Engenharia consultiva - Elaboracao de planos diretores relacionados com obras ou Servicos de engenharia (relacionados com obras de constru��o civil, hidr�ulicas, de escoramento  ou de conten��o de encostas)
+07.03.03	Elaboracao de estudos de viabilidade relacionados com Servicos de engenharia n�o relacionados com obras de constru��o civil
+07.03.04	Engenharia consultiva - Elaboracao de estudos de viabilidade, relacionados com obras ou Servicos de engenharia (relacionados com obras de constru��o civil, hidr�ulicas, de escoramento  ou de conten��o de encostas)
+07.03.05	Elaboracao de estudos organizacionais e outros, relacionados com Servicos de engenharia n�o relacionados com obras de constru��o civil
+07.03.06	Engenharia consultiva - Elaboracao de estudos diversos relacionados com obras ou Servicos de engenharia (relacionados com obras de constru��o civil, hidr�ulicas, de escoramento  ou de conten��o de encostas)
+07.03.07	Elaboracao de anteprojetos para trabalhos de engenharia n�o relacionados com obras de constru��o civil
+07.03.08	Elaboracao de projetos b�sicos para trabalhos de engenharia n�o relacionados com obras de constru��o civil
+07.03.09	Elaboracao de projetos executivos para trabalhos de engenharia n�o relacionados com obras de constru��o civil
+07.03.10	Engenharia consultiva - Elaboracao de anteprojetos, projetos b�sicos e projetos executivos para trabalhos de engenharia (relacionados com obras de constru��o civil, hidr�ulicas, de escoramento  ou de conten��o de encostas)
+07.03.11	Elaboracao de planos diretores, estudos de viabilidade, estudos organizacionais e outros, anteprojetos, projetos b�sicos e projetos executivos, vinculada a constru��o ou reforma de im�vel situado na �rea delimitada na Opera��o Urbana Consorciada da Regi�o do Porto do Rio de Janeiro, nos termos da Lei Complementar n� 101, de 23 de novembro de 2009 - isen��o institu�da pela Lei n� 5.128, de 16 de dezembro de 2009
+07.04   	Demoli��o
+07.04.01	Demoli��o
+07.04.02	Demoli��o vinculada a constru��o ou reforma de im�vel situado na �rea delimitada na Opera��o Urbana Consorciada da Regi�o do Porto do Rio de Janeiro, nos termos da Lei Complementar n� 101, de 23 de novembro de 2009 - isen��o institu�da pela Lei n� 5.128, de 16 de dezembro de 2009
+07.05   	Repara��o, conserva��o e reforma de edif�cios, estradas, pontes, portos e congeneres (exceto o fornecimento de mercadorias produzidas pelo prestador dos Servicos, fora do local da presta��o dos Servicos, que fica sujeito ao ICMS).
+07.05.01	Repara��o de edif�cios e congeneres
+07.05.02	Repara��o de estradas e congeneres
+07.05.03	Repara��o de pontes e congeneres
+07.05.04	Repara��o de portos  e congeneres
+07.05.05	Repara��o de im�veis em geral
+07.05.07	Conserva��o de edif�cios e congeneres
+07.05.08	Conserva��o de estradas e congeneres
+07.05.09	Conserva��o de pontes e congeneres
+07.05.10	Conserva��o de portos e congeneres
+07.05.11	Conserva��o de im�veis em geral
+07.05.13	Reforma de edif�cios e congeneres
+07.05.14	Reforma de estradas e congeneres
+07.05.15	Reforma de pontes e congeneres
+07.05.16	Reforma de portos e congeneres
+07.05.17	Reforma de im�veis em geral
+07.05.19	Reforma de im�veis para convers�o em resid�ncias integrantes de empreendimentos habitacionais de interesse social e de arrendamento residencial assim entendidos aqueles aqueles expressamente reconhecidos pela Secretaria Municipal de Habita��o como inseridos na pol�tica habitacional municipal, estadual e federal, destinados � popula��o com renda de at� dez sal�rios m�nimos, conforme a Lei n� 5.065, de 10 de julho de 2009.
+07.05.20	Assentamento de alvenaria
+07.05.21	Coloca��o ou instala��o de assoalhos
+07.05.22	Coloca��o ou instala��o de revestimentos em paredes
+07.05.23	Servicos de pintura ou congeneres
+07.05.24	Coloca��o ou instala��o de vidros
+07.05.25	Coloca��o ou instala��o de esquadrias met�licas
+07.05.26	Coloca��o ou instala��o de esquadrias de madeira
+07.05.27	Coloca��o ou instala��o de ferragens de portas ou congeneres
+07.05.28	Coloca��o ou instala��o de divis�rias
+07.05.29	Coloca��o ou instala��o de placas de gesso
+07.05.30	Recupera��o de pisos ou congeneres
+07.05.31	Raspagem de pisos ou congeneres
+07.05.32	Polimento de pisos ou congeneres
+07.05.33	Lustra��o de pisos ou congeneres
+07.05.34	Calafeta��o
+07.05.38	Impermeabiliza��o - repara��o ou reforma de edif�cios, estradas, pontes, portos ou congeneres
+07.05.39	Impermeabiliza��o - conserva��o de edif�cios, estradas, pontes, portos ou congeneres
+07.05.40	Conserva��o ou reforma de edif�cio, estrada, ponte, porto ou cong�nere, vinculada a constru��o ou reforma de im�vel situado na �rea delimitada na Opera��o Urbana Consorciada da Regi�o do Porto do Rio de Janeiro, nos termos da Lei Complementar n� 101, de 23 de novembro de 2009 � isen��o institu�da pela Lei n� 5.128, de 16 de dezembro de 2009
+07.06   	Coloca��o e instala��o de tapetes, carpetes, assoalhos, cortinas, revestimentos de parede, vidros, divis�rias, placas de gesso e congeneres, com material fornecido pelo tomador do servico.
+07.06.01	Coloca��o ou instala��o de tapetes
+07.06.02	Coloca��o ou instala��o de carpetes
+07.06.03	Coloca��o ou instala��o de assoalhos
+07.06.04	Coloca��o ou instala��o de cortinas
+07.06.05	Coloca��o ou instala��o de revestimentos de parede
+07.06.06	Servicos de pintura ou congeneres
+07.06.07	Coloca��o ou instala��o de vidros
+07.06.08	Coloca��o ou instala��o de esquadrias met�licas
+07.06.09	Coloca��o ou instala��o de esquadrias de madeira
+07.06.10	Coloca��o ou instala��o de ferragens de portas ou congeneres
+07.06.11	Coloca��o ou instala��o de divis�rias
+07.06.12	Coloca��o ou instala��o de placas de gesso
+07.06.13	Assentamento de alvenaria
+07.06.14	Coloca��o ou instala��o de assoalhos
+07.06.15	Coloca��o ou instala��o de revestimentos em paredes
+07.06.16	Servicos de pintura ou congeneres
+07.06.17	Coloca��o ou instala��o de vidros
+07.06.18	Coloca��o ou instala��o de esquadrias met�licas
+07.06.19	Coloca��o ou instala��o de esquadrias de madeira
+07.06.20	Coloca��o ou instala��o de ferragens de portas ou congeneres
+07.06.21	Coloca��o ou instala��o de divis�rias
+07.06.22	Coloca��o ou instala��o de placas de gesso
+07.06.23	Recupera��o de pisos ou congeneres
+07.06.24	Raspagem de pisos ou congeneres
+07.06.25	Polimento de pisos ou congeneres
+07.06.26	Lustra��o de pisos ou congeneres
+07.06.27	Calafeta��o
+07.07   	Recupera��o, raspagem, polimento e lustra��o de pisos e congeneres.
+07.07.01	Recupera��o de pisos ou congeneres
+07.07.02	Raspagem de pisos ou congeneres
+07.07.03	Polimento de pisos ou congeneres
+07.07.04	Lustra��o de pisos ou congeneres
+07.08   	Calafeta��o.
+07.08.01	Calafeta��o
+07.09   	Varri��o, coleta, remo��o, incinera��o, tratamento, reciclagem, separa��o e destina��o final de lixo, rejeitos e outros res�duos quaisquer.
+07.09.01	Varri��o de lixo, rejeitos ou outros res�duos quaisquer
+07.09.02	Coleta de res�duos lixo, rejeitos ou outros res�duos quaisquer
+07.09.03	Remo��o de lixo, rejeitos ou outros res�duos quaisquer
+07.09.04	Incinera��o de lixo, rejeitos ou outros res�duos quaisquer
+07.09.05	Tratamento de lixo, rejeitos ou outros res�duos quaisquer
+07.09.06	Reciclagem de lixo, rejeitos ou outros res�duos quaisquer
+07.09.07	Separa��o de  lixo, rejeitos ou outros res�duos quaisquer
+07.09.08	Destina��o final de  lixo, rejeitos ou outros res�duos quaisquer
+07.09.09	Lei n� 5.133/2009, art. 4� - varri��o, coleta, remo��o, incinera��o, tratamento, reciclagem, separa��o ou destina��o final de lixo, rejeitos e outros res�duos quaisquer, vinculado(a) � opera��o de complexo sider�rgico na Zona Oeste do Munic�pio, conforme defini��o constante do inc. IV do art. 3� da Lei n� 4.372/2006.
+07.10   	Limpeza, manuten��o e conserva��o de vias e logradouros p�blicos, im�veis, chamin�s, piscinas, parques, jardins e congeneres.
+07.10.01	Manuten��o ou conserva��o de vias ou logradouros p�blicos
+07.10.02	Manuten��o ou conserva��o de im�veis
+07.10.03	Manuten��o ou conserva��o de chamin�s
+07.10.04	Manuten��o ou conserva��o de piscinas
+07.10.05	Manuten��o ou conserva��o de parques
+07.10.06	Manuten��o ou conserva��o de jardins
+07.10.07	Limpeza de vias ou logradouros p�blicos
+07.10.08	Limpeza de im�veis
+07.10.09	Limpeza de chamin�s
+07.10.10	Limpeza de piscinas
+07.10.11	Limpeza de parques
+07.10.12	Limpeza de jardins
+07.10.13	Impermeabiliza��o - manuten��o ou conserva��o
+07.11   	Decora��o e jardinagem, inclusive corte e poda de �rvores.
+07.11.01	Decora��o
+07.11.02	Jardinagem
+07.11.03	Corte ou poda de �rvores
+07.12   	Controle e tratamento de efluentes de qualquer natureza e de agentes f�sicos, qu�micos e biol�gicos
+07.12.01	Controle de efluentes de qualquer natureza
+07.12.02	Controle de agentes f�sicos e/ou qu�micos
+07.12.03	Controle de agentes biol�gicos
+07.12.04	Tratamento de efluentes de qualquer natureza
+07.12.05	Tratamento de agentes qu�micos
+07.12.06	Tratamento de agentes biol�gicos
+07.12.07	Lei n� 5.133/2009, art. 4� - controle e tratamento de efluentes de qualquer natureza e de agentes f�sicos, qu�micos e biol�gicos, vinculados � opera��o de complexo sider�rgico na Zona Oeste do Munic�pio, conforme defini��o constante do inc. IV do art. 3� da Lei n� 4.372/2006.
+07.13   	Dedetiza��o, desinfec��o, desinsetiza��o, imuniza��o, higieniza��o, desratiza��o, pulveriza��o e congeneres.
+07.13.01	Dedetiza��o, desinsetiza��o ou cong�nere
+07.13.02	Desinfec��o, imuniza��o, higieniza��o ou cong�nere
+07.13.03	Desratiza��o ou cong�nere
+07.13.04	Pulveriza��o ou cong�nere
+07.13.05	Controle de pragas
+07.16   	Florestamento, reflorestamento, semeadura, aduba��o, repara��o de solo, plantio, silagem, colheita, corte e descascamento de �rvores, silvicultura, explora��o florestal e dos Servicos congeneres indissoci�veis da forma��o, manuten��o e colheita de florestas, para quaisquer fins e por quaisquer meios.
+07.16.01	Florestamento,  reflorestamento ou cong�nere
+07.16.03	Semeadura, aduba��o, repara��o de solo, plantio, silagem, colheita
+07.16.04	Corte e descascamento de �rvores
+07.16.05	Silvicultura, explora��o florestal e dos Servicos congeneres indissoci�veis da forma��o, manuten��o e colheita de florestas, para quaisquer fins e por quaisquer meios
+07.17   	Escoramento, conten��o de encostas e Servicos congeneres
+07.17.01	Escoramento, conten��o de encostas e Servicos congeneres
+07.18   	Limpeza e dragagem de rios, portos, canais, ba�as, lagos, lagoas, represas, a�udes e congeneres.
+07.18.01	Limpeza e dragagem de rios
+07.18.02	Limpeza e dragagem de portos
+07.18.03	Limpeza e dragagem de canais
+07.18.04	Limpeza e dragagem de ba�as ou congeneres
+07.18.05	Limpeza e dragagem de lagos, lagoas, represas, a�udes ou congeneres
+07.19   	Acompanhamento e fiscaliza��o da execu��o de obras de engenharia, arquitetura e urbanismo
+07.19.01	Acompanhamento e fiscaliza��o da execu��o de obras de engenharia, arquitetura ou urbanismo
+07.19.04	Engenharia consultiva - acompanhamento e  fiscaliza��o da execu��o de obras de engenharia, arquitetura e urbanismo (relacionados com obras de constru��o civil, hidr�ulicas, de escoramento  ou de conten��o de encostas)
+07.20   	Aerofotogrametria (inclusive interpreta��o), cartografia, mapeamento, levantamentos topogr�ficos, batim�tricos, geogr�ficos, geod�sicos, geol�gicos, geof�sicos e congeneres.
+07.20.01	Aerofotogrametria
+07.20.02	Interpreta��o de aerofotogrametria
+07.20.03	Cartografia ou cong�nere
+07.20.04	Mapeamento ou cong�nere
+07.20.05	Levantamentos topogr�ficos ou congeneres
+07.20.06	Levantamentos batim�tricos ou congeneres
+07.20.07	Levantamentos geogr�ficos ou congeneres
+07.20.08	Levantamentos geod�sicos ou congeneres
+07.20.09	Levantamentos geol�gicos ou congeneres
+07.20.10	Levantamentos geof�sicos ou congeneres
+07.21   	Pesquisa, perfura��o, cimenta��o, mergulho, perfilagem, concreta��o, testemunhagem, pescaria, estimula��o e outros Servicos relacionados com a explora��o e explota��o de petr�leo, g�s natural e de outros recursos minerais.
+07.21.01	Pesquisa, perfura��o, cimenta��o, mergulho, perfilagem, concreta��o, testemunhagem, pescaria, estimula��o e outros Servicos relacionados com a explora��o e explota��o de petr�leo, g�s natural e de outros recursos minerais
+07.21.03	Servicos de log�stica relacionados � explora��o e � explota��o de petr�leo e g�s natural
+07.21.04	Integra��o de Servicos de implementa��o,  interven��o  e interliga��o de  po�os  mar�timos  relacionados � explora��o  e  � explota��o  de  petr�leo  e  g�s  natural,  desde  que  os  respectivos estabelecimentos prestadores sejam localizados nos bairros de Acari, Barros  Filho, Cordovil, Costa Barros, Jardim Am�rica, Parada  de Lucas, Parque Col�mbia, Pavuna e Vig�rio Geral
+07.21.05	Servicos prestados mediante cess�o de direito de uso de dados s�smicos n�o exclusivos obtidos por Empresa de Aquisi��o de Dados - EAD, na forma da regulamenta��o da Ag�ncia Nacional de Petr�leo, G�s Natural e Biocombust�veis - ANP ou ag�ncia reguladora que a substitua
+07.22   	Nuclea��o e bombardeamento de nuvens e congeneres.
+07.22.01	Nuclea��o e bombardeamento de nuvens ou congeneres
+08      	Servicos de educa��o, ensino, orienta��o pedag�gica e educacional, instru��o, treinamento e avalia��o pessoal de qualquer grau ou natureza.
+08.01   	Ensino regular pr�-escolar, fundamental, m�dio e superior.
+08.01.01	Ensino pr�-escolar
+08.01.02	Ensino fundamental
+08.01.03	Ensino m�dio
+08.01.04	Ensino superior
+08.01.05	Ensino regular � dist�ncia
+08.02   	Instru��o, treinamento, orienta��o pedag�gica e educacional, avalia��o de conhecimentos de qualquer natureza.
+08.02.01	Instru��o
+08.02.02	Treinamento
+08.02.03	Orienta��o pedag�gica
+08.02.04	Orienta��o educacional
+08.02.05	Avalia��o de conhecimentos
+08.02.06	Ensino t�cnico
+08.02.07	Ensino tecnologico
+08.02.08	Ensino de m�sica
+08.02.09	Ensino de artes
+08.02.10	Ensino de idiomas
+08.02.11	Forma��o de condutores
+08.02.12	Curso de pilotagem
+08.02.13	Curso de informatica
+08.02.14	Cursos em geral
+08.02.15	Instru��o e treinamento � dist�ncia
+08.02.16	Ensino � dist�ncia - cursos livres
+09      	Servicos relativos a hospedagem, turismo, viagens e congeneres.
+09.01   	Hospedagem de qualquer natureza em hot�is, apart-service condominiais, flat, apart-hot�is, hot�is resid�ncia, residence-service, suite service, hotelaria mar�tima, mot�is, pens�es e congeneres; ocupa��o por temporada com fornecimento de servico (o valor da alimenta��o e gorjeta, quando inclu�do no pre�o da di�ria, fica sujeito ao Imposto Sobre Servicos).
+09.01.01	Hospedagem, de qualquer natureza, em hot�is
+09.01.02	Hospedagem, de qualquer natureza, em apart-service condominial, flat, apart-hotel, hotel resid�ncia, residence-service, suite service, condom�nio hoteleiro, flat-hotel ou cong�nere
+09.01.03	Hospedagem de qualquer natureza - hotelaria mar�tima
+09.01.04	Hospedagem, de qualquer natureza, em pens�es, hospedarias e congeneres
+09.01.05	Ocupa��o por temporada com fornecimento de servico
+09.01.06	Hospedagem, de qualquer natureza, em mot�is e congeneres
+09.02   	Agenciamento, organiza��o, promo��o, intermedia��o e execu��o de programas de turismo, passeios, viagens, excurs�es, hospedagens e congeneres.
+09.02.01	Agenciamento, organiza��o, promo��o e intermedia��o de programas de turismo, passeios, viagens, excurs�es, hospedagens e congeneres.
+09.02.02	Execu��o de programas de turismo, passeios, viagens, excurs�es, hospedagens e congeneres.
+09.02.03	Reservas
+09.03   	Guias de turismo.
+09.03.01	Guia de turismo
+10      	Servicos de intermedia��o e congeneres.
+10.01   	Agenciamento, corretagem ou intermedia��o de c�mbio, de seguros, de cart�es de cr�dito, de planos de sa�de e de planos de previd�ncia privada.
+10.01.01	Agenciamento, corretagem ou intermedia��o de c�mbio
+10.01.03	Agenciamento, corretagem ou intermedia��o  de cart�es de cr�dito
+10.01.04	Agenciamento, corretagem ou intermedia��o de planos de sa�de
+10.01.05	Agenciamento, corretagem ou intermedia��o de planos de previd�ncia privada
+10.01.06	Agenciamento, corretagem ou intermedia��o, quando relativos a seguros
+10.01.07	Agenciamento, corretagem ou intermedia��o, quando relativos a resseguros
+10.02   	Agenciamento, corretagem ou intermedia��o de t�tulos em geral, valores mobili�rios e contratos quaisquer.
+10.02.01	Agenciamento, corretagem ou intermedia��o de t�tulos em geral ou valores mobili�rios
+10.02.02	Servicos de agenciamento, corretagem ou intermedia��o de t�tulos em geral ou valores mobili�rios, prestados por institui��o autorizada a funcionar pelo Banco Central do Brasil
+10.02.03	Agenciamento, corretagem ou intermedia��o de contratos quaisquer 
+10.02.04	Servicos de agenciamento, corretagem ou intermedia��o de t�tulos em geral ou valores mobili�rios realizados no �mbito de Bolsa de Mercadorias e Futuros
+10.02.05	Intermedia��o de Servicos entre pessoas f�sicas, realizada exclusivamente pela internet
+10.03   	Agenciamento, corretagem ou intermedia��o de direitos de propriedade industrial, art�stica ou liter�ria.
+10.03.01	Agenciamento, corretagem ou intermedia��o de direitos de propriedade industrial
+10.03.02	Agenciamento, corretagem ou intermedia��o de direitos de propriedade art�stica
+10.03.03	Agenciamento, corretagem ou intermedia��o de direitos de propriedade liter�ria
+10.04   	Agenciamento, corretagem ou intermedia��o de contratos de arrendamento mercantil (leasing), de franquia (franchising) e de faturiza��o (factoring).
+10.04.01	Agenciamento, corretagem ou intermedia��o de contratos de arrendamento mercantil (leasing)
+10.04.02	Agenciamentode contratos de franquia (franchising)
+10.04.03	Agenciamento, corretagem ou intermedia��o de contratos de faturiza��o (factoring)
+10.05   	Agenciamento, corretagem ou intermedia��o de bens m�veis ou im�veis, n�o abrangidos em outros itens ou subitens, inclusive aqueles realizados no �mbito de Bolsas de Mercadorias e Futuros, por quaisquer meios.
+10.05.01	Agenciamento, corretagem ou intermedia��o de contratos em mercado de mercadorias e futuros
+10.05.02	Agenciamento, corretagem ou intermedia��o de bens m�veis
+10.05.03	Agenciamento, corretagem ou intermedia��o de bens im�veis
+10.05.04	Venda em consigna��o
+10.05.05	Agenciamento de cargas
+10.05.06	Intermedia��o na comercializa��o de produtos de informatica
+10.05.07	Agenciamento de transportes
+10.05.08	Intermedia��o para licenciamento ou cess�o do direito de uso de programa de computador
+10.06   	Agenciamento mar�timo.
+10.06.01	Agenciamento mar�timo
+10.07   	Agenciamento de not�cias.
+10.07.01	Agenciamento de not�cias
+10.08   	Agenciamento de publicidade e propaganda, inclusive o agenciamento de veicula��o por quaisquer meios.
+10.08.01	Agenciamento de publicidade e propaganda
+10.08.02	Agenciamento de veicula��o de publicidade e propaganda
+10.09   	Representa��o de qualquer natureza, inclusive comercial.
+10.09.01	Representa��o comercial
+10.09.02	Representa��o em geral
+10.09.04	Servicos de representa��o ativa ou passiva, realizada atrav�s de centrais de teleatendimento, prestados por estabelecimentos situados na �rea de Planejamento 3 - AP-3 e na �rea de Planejamento 5 - AP-5, conforme delimitadas no Plano Diretor da Cidade do Rio de Janeiro, Lei Complementar n� 111, de 1� de fevereiro de 2011, e na �rea de Planejamento 2.2 - AP-2.2, que engloba a VIII e a IX Regi�es Administrativas
+10.09.05	Servicos de representa��o, quando relativa a seguros
+10.09.06	Servicos de representa��o, quando relativa a resseguros
+10.10   	Distribui��o de bens de terceiros.
+10.10.01	Distribui��o de bens de terceiros
+10.10.02	Servicos relativos � ind�stria cinematogr�fica, correspondentes a receitas de distribui��o de filmes, exclusivamente vinculados a filme brasileiro, natural ou de enredo, e havendo dedica��o exclusiva do distribuidor a filmes brasileiros, naturais ou de enredo
+10.10.03	Servicos relativos � ind�stria cinematogr�fica, correspondentes a receitas de distribui��o de filmes, vinculados a filme estrangeiro, ou n�o havendo dedica��o exclusiva do distribuidor a filmes brasileiros
+11      	Servicos de guarda, estacionamento, armazenamento, vigil�ncia e congeneres.
+11.01   	Guarda e estacionamento de ve�culos terrestres automotores, de aeronaves e de embarca��es.
+11.01.01	Guarda e estacionamento de ve�culos terrestres automotores
+11.01.02	Guarda e estacionamento de aeronaves
+11.01.03	Guarda e estacionamento de embarca��es
+11.02   	Vigil�ncia, seguran�a ou monitoramento de bens, pessoas e semoventes.
+11.02.03	Vigil�ncia, seguran�a ou monitoramento de bens, pessoas ou semoventes
+11.03   	Escolta, inclusive de ve�culos e cargas.
+11.03.01	Escolta
+11.04   	Armazenamento, dep�sito, carga, descarga, arruma��o e guarda de bens de qualquer esp�cie.
+11.04.01	Armazenamento, guarda ou dep�sito de bens
+11.04.02	Carga e/ou descarga de bens
+11.04.03	Arruma��o de bens
+11.05   	Servicos relacionados ao monitoramento e rastreamento a dist�ncia, em qualquer via ou local, de ve�culos, cargas, pessoas e semoventes em circula��o ou movimento, realizados por meio de telefonia m�vel, transmiss�o de sat�lites, r�dio ou qualquer outro meio, inclusive pelas empresas de tecnologia da informacao veicular, independentemente de o prestador de Servicos ser propriet�rio ou n�o da infraestrutura de telecomunica��es que utiliza
+11.05.01	Servicos relacionados ao monitoramento e rastreamento a dist�ncia, em qualquer via ou local, de ve�culos, cargas, pessoas e semoventes em circula��o ou movimento, realizados por meio de telefonia m�vel, transmiss�o de sat�lites, r�dio ou qualquer outro meio, inclusive pelas empresas de tecnologia da informacao veicular, independentemente de o prestador de Servicos ser propriet�rio ou n�o da infraestrutura de telecomunica��es que utiliza
+12      	Servicos de divers�es, lazer, entretenimento e congeneres.
+12.01   	Espet�culos teatrais
+12.01.01	Espet�culos teatrais
+12.02   	Exibi��es cinematogr�ficas
+12.02.01	Exibi��es cinematogr�ficas
+12.03   	Espet�culos circenses
+12.03.01	Espet�culos circenses
+12.04   	Programas de audit�rio
+12.04.01	Programas de audit�rio
+12.05   	Parques de divers�es, centros de lazer e congeneres.
+12.05.01	Parques de divers�es e congeneres
+12.05.02	Centros de lazer  e congeneres
+12.06   	Boates, taxi-dancing e congeneres
+12.06.01	Taxi-dancing  e congeneres
+12.06.02	Boates  e congeneres
+12.06.03	Discotecas
+12.06.04	Danceterias
+12.07   	Shows, ballet, dan�as, desfiles, bailes, �peras, concertos, recitais, festivais e congeneres
+12.07.01	Realiza��o de shows
+12.07.02	Realiza��o de espet�culos de  ballet
+12.07.03	Realiza��o de dan�a
+12.07.04	Realiza��o de desfile
+12.07.05	Realiza��o de baile
+12.07.06	Realiza��o de espet�culos de �pera
+12.07.07	Realiza��o de concerto
+12.07.08	Realiza��o de recital
+12.07.09	Realiza��o de festival
+12.08   	Feiras, exposi��es, congressos e congeneres
+12.08.01	�feira, exposi��o, congresso ou cong�nere
+12.09   	Bilhares, boliches e divers�es eletronicas ou n�o
+12.09.01	Jogos de bilhar
+12.09.02	Jogos de boliche
+12.09.03	Divers�es eletronicas ou n�o
+12.10   	Corridas e competi��es de animais
+12.10.01	Corridas e competi��es de animais
+12.11   	Competi��es esportivas ou de destreza f�sica ou intelectual, com ou sem a participa��o do espectador.
+12.11.01	Competi��es esportivas ou de destreza f�sica ou intelectual
+12.12   	Execu��o de m�sica
+12.12.01	Execu��o de m�sica
+12.13   	Produ��o, mediante ou sem encomenda pr�via, de eventos, espet�culos, entrevistas, shows, ballet, dan�as, desfiles, bailes, teatros, �peras, concertos, recitais, festivais e congeneres.
+12.13.01	Produ��o de eventos
+12.13.02	Produ��o de espet�culos
+12.13.03	Produ��o de entrevistas
+12.13.04	Produ��o de shows
+12.13.05	Produ��o de desfiles
+12.13.06	Produ��o de dan�as
+12.13.07	Produ��o de bailes
+12.13.08	Produ��o de pe�as teatrais
+12.13.09	Produ��o de �peras
+12.13.10	Produ��o de concertos
+12.13.11	Produ��o de recitais
+12.13.12	Produ��o de festivais e congeneres
+12.14   	Fornecimento de m�sica para ambientes fechados ou n�o, mediante transmiss�o por qualquer processo
+12.14.01	Fornecimento de m�sica para ambientes fechados ou n�o, mediante transmiss�o por qualquer processo
+12.15   	Desfiles de blocos carnavalescos ou folcl�ricos, trios el�tricos e congeneres.
+12.15.01	Desfiles de blocos carnavalescos ou folcl�ricos, ou congeneres
+12.15.02	Desfiles de trios el�tricos ou con�neres
+12.16   	Exibi��o de filmes, entrevistas, musicais, espet�culos, shows, concertos, desfiles, �peras, competi��es esportivas, de destreza intelectual ou congeneres
+12.16.01	Exibi��o de filmes cinematogr�ficos
+12.16.08	Exibi��o de entrevistas
+12.16.09	Exibi��o de musicais
+12.16.10	Exibi��o de espet�culos
+12.16.11	Exibi��o de shows
+12.16.12	Exibi��o de desfiles
+12.16.13	Exibi��o de concertos
+12.16.14	�peras
+12.16.15	Exibi��o de competi��es esportivas, de destreza intelectual ou congeneres
+12.17   	Recrea��o e anima��o, inclusive em festas e eventos de qualquer natureza
+12.17.01	Recrea��o
+12.17.02	Anima��o de festas
+12.17.03	Anima��o em feiras
+12.17.04	Anima��o em eventos de qualquer natureza
+13      	Servicos relativos a fonografia, fotografia, cinematografia e reprografia.
+13.02   	Fonografia ou grava��o de sons, inclusive trucagem, dublagem, mixagem e congeneres.
+13.02.01	Fonografia
+13.02.02	Grava��o de sons
+13.02.03	Trucagem de som
+13.02.04	Dublagem
+13.02.05	Mixagem
+13.02.06	Reprodu��o de som
+13.02.07	Reprodu��o de v�deo
+13.02.08	Reprodu��o de software
+13.02.09	Edi��o de m�sica
+13.03   	Fotografia e cinematografia, inclusive revela��o, amplia��o, c�pia, reprodu��o, trucagem e congeneres.
+13.03.01	Fotografia
+13.03.02	Cinematografia
+13.03.03	Revela��o fotogr�fica
+13.03.04	Amplia��o fotogr�fica
+13.03.05	C�pia de imagem
+13.03.06	Reprodu��o de filme
+13.03.07	Trucagem de imagem
+13.03.08	Servicos relativos � ind�stria cinematogr�fica, diretamente concorrentes para a produ��o da obra audiovisual, vinculados a filme brasileiro, natural ou de enredo
+13.03.09	Servicos relativos � ind�stria cinematogr�fica, diretamente concorrentes para a produ��o da obra audiovisual, vinculados a filme estrangeiro
+13.03.10	Cinematografia - filmes publicit�rios
+13.04   	Reprografia, microfilmagem e digitaliza��o.
+13.04.01	Reprografia
+13.04.02	Microfilmagem
+13.04.03	Digitaliza��o
+13.04.04	Servicos t�picos de papelarias e estabelecimentos congeneres, como reprografia (c�pias), plastifica��o e outros
+13.05   	Composi��o gr�fica, inclusive confec��o de impressos gr�ficos, fotocomposi��o, clicheria, zincografia, litografia e fotolitografia, exceto se destinados a posterior opera��o de comercializa��o ou industrializa��o, ainda que incorporados, de qualquer forma, a outra mercadoria que deva ser objeto de posterior circula��o, tais como bulas, r�tulos, etiquetas, caixas, cartuchos, embalagens e manuais t�cnicos e de instru��o, quando ficar�o sujeitos ao ICMS.
+13.05.01	Composi��o gr�fica
+13.05.02	Fotocomposi��o e outras matrizes gr�ficas
+13.05.03	Clicheria
+13.05.04	Zincografia
+13.05.05	Litografia
+13.05.06	Fotolitografia
+13.05.07	Impress�o
+13.05.08	Pr�-impress�o
+13.05.09	Impress�o em chapas met�licas
+13.05.10	Encaderna��o de livros e revistas
+13.05.11	Confec��o de impressos personalizados
+13.05.12	Confec��o de impressos de seguran�a
+13.05.13	Acabamento gr�fico
+13.05.14	Confec��o de impressos para o usu�rio final
+13.05.15	Servicos gr�ficos em geral
+14      	Servicos relativos a bens de terceiros.
+14.01   	Lubrifica��o, limpeza, lustra��o, revis�o, carga e recarga, conserto, restaura��o, blindagem, manuten��o e conserva��o de maquinas, ve�culos, aparelhos, equipamentos, motores, elevadores ou de qualquer objeto (exceto pe�as e partes empregadas, que ficam s
+14.01.01	Lubrifica��o de maquinas
+14.01.02	Limpeza ou lustra��o de maquinas
+14.01.03	Revis�o de maquinas
+14.01.04	Carga e recarga de maquinas
+14.01.05	Conserto de maquinas
+14.01.06	Restaura��o de maquinas
+14.01.07	Manuten��o de maquinas
+14.01.08	Conserva��o de maquinas
+14.01.09	Lubrifica��o de aparelhos
+14.01.10	Limpeza ou lustra��o de aparelhos
+14.01.11	Revis�o de aparelhos
+14.01.12	Carga e recarga de aparelhos
+14.01.13	Conserto de aparelhos
+14.01.14	Restaura��o de aparelhos
+14.01.15	Manuten��o de aparelhos
+14.01.16	Conserva��o de aparelhos
+14.01.17	Conserva��o de ve�culos
+14.01.18	Lubrifica��o de ve�culos
+14.01.19	Limpeza de ve�culos
+14.01.20	Revis�o de ve�culos
+14.01.22	Conserto de ve�culos
+14.01.23	Restaura��o de ve�culos
+14.01.24	Manuten��o de ve�culos
+14.01.25	Blindagem de ve�culos
+14.01.26	Lustra��o de ve�culos
+14.01.27	Lubrifica��o de equipamentos
+14.01.28	Limpeza de equipamentos
+14.01.29	Revis�o de equipamentos
+14.01.30	Conserto de equipamentos
+14.01.31	Restaura��o de equipamentos
+14.01.32	Manuten��o de equipamentos
+14.01.33	Conserva��o de equipamentos
+14.01.34	Lubrifica��o, limpeza, revis�o,  conserto, restaura��o, manuten��o ou conserva��o de elevadores
+14.01.35	Lubrifica��o de motores
+14.01.36	Limpeza de motores
+14.01.37	Revis�o de motores
+14.01.38	Conserto de motores
+14.01.39	Restaura��o de motores
+14.01.40	Manuten��o de motores
+14.01.41	Conserva��o de motores
+14.01.42	Recondicionamento de baterias
+14.01.43	Manuten��o de esta��es el�tricas
+14.01.44	Manuten��o de redes el�tricas
+14.01.45	Manuten��o de esta��es de telecomunica��es
+14.01.46	Manuten��o de redes de telecomunica��es
+14.01.47	Alinhamento para ve�culos
+14.01.48	Balanceamento para ve�culos
+14.01.49	Recarga de cartuchos
+14.01.50	Restaura��o de arte
+14.01.51	Manuten��o de computadores
+14.01.52	Manuten��o de eletrodom�sticos
+14.01.53	Conserto de cal�ados
+14.01.54	Lubrifica��o de objetos em geral
+14.01.55	Limpeza de objetos em geral
+14.01.56	Lustra��o de objetos em geral
+14.01.57	Revis�o em objetos em geral
+14.01.58	Carga e recarga de objetos em geral
+14.01.59	Conserto de objetos em geral
+14.01.60	Restaura��o de objetos em geral
+14.01.61	Blindagem de objetos em geral
+14.01.62	Manuten��o de objetos em geral
+14.01.63	Conserva��o de objetos em geral
+14.01.64	Repara��o de embarca��es efetuada por industria da constru��o e de reparo naval
+14.01.65	Servicos relacionados a repara��o de embarca��es, efetuados por prestadores contratados pela industria da constru��o e de reparo naval
+14.01.66	Lei n� 5.133/2009, art. 4� - lubrifica��o, limpeza, lustra��o, revis�o, carga e recarga, conserto, restaura��o, blindagem, manuten��o ou conserva��o de maquinas, ve�culos, aparelhos, equipamentos, motores, elevadores ou de qualquer objeto, vinculado(a) � opera��o de complexo sider�rgico na Zona Oeste do Munic�pio, conforme defini��o constante do inc. IV do art. 3� da Lei n� 4.372/2006.
+14.02   	Assist�ncia t�cnica.
+14.02.01	Assist�ncia t�cnica
+14.02.02	Servicos de assist�ncia t�cnica, manuten��o, repara��o e outros, relacionados ao fornecimento de g�s
+14.03   	Recondicionamento de motores (exceto pe�as e partes empregadas, que ficam sujeitas ao ICMS).
+14.03.01	Recondicionamento de motores
+14.04   	Recauchutagem ou regenera��o de pneus.
+14.04.01	Recauchutagem de pneus
+14.04.02	Regenera��o de pneus
+14.04.03	Borracharia para ve�culos
+14.05   	Restaura��o, recondicionamento, acondicionamento, pintura, beneficiamento, lavagem, secagem, tingimento, galvanoplastia, anodiza��o, corte, recorte, plastifica��o, costura, acabamento, polimento e congeneres de objetos quaisquer.
+14.05.01	Restaura��o
+14.05.02	Recondicionamento
+14.05.03	Acondicionamento
+14.05.04	Pintura
+14.05.05	Beneficiamento
+14.05.06	Lavagem
+14.05.07	Secagem
+14.05.08	Tingimento
+14.05.09	Galvanoplastia
+14.05.10	Anodiza��o
+14.05.11	Corte
+14.05.12	Recorte
+14.05.13	Polimento
+14.05.14	Plastifica��o
+14.05.15	Estamparia t�xtil
+14.05.16	Texturiza��o t�xtil
+14.05.17	Alvejamento de tecidos
+14.05.18	Usinagem
+14.05.19	Solda
+14.05.20	Revestimento de metais
+14.05.21	Tratamento de metais
+14.05.22	Britamento de pedras
+14.05.23	Aparelhamento de pedras
+14.05.24	Vitrifica��o
+14.05.25	Envasamento
+14.05.26	Empacotamento
+14.05.27	Servicos n�o especificados, aplicados a objetos quaisquer
+14.05.28	Tinturaria - lavagem, secagem, tingimento e Servicos conexos
+14.05.29	Lei n� 5.133/2009, art. 4� - restaura��o, recondicionamento, acondicionamento, pintura, beneficiamento, lavagem, secagem, tingimento, galvanoplastia, anodiza��o, corte, recorte, polimento, plastifica��o ou cong�nere, de objeto qualquer, vinculado(a) � opera��o de complexo sider�rgico na Zona Oeste do Munic�pio, conforme defini��o constante do inc. IV do art. 3� da Lei n� 4.372/2006.
+14.05.30	Costura e congeneres
+14.05.31	Acabamento e congeneres, de objetos quaisquer
+14.06   	Instala��o e montagem de aparelhos, maquinas e equipamentos, inclusive montagem industrial, prestados ao usu�rio final, exclusivamente com material por ele fornecido.
+14.06.01	Montagem industrial
+14.06.02	Instala��o de aparelhos
+14.06.03	Instala��o de maquinas
+14.06.04	Instala��o de equipamentos
+14.06.05	Montagem de aparelhos
+14.06.06	Montagem de maquinas
+14.06.07	Montagem de equipamentos
+14.06.08	Montagem de locomotivas
+14.06.09	Montagem de vag�es
+14.06.10	Montagem de material rodante
+14.06.11	Montagem de aeronaves
+14.06.12	Montagem de estruturas met�licas
+14.06.13	Instala��o de pain�is
+14.06.14	Montagem de stands
+14.06.15	Instala��o de acess�rios para ve�culos
+14.06.16	Lei n� 5.133/2009, art. 4� - instala��o e/ou montagem de aparelhos, maquinas e equipamentos, inclusive montagem industrial, prestada ao usu�rio final, exclusivamente com material por ele fornecido, e vinculada � constru��o ou � opera��o de complexo sider�rgico na Zona Oeste do Munic�pio, conforme defini��o constante do inc. IV do art. 3� da Lei n� 4.372/2006.
+14.07   	Coloca��o de molduras e congeneres.
+14.07.01	Coloca��o de molduras
+14.08   	Encaderna��o, grava��o e doura��o de livros, revistas e congeneres.
+14.08.01	Encaderna��o de livros ou congeneres
+14.08.02	Doura��o de livros ou congeneres
+14.08.03	Grava��o de livros ou congeneres
+14.08.04	Encaderna��o de revistas ou congeneres
+14.09   	Alfaiataria e costura, quando o material for fornecido pelo usu�rio final, exceto aviamento.
+14.09.01	Alfaiataria
+14.09.02	Costura
+14.09.03	Confec��o sob medida
+14.10   	Tinturaria e lavanderia.
+14.10.01	Tinturaria
+14.10.02	Lavanderia
+14.10.03	Toalharia
+14.11   	Tape�aria e reforma de estofamentos em geral.
+14.11.01	Tape�aria
+14.11.02	Reforma de estofamentos
+14.12   	Funilaria e lanternagem.
+14.12.01	Funilaria
+14.13   	Carpintaria e serralheria.
+14.13.01	Carpintaria
+14.13.02	Serralheria
+14.14   	Guincho intramunicipal, guindaste e i�amento.
+14.14.01	Guincho intramunicipal, guindaste e i�amento
+15      	Servicos relacionados ao setor banc�rio ou financeiro, inclusive aqueles prestados por institui��es financeiras autorizadas a funcionar pela Uni�o ou por quem de direito.
+15.01   	Administra��o de fundos quaisquer, de cons�rcio, de cart�o de cr�dito ou d�bito e congeneres, de carteira de clientes, de cheques pr�-datados e congeneres.
+15.01.01	Administra��o de fundos quaisquer
+15.01.02	Administra��o de carteira de clientes
+15.01.03	Administra��o de cons�rcio
+15.01.04	Administra��o de cart�es de cr�dito ou d�bito e congeneres
+15.01.05	Administra��o de cheques pr�-datados e congeneres
+15.02   	Abertura de contas em geral, inclusive conta-corrente, conta de investimentos e aplicacao e caderneta de poupan�a, no Pa�s e no exterior, bem como a manuten��o das referidas contas ativas e inativas.
+15.02.01	Abertura de contas em geral, inclusive conta-corrente, conta de investimentos e aplicacao e caderneta de poupan�a, no pa�s e no exterior, bem como a manuten��o das referidas contas ativas e inativas
+15.03   	Loca��o e manuten��o de cofres particulares, de terminais eletr�nicos, de terminais de atendimento e de bens e equipamentos em geral.
+15.03.01	Loca��o e manuten��o de cofres particulares
+15.03.02	Loca��o e manuten��o de terminais eletr�nicos, de terminais de atendimento e de bens e equipamentos em geral
+15.04   	Fornecimento ou emiss�o de atestados em geral, inclusive atestado de idoneidade, atestado de capacidade financeira e congeneres
+15.04.01	Fornecimento ou emiss�o de atestados em geral, inclusive atestado de idoneidade, atestado de capacidade financeira e congeneres
+15.05   	Cadastro, Elaboracao de ficha cadastral, renova��o cadastral e congeneres, inclus�o ou exclus�o no Cadastro de Emitentes de Cheques sem Fundos � CCF ou em quaisquer outros bancos cadastrais
+15.05.01	Cadastro,Elaboracao de ficha cadastral, renova��o cadastral e congeneres 
+15.05.02	Inclus�o ou exclus�o no Cadastro de Emitentes de Cheques sem Fundos � CCF ou em quaisquer outros bancos cadastrais
+15.06   	Emiss�o, reemiss�o e fornecimento de avisos, comprovantes e documentos em geral; abono de firmas; coleta e entrega de documentos, bens e valores; comunica��o com outra ag�ncia ou com a administra��o central; licenciamento eletr�nico de ve�culos; transfer�ncia de ve�culos; agenciamento fiduci�rio ou deposit�rio; devolu��o de bens em cust�dia
+15.06.01	Emiss�o, reemiss�o e fornecimento de avisos, comprovantes e documentos em geral
+15.06.02	Abono de firmas
+15.06.03	Coleta e entrega de documentos, bens e valores
+15.06.04	Comunica��o com outra ag�ncia ou com a administra��o central 
+15.06.05	Licenciamento eletr�nico de ve�culos
+15.06.06	Transfer�ncia de ve�culos
+15.06.07	Agenciamento fiduci�rio ou deposit�rio 
+15.06.08	Devolu��o de bens em cust�dia
+15.06.09	Baixa eletr�nica de gravame para ve�culos
+15.07   	Acesso, movimenta��o, atendimento e consulta a contas em geral, por qualquer meio ou processo, inclusive por telefone, fac-s�mile, internet e telex, acesso a terminais de atendimento, inclusive vinte e quatro horas; acesso a outro banco e a rede compartilhada; fornecimento de saldo, extrato e demais informa��es relativas a contas em geral, por qualquer meio ou processo
+15.07.01	Acesso, movimenta��o, atendimento e consulta a contas em geral, por qualquer meio ou processo, inclusive por telefone, facs�mile, internet e telex, acesso a terminais de atendimento, inclusive vinte e quatro horas 
+15.07.02	 acesso a outro banco e a rede compartilhada
+15.07.03	Fornecimento de saldo, extrato e demais informa��es relativas a contas em geral, por qualquer meio ou processo
+15.08   	Emiss�o, reemiss�o, altera��o, cess�o, substitui��o, cancelamento e registro de contrato de cr�dito; estudo, Analise e avalia��o de opera��es de cr�dito; emiss�o, concess�o, altera��o ou contrata��o de aval, fian�a, anu�ncia e congeneres; Servicos relativos a abertura de cr�dito, para quaisquer fins.
+15.08.01	Emiss�o de contrato de cr�dito 
+15.08.02	Reemiss�o de contrato de cr�dito 
+15.08.03	Altera��o de contrato de cr�dito
+15.08.04	Cess�o de contrato de cr�dito
+15.08.05	Substitui��o de contrato de cr�dito
+15.08.06	Cancelamento de contrato de cr�dito
+15.08.07	Registro de contrato de cr�dito
+15.08.08	Estudo, Analise e avalia��o de opera��es de cr�dito
+15.08.09	Emiss�o, concess�o, altera��o ou contrata��o de aval, fian�a, anu�ncia e congeneres
+15.08.10	Servicos relativos a abertura de cr�dito, para quaisquer fins 
+15.08.11	Opera��es n�o especificadas relativas a contratos de cr�dito
+15.09   	Arrendamento mercantil (leasing) de quaisquer bens, inclusive cess�o de direitos e obriga��es, substitui��o de garantia, altera��o, cancelamento e registro de contrato, e demais Servicos relacionados ao arrendamento mercantil (leasing).
+15.09.01	Arrendamento mercantil (leasing) de quaisquer bens, cess�o de direitos e obriga��es, substitui��o de garantia, altera��o, cancelamento e registro de contrato 
+15.09.02	 Servicos n�o especificados relacionados ao arrendamento mercantil (leasing) 
+15.10   	Servicos relacionados a cobran�as, recebimentos ou pagamentos em geral, de t�tulos quaisquer, de contas ou carn�s, de c�mbio, de tributos e por conta de terceiros, inclusive os efetuados por meio eletr�nico, autom�tico ou por maquinas de atendimento; fornecimento de posi��o de cobran�a, recebimento ou pagamento; emiss�o de carn�s, fichas de compensa��o, impressos e documentos em geral.
+15.10.01	Servicos relacionados a cobran�as, recebimentos ou pagamentos em geral, de t�tulos quaisquer, de contas ou carn�s, de c�mbio, de tributos e por conta de terceiros, inclusive os efetuados por meio eletr�nico, autom�tico ou por maquinas de atendimento 
+15.10.02	Fornecimento de posi��o de cobran�a, recebimento ou pagamento 
+15.10.03	Emiss�o de carn�s, fichas de compensa��o, impressos ou documentos em geral 
+15.11   	Devolu��o de t�tulos, protesto de t�tulos, susta��o de protesto, manuten��o de t�tulos, reapresenta��o de t�tulos, e demais Servicos a eles relacionados
+15.11.01	Devolu��o de t�tulos
+15.11.02	Protesto de t�tulos
+15.11.03	Susta��o de protesto de t�tulos
+15.11.04	Manuten��o de t�tulos
+15.11.05	Reapresenta��o de t�tulos
+15.11.06	Servicos n�o especificados relacionados a t�tulos
+15.12   	Cust�dia em geral, inclusive de t�tulos e valores mobili�rios.
+15.12.01	Cust�dia de t�tulos
+15.12.02	Cust�dia de valores mobili�rios
+15.12.03	Cust�dia de bens
+15.12.04	Cust�dia em geral
+15.13   	Servicos relacionados a opera��es de c�mbio em geral, edi��o, altera��o, prorroga��o, cancelamento e baixa de contrato de c�mbio; emiss�o de registro de exporta��o ou de cr�dito; cobran�a ou dep�sito no exterior; emiss�o, fornecimento e cancelamento de cheques de viagem; fornecimento, transfer�ncia, cancelamento e demais Servicos relativos a carta de cr�dito de importa��o, exporta��o e garantias recebidas; envio e recebimento de mensagens em geral relacionadas a opera��es de c�mbio.
+15.13.01	Servicos relacionados a opera��es de c�mbio em geral
+15.13.02	Edi��o, altera��o, prorroga��o, cancelamento e baixa de contrato de c�mbio 
+15.13.03	Emiss�o de registro de exporta��o ou de cr�dito 
+15.13.04	Cobran�a ou dep�sito no exterior
+15.13.05	Emiss�o, fornecimento e cancelamento de cheques de viagem 
+15.13.06	Fornecimento, transfer�ncia, cancelamento e demais Servicos relativos a carta de cr�dito de importa��o, exporta��o e garantias recebidas 
+15.13.07	Envio e recebimento de mensagens em geral relacionadas a opera��es de c�mbio 
+15.14   	Fornecimento, emiss�o, reemiss�o, renova��o e manuten��o de cart�o magn�tico, cart�o de cr�dito, cart�o de d�bito, cart�o sal�rio e congeneres
+15.14.01	Fornecimento de cart�o magn�tico, cart�o de cr�dito, cart�o de d�bito, cart�o sal�rio ou congeneres 
+15.14.02	Emiss�o de cart�o magn�tico, cart�o de cr�dito, cart�o de d�bito, cart�o sal�rio ou congeneres 
+15.14.03	Reemiss�o de cart�o magn�tico, cart�o de cr�dito, cart�o de d�bito, cart�o sal�rio ou congeneres 
+15.14.04	Renova��o de cart�o magn�tico, cart�o de cr�dito, cart�o de d�bito, cart�o sal�rio ou congeneres
+15.14.05	Manuten��o de cart�o magn�tico, cart�o de cr�dito, cart�o de d�bito, cart�o sal�rio ou congeneres 
+15.14.06	Cart�es de conv�nios refei��o e alimenta��o - administra��o, fornecimento, emiss�o, reemiss�o, renova��o, manuten��o e controle de cr�ditos
+15.15   	Compensa��o de cheques e t�tulos quaisquer; Servicos relacionados a dep�sito, inclusive dep�sito identificado, a saque de contas quaisquer, por qualquer meio ou processo, inclusive em terminais eletr�nicos e de atendimento
+15.15.01	Compensa��o de cheques e t�tulos quaisquer 
+15.15.02	Servicos relacionados a dep�sito, inclusive dep�sito identificado, por qualquer meio ou processo, inclusive em terminais eletr�nicos e de atendimento
+15.15.03	Servicos relacionados a saque de contas quaisquer, por qualquer meio ou processo, inclusive em terminais eletr�nicos e de atendimento 
+15.16   	Emiss�o, reemiss�o, liquida��o, altera��o, cancelamento e baixa de ordens de pagamento, ordens de cr�dito e similares, por qualquer meio ou processo; Servicos relacionados � transfer�ncia de valores, dados, fundos, pagamentos e similares, inclusive entre contas em geral.
+15.16.01	Emiss�o de ordens de pagamento, ordens de cr�dito e similares, por qualquer meio ou processo 
+15.16.02	Reemiss�o de ordens de pagamento, ordens de cr�dito e similares, por qualquer meio ou processo 
+15.16.03	Liquida��o de ordens de pagamento, ordens de cr�dito e similares, por qualquer meio ou processo
+15.16.04	Altera��o de ordens de pagamento, ordens de cr�dito e similares, por qualquer meio ou processo 
+15.16.05	Cancelamento de ordens de pagamento, ordens de cr�dito e similares, por qualquer meio ou processo 
+15.16.06	Baixa de ordens de pagamento, ordens de cr�dito e similares, por qualquer meio ou processo 
+15.16.07	Servicos relacionados a transfer�ncia de valores, dados, fundos, pagamentos e similares, inclusive entre contas em geral 
+15.17   	Emiss�o, fornecimento, devolu��o, susta��o, cancelamento e oposi��o de cheques quaisquer, avulso ou por tal�o.
+15.17.01	Emiss�o de cheques quaisquer, avulso ou por tal�o 
+15.17.02	Fornecimento de cheques quaisquer, avulso ou por tal�o 
+15.17.03	Devolu��o de cheques quaisquer, avulso ou por tal�o 
+15.17.04	Susta��o de cheques quaisquer, avulso ou por tal�o 
+15.17.05	Cancelamento de cheques quaisquer, avulso ou por tal�o 
+15.17.06	Oposi��o de cheques quaisquer, avulso ou por tal�o 
+15.18   	Servicos relacionados a cr�dito imobili�rio, avalia��o e vistoria de im�vel ou obra, Analise t�cnica e jur�dica, emiss�o, reemiss�o, altera��o, transfer�ncia e renegocia��o de contrato, emiss�o e reemiss�o do termo de quita��o e demais Servicos relacionados a cr�dito imobili�rio.
+15.18.01	Servicos relacionados a cr�dito imobili�rio 
+15.18.02	Avalia��o e vistoria de im�vel ou obra 
+15.18.03	Analise t�cnica e jur�dica relacionada a cr�dito imobili�rio 
+15.18.04	Emiss�o de contrato de cr�dito imobili�rio
+15.18.05	Reemiss�o de contrato de cr�dito imobili�rio
+15.18.06	Altera��o de contrato de cr�dito imobili�rio
+15.18.07	Transfer�ncia de contrato de cr�dito imobili�rio
+15.18.08	Renegocia��o de contrato de cr�dito imobili�rio
+15.18.09	Emiss�o e reemiss�o de termo de quita��o de cr�dito imobili�rio
+15.18.10	Servicos n�o discriminados relativos a cr�dito imobili�rio
+16      	Servicos de transporte de natureza municipal.
+16.01   	Servicos de transporte coletivo municipal rodovi�rio, metrovi�rio, ferrovi�rio e aquavi�rio de passageiros.
+16.01.01	�nibus (transporte rodovi�rio coletivo de passageiros quando prestado sob o regime de concess�o ou permiss�o do poder p�blico, em �nibus ou micro�nibus)
+16.01.02	Van (transporte rodovi�rio coletivo de passageiros quando prestado em van, perua ou ve�culo cong�nere, com circula��o adstrita a determinadas linhas ) 
+16.01.05	Transporte rodovi�rio municipal de passageiros - casos n�o especificados
+16.01.06	Transporte ferrovi�rio municipal de passageiros
+16.01.07	Transporte metrovi�rio municipal de passageiros
+16.01.08	Transporte aquavi�rio municipal de passageiros
+16.01.09	Transporte escolar
+16.01.10	Transporte tur�stico
+16.02   	Outros Servicos de transporte de natureza municipal.
+16.02.01	T�xi
+16.02.02	Servicos de t�xi prestados por sociedades cooperativas formadas exclusivamente por profissionais aut�nomos
+16.02.03	Transporte n�o coletivo de passageiros - casos n�o especificados em outros c�digos
+16.02.04	Transporte municipal de carga
+16.02.05	Transporte municipal dutovi�rio
+16.02.06	Servicos de transporte de natureza municipal, n�o especificados em outros c�digos
+16.02.07	servico de navega��o e transporte fluvial de cargas cujo terminal de embarque ou de desembarque se localize �s margens dos rios Acari e Pavuna
+17      	Servicos de apoio t�cnico, administrativo, jur�dico, cont�bil, comercial e congeneres.
+17.01   	Assessoria ou consultoria de qualquer natureza, n�o contida em outros itens desta lista; Analise, exame, pesquisa, coleta, compila��o e fornecimento de dados e informa��es de qualquer natureza, inclusive cadastro e similares.
+17.01.01	Assessoria ou consultoria de qualquer natureza, n�o especificada
+17.01.02	Analise, exame, pesquisa, coleta, compila��o ou fornecimento de dados e informa��es de qualquer natureza, inclusive cadastro e similares
+17.02   	Datilografia, digita��o, estenografia, expediente, secretaria em geral, resposta aud�vel, reda��o, edi��o, interpreta��o, revis�o, tradu��o, apoio e infra-estrutura administrativa e congeneres.
+17.02.01	Datilografia, digita��o e congeneres
+17.02.02	Estenografia e congeneres
+17.02.03	Expediente e secretaria em geral
+17.02.04	Reda��o
+17.02.05	Edi��o
+17.02.06	Resposta aud�vel, interpreta��o, apoio e infra-estrutura administrativa e congeneres
+17.02.07	Revis�o
+17.02.08	Tradu��o
+17.02.09	Apoio administrativo
+17.02.10	Atendimento telef�nico
+17.02.11	Atendimento a clientes com uso de solu��o integrada por multicanais (telefonia, e-mail, SMS, aplicativos e presencial)
+17.03   	Planejamento, coordena��o, Programacao ou organiza��o t�cnica, financeira ou administrativa.
+17.03.01	Planejamento t�cnico ou cong�nere
+17.03.02	Planejamento financeiro ou cong�nere
+17.03.03	Planejamento administrativo ou cong�nere
+17.03.04	Coordena��o t�cnica ou cong�nere
+17.03.05	Coordena��o financeira ou cong�nere
+17.03.06	Coordena��o administrativa ou cong�nere
+17.03.07	Programacao t�cnica ou cong�nere
+17.03.08	Programacao financeira ou cong�nere
+17.03.09	Programacao administrativa ou cong�nere
+17.03.10	Organiza��o t�cnica ou cong�nere
+17.03.11	Organiza��o financeira ou cong�nere
+17.03.12	Organiza��o administrativa ou cong�nere
+17.04   	Recrutamento, agenciamento, sele��o e coloca��o de m�o-de-obra.
+17.04.01	Recrutamento e sele��o de m�o-de-obra
+17.04.02	Agenciamento de m�o-de-obra
+17.04.03	Coloca��o de m�o-de-obra
+17.05   	Fornecimento de m�o-de-obra, mesmo em car�ter tempor�rio, inclusive de empregados ou trabalhadores, avulsos ou tempor�rios, contratados pelo prestador de servico
+17.05.01	Fornecimento de m�o-de-obra
+17.05.02	Fornecimento de m�o-de-obra tempor�ria
+17.06   	Propaganda e publicidade, inclusive promo��o de vendas, planejamento de campanhas ou sistemas de publicidade, Elaboracao de desenhos, textos e demais materiais publicit�rios.
+17.06.01	Propaganda e publicidade
+17.06.02	Propaganda e publicidade - Servicos concernentes � concep��o, reda��o e produ��o  de propaganda e publicidade, inclusive divulga��o de material publicit�rio
+17.06.03	Promo��o de vendas
+17.06.04	Planejamento de campanhas ou sistemas de publicidade
+17.06.05	Elaboracao de desenhos, textos ou demais materiais publicit�rios
+17.06.06	Pesquisa de mercado
+17.06.07	Rela��es p�blicas
+17.06.08	Assessoria na edi��o de boletins ou revistas informativas ou publicit�rias
+17.06.09	An�ncios f�nebres
+17.06.10	An�ncios de emprego
+17.06.11	Publica��es de demonstra��es financeiras
+17.06.12	Servicos especiais ligados � atividade de publicidade e propaganda, n�o especificados em outros c�digos
+17.06.13	Produ��o de filmes publicit�rios
+17.08   	Franquia (franchising).
+17.08.01	Franquia (franchising)
+17.09   	Per�cias, laudos, exames t�cnicos e Analises t�cnicas.
+17.09.01	Per�cia
+17.09.02	Elaboracao de laudos
+17.09.03	Exames t�cnicos
+17.09.04	Analise t�cnica
+17.10   	Planejamento, organiza��o e administra��o de feiras, exposi��es, congressos e congeneres.
+17.10.01	Planejamento de feira ou cong�nere
+17.10.02	Planejamento de exposi��o ou cong�nere
+17.10.03	Planejamento de congresso ou cong�nere
+17.10.04	Organiza��o de feira ou cong�nere
+17.10.05	Organiza��o de exposi��o ou cong�nere
+17.10.06	Organiza��o de congresso ou cong�nere
+17.10.07	Administra��o de feira ou cong�nere
+17.10.08	Administra��o de exposi��o ou cong�nere
+17.10.09	Administra��o de congresso ou cong�nere
+17.11   	Organiza��o de festas e recep��es; buf� (exceto o fornecimento de alimenta��o e bebidas, que fica sujeito ao ICMS).
+17.11.01	Organiza��o de festas
+17.11.02	Organiza��o de recep��es
+17.11.03	Buf�
+17.11.04	Preparo de alimentos
+17.12   	Administra��o em geral, inclusive de bens e neg�cios de terceiros.
+17.12.01	Administra��o de bens de terceiros
+17.12.02	Administra��o de neg�cios de terceiros
+17.12.03	Administra��o de instala��o para a pr�tica esportiva
+17.12.04	Administra��o de cemit�rios
+17.12.05	Administra��o de condom�nios
+17.12.06	Administra��o escolar
+17.12.07	Administra��o em geral
+17.12.08	Administra��o de benef�cios relativos a planos de assist�ncia � sa�de
+17.13   	Leil�o e congeneres.
+17.13.01	Leil�o ou cong�nere
+17.14   	Advocacia.
+17.14.01	Advocacia
+17.15   	Arbitragem de qualquer esp�cie, inclusive jur�dica.
+17.15.01	Arbitragem de qualquer esp�cie, inclusive jur�dica
+17.16   	Auditoria.
+17.16.01	Auditoria
+17.16.02	Auditoria de projetos de cr�ditos de carbono
+17.16.03	Servicos de invent�rio de emiss�es de gases de efeito estufa
+17.16.04	Auditoria de invent�rios de emiss�es de gases de efeito estufa
+17.17   	Analise de Organiza��o e M�todos.
+17.17.01	Analise de organiza��o e m�todos
+17.18   	Atu�ria e c�lculos t�cnicos de qualquer natureza.
+17.18.01	Atu�ria
+17.18.02	C�lculos t�cnicos
+17.19   	Contabilidade, inclusive Servicos t�cnicos e auxiliares.
+17.19.01	Contabilidade, inclusive Servicos t�cnicos e auxiliares
+17.20   	Consultoria e assessoria econ�mica ou financeira.
+17.20.01	Consultoria e assessoria econ�mica ou financeira
+17.20.02	Servicos de registro e certifica��o de cr�ditos de carbono
+17.20.03	Servicos de disponibiliza��o de plataformas de transa��o de cr�ditos de carbono
+17.21   	Estat�stica.
+17.21.01	Estat�stica
+17.22   	Cobran�a em geral.
+17.22.01	Cobran�a
+17.23   	Assessoria, Analise, avalia��o, atendimento, consulta, cadastro, sele��o, gerenciamento de informa��es, administra��o de contas a receber ou a pagar e em geral, relacionados a opera��es de faturiza��o (factoring).
+17.23.01	Assessoria, Analise, avalia��o, atendimento, consulta, cadastro, sele��o, gerenciamento de informa��es, administra��o de contas a receber ou a pagar e em geral, relacionadas a opera��es de faturiza��o (factoring) 
+17.24   	Apresenta��o de palestras, confer�ncias, semin�rios e congeneres.
+17.24.01	Apresenta��o de palestras e congeneres
+17.24.02	Apresenta��o em confer�ncias e congeneres
+17.24.03	Apresenta��o em semin�rios e congeneres
+17.25   	Inser��o de textos, desenhos e outros materiais de propaganda e publicidade, em qualquer meio (exceto em livros, jornais, peri�dicos e nas modalidades de Servicos de radiodifus�o sonora e de sons e imagens de recep��o livre e gratuita).
+17.25.01	Inser��o de textos, desenhos ou outros materiais de propaganda e publicidade, em qualquer meio (exceto em livros, jornais, peri�dicos e nas modalidades de Servicos de radiodifus�o sonora e de sons e imagens de recep��o livre e gratuita)
+17.25.02	Veicula��o de publicidade na internet, contratada por pessoa jur�dica
+17.25.03	Veicula��o de publicidade na internet, contratada por pessoa natural
+17.25.04	Servicos de veicula��o de publicidade, quando efetuada por meio, exclusivamente, da internet.
+18      	Servicos de regula��o de sinistros vinculados a contratos de seguros; inspe��o e avalia��o de riscos para cobertura de contratos de seguros; preven��o e ger�ncia de riscos segur�veis e congeneres.
+18.01   	Servicos de regula��o de sinistros vinculados a contratos de seguros; inspe��o e avalia��o de riscos para cobertura de contratos de seguros; preven��o e ger�ncia de riscos segur�veis e congeneres.
+18.01.01	Servicos de regula��o de sinistros vinculados a contratos de seguros
+18.01.02	Inspe��o e avalia��o de riscos para cobertura de contratos de seguros
+18.01.03	Preven��o e ger�ncia de riscos segur�veis e congeneres
+18.01.04	Lideran�a em co-seguro
+18.01.05	Servicos relativos a seguros
+19      	Servicos de distribui��o e venda de bilhetes e demais produtos de loteria, bingos, cart�es, pules ou cupons de apostas, sorteios, pr�mios, inclusive os decorrentes de t�tulos de capitaliza��o e congeneres.
+19.01   	Servicos de distribui��o e venda de bilhetes e demais produtos de loteria, bingos, cart�es, pules ou cupons de apostas, sorteios, pr�mios, inclusive os decorrentes de t�tulos de capitaliza��o e congeneres.
+19.01.01	Servicos de distribui��o e venda de bilhetes e demais produtos de loteria, bingos, cart�es, pules ou cupons de apostas, sorteios, pr�mios, inclusive os decorrentes de t�tulos de capitaliza��o e congeneres
+19.01.02	Servicos relativos a t�tulos de capitaliza��o e congeneres
+20      	Servicos portu�rios, aeroportu�rios, ferroportu�rios, de terminais rodovi�rios, ferrovi�rios e metrovi�rios.
+20.01   	Servicos portu�rios, ferroportu�rios, utiliza��o de porto, movimenta��o de passageiros, reboque de embarca��es, rebocador escoteiro, atraca��o, desatraca��o, Servicos de praticagem, capatazia, armazenagem de qualquer natureza, Servicos acess�rios, movimenta��o de mercadorias, Servicos de apoio mar�timo, de movimenta��o ao largo, Servicos de armadores, estiva, confer�ncia, log�stica e congeneres.
+20.01.01	Servicos ferroportu�rios
+20.01.02	Log�stica ferroportu�ria
+20.01.03	Armazenagem de qualquer natureza, relacionada a terminal ferroportu�rio
+20.01.04	Movimenta��o de mercadorias em terminal ferroportu�rio e/ou opera�oes congeneres
+20.01.05	Servicos acess�rios ferroportu�rios
+20.01.06	Administra��o da infra-estrutura ferroportu�ria
+20.01.07	Servicos portu�rios
+20.01.08	Servicos vinculados �s opera��es dos terminais portu�rios na Zona Oeste do Munic�pio do Rio de Janeiro, de importa��o de carv�o e outros insumos e exporta��o de placas de a�o produzidas no Complexo Sider�rgico destinado � produ��o e � exporta��o de placas de a�o na Zona Oeste do Munic�pio do Rio de Janeiro, satisfazendo os termos da Lei n� 4.372, de 13 de junho de 2006
+20.01.09	Log�stica portu�ria
+20.01.10	Utiliza��o de porto
+20.01.11	Movimenta��o de passageiros em porto
+20.01.12	Reboque de embarca��es e/ou rebocador escoteiro
+20.01.13	Atraca��o e desatraca��o
+20.01.14	Servicos de praticagem
+20.01.15	Capatazia em porto
+20.01.16	Armazenagem de qualquer natureza, em porto ou relacionada a porto
+20.01.18	Movimenta��o de mercadorias em porto e/ou opera��es congeneres
+20.01.19	Servicos de apoio mar�timo e/ou movimenta��o ao largo
+20.01.20	Escolta de embarca��es
+20.01.21	Servicos de armador
+20.01.22	Servicos de estiva, confer�ncia e congeneres, em portos
+20.01.23	Administra��o da infra-estrutura portu�ria
+20.01.24	Servicos portu�rios acess�rios
+20.02   	Servicos aeroportu�rios, utiliza��o de aeroporto, movimenta��o de passageiros, armazenagem de qualquer natureza, capatazia, movimenta��o de aeronaves, Servicos de apoio aeroportu�rios, Servicos acess�rios, movimenta��o de mercadorias, log�stica e congeneres.
+20.02.01	Servicos aeroportu�rios
+20.02.02	Log�stica aeroportu�ria
+20.02.03	Utiliza��o de aeroporto
+20.02.04	Movimenta��o de passageiros em aeroporto
+20.02.05	Armazenagem de qualquer natureza, em aeroporto ou relacionada a aeroporto
+20.02.06	Movimenta��o de mercadorias em aeroporto e opera�oes congeneres
+20.02.07	Apoio aeroportu�rio
+20.03   	Servicos de terminais rodovi�rios, ferrovi�rios, metrovi�rios, movimenta��o de passageiros, mercadorias, inclusive     suas opera��es, log�stica e congeneres.
+20.03.01	Servicos de terminais rodovi�rios, movimenta��o de passageiros, mercadorias, inclusive suas opera��es, log�stica e congeneres
+20.03.02	Servicos de terminais ferrovi�rios, movimenta��o de passageiros, mercadorias, inclusive suas opera��es, log�stica e congeneres
+20.03.03	Servicos de terminais metrovi�rios, movimenta��o de passageiros, mercadorias, inclusive suas opera��es, log�stica e congeneres
+21      	Servicos de registros p�blicos, cartor�rios e notariais
+21.01   	Servicos de registros p�blicos, cartor�rios e notariais
+21.01.01	Servicos de registros p�blicos, cartor�rios e notariais
+22      	Servicos de explora��o de rodovia.
+22.01   	Servicos de explora��o de rodovia
+22.01.01	Servicos de explora��o de rodovia mediante cobran�a de pre�o ou ped�gio dos usu�rios, envolvendo execu��o de Servicos de conserva��o, manuten��o, melhoramentos para adequa��o de capacidade e seguran�a de tr�nsito, opera��o, monitora��o, assist�ncia aos usu�rios e/ou outros Servicos definidos em contratos, atos de concess�o ou de permiss�o ou em normas oficiais
+23      	Servicos de Programacao e comunica��o visual, desenho industrial e congeneres.
+23.01   	Servicos de Programacao e comunica��o visual, desenho industrial e congeneres.
+23.01.01	Servicos de Programacao visual, comunica��o visual ou congeneres
+23.01.02	Desenho industrial ou servico cong�nere
+24      	Servicos de chaveiros, confec��o de carimbos, placas, sinaliza��o visual, banners, adesivos e congeneres.
+24.01   	Servicos de chaveiros, confec��o de carimbos, placas, sinaliza��o visual, banners, adesivos e congeneres.
+24.01.01	Chaveiro
+24.01.02	Confec��o de carimbos
+24.01.03	Confec��o de placas, sinaliza��o visual, banners, adesivos e congeneres
+25      	Servicos funer�rios.
+25.01   	Funerais, inclusive fornecimento de caix�o, urna ou esquifes; aluguel de capela; transporte do corpo cadav�rico; fornecimento de flores, coroas e outros paramentos; desembara�o de certid�o de �bito; fornecimento de v�u, essa e outros adornos; embalsamamento, embelezamento, conserva��o ou restaura��o de cad�veres.
+25.01.01	Servicos funer�rios
+25.02   	Translado intramunicipal e crema��o de corpos e partes de corpos cadav�ricos.
+25.02.01	Crema��o de corpos ou partes de corpos cadav�ricos
+25.02.02	Translado intramunicipal de corpos e partes de corpos cadav�ricos
+25.03   	Planos ou conv�nio funer�rios.
+25.03.01	Plano funer�rio
+25.03.02	Conv�nio funer�rio
+25.04   	Manuten��o e conserva��o de jazigos e cemit�rios. 
+25.04.01	Manuten��o e conserva��o de jazigos e cemit�rios
+25.05   	Cess�o de uso de espa�os em cemit�rios para sepultamento.
+25.05.01	Cess�o de uso de espa�os em cemit�rios para sepultamento
+26      	Servicos de coleta, remessa ou entrega de correspond�ncias, documentos, objetos, bens ou valores, inclusive pelos correios e suas ag�ncias franqueadas; courrier e congeneres.
+26.01   	Servicos de coleta, remessa ou entrega de correspond�ncias, documentos, objetos, bens ou valores, inclusive pelos correios e suas ag�ncias franqueadas; courrier e congeneres.
+26.01.01	Servicos de coleta, remessa ou entrega de correspond�ncias, documentos, objetos, bens ou valores, inclusive pelos correios e suas ag�ncias franqueadas
+26.01.02	Servicos de courrier ou congeneres
+27      	Servicos de assist�ncia social.
+27.01   	Servicos de assist�ncia social.
+27.01.01	Servicos de assist�ncia social
+28      	Servicos de avalia��o de bens e Servicos de qualquer natureza. 
+28.01   	Servicos de avalia��o de bens e Servicos de qualquer natureza.
+28.01.01	Avalia��o de bens de qualquer natureza
+28.01.02	Avalia��o de Servicos de qualquer natureza
+28.01.03	Avalia��o de im�veis
+29      	Servicos de biblioteconomia.
+29.01   	Servicos de biblioteconomia.
+29.01.01	Servicos de biblioteconomia
+30      	Servicos de biologia, biotecnologia e qu�mica.
+30.01   	Servicos de biologia, biotecnologia e qu�mica.
+30.01.01	Servicos de biologia
+30.01.02	Servicos de biotecnologia
+30.01.03	Servicos de qu�mica
+31      	Servicos t�cnicos em edifica��es, eletr�nica, eletrot�cnica, mec�nica, telecomunica��es e congeneres. 
+31.01   	Servicos t�cnicos em edifica��es, eletr�nica, eletrot�cnica, mec�nica, telecomunica��es e congeneres.
+31.01.01	Servicos t�cnicos em edifica��es
+31.01.02	Servicos t�cnicos em eletr�nica
+31.01.03	Servicos t�cnicos em eletrot�cnica
+31.01.04	Servicos t�cnicos em mec�nica
+31.01.05	Servicos t�cnicos em telecomunica��es
+31.01.06	Servicos t�cnicos e congeneres, n�o especificados
+31.01.07	SVA � Servicos de valor adicionado suportados por Servicos de telecomunica��es, nos termos da Lei Federal n� 9.472/97
+32      	Servicos de desenhos t�cnicos.
+32.01   	Servicos de desenhos t�cnicos.
+32.01.01	Servicos de desenhos t�cnicos
+33      	Servicos de desembara�o aduaneiro, comiss�rios, despachantes e congeneres.
+33.01   	Servicos de desembara�o aduaneiro, comiss�rios, despachantes e congeneres.
+33.01.01	Desembara�o aduaneiro
+33.01.02	Comiss�rio aduaneiro
+33.01.03	Despachante aduaneiro
+33.01.04	Servicos de despachantes e congeneres
+34      	Servicos de investiga��es particulares, detetives e congeneres.
+34.01   	Servicos de investiga��es particulares, detetives e congeneres.
+34.01.01	Servicos de investiga��es particulares, detetives ou congeneres
+35      	Servicos de reportagem, assessoria de imprensa, jornalismo e rela��es p�blicas.
+35.01   	Servicos de reportagem, assessoria de imprensa, jornalismo e rela��es p�blicas.
+35.01.01	Reportagem
+35.01.02	Jornalismo
+35.01.03	Assessoria de imprensa
+35.01.04	Rela��es p�blicas
+35.01.05	Assessoria de rela��es p�blicas
+36      	Servicos de meteorologia.
+36.01   	Servicos de meteorologia.
+36.01.01	Servicos de meteorologia
+37      	Servicos de artistas, atletas, modelos e manequins.
+37.01   	Servicos de artistas, atletas, modelos e manequins.
+37.01.01	Servicos de artistas
+37.01.02	Servicos de atletas
+37.01.03	Servicos de modelos e manequins
+37.01.04	Fornecimento de elenco (cast) de artistas e figurantes
+38      	Servicos de museologia.
+38.01   	Servicos de museologia.
+38.01.01	Museologia
+39      	Servicos de ourivesaria e lapida��o.
+39.01   	Servicos de ourivesaria e lapida��o (quando o material for fornecido pelo tomador do servico).
+39.01.01	Servicos de ourivesaria e lapida��o
+40      	Servicos relativos a obras de arte sob encomenda.
+40.01   	Obras de arte sob encomenda.
+40.01.01	Servicos relativos a obras de arte sob encomenda
