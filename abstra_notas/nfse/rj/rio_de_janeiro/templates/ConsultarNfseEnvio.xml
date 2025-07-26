@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ConsultarNfseEnvio xmlns="http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd">
+	<Prestador>
+		<Cnpj>{{ prestador_cnpj }}</Cnpj>
+		{% if prestador_inscricao_municipal %}
+		<InscricaoMunicipal>{{ prestador_inscricao_municipal }}</InscricaoMunicipal>
+		{% endif %}
+	</Prestador>
+	{% if data_inicial and data_final %}
+	<PeriodoEmissao>
+		<DataInicial>{{ data_inicial }}</DataInicial>
+		<DataFinal>{{ data_final }}</DataFinal>
+	</PeriodoEmissao>
+	{% endif %}
+	{% if numero_nfse %}
+	<NumeroNfse>{{ numero_nfse }}</NumeroNfse>
+	{% endif %}
+	{% if tomador_cnpj or tomador_cpf %}
+	<Tomador>
+		<CpfCnpj>
+			{% if tomador_cpf %}
+			<Cpf>{{ tomador_cpf }}</Cpf>
+			{% endif %}
+			{% if tomador_cnpj %}
+			<Cnpj>{{ tomador_cnpj }}</Cnpj>
+			{% endif %}
+		</CpfCnpj>
+		{% if tomador_inscricao_municipal %}
+		<InscricaoMunicipal>{{ tomador_inscricao_municipal }}</InscricaoMunicipal>
+		{% endif %}
+	</Tomador>
+	{% endif %}
+	{% if intermediario_servico %}
+	<IntermediarioServico>
+		<RazaoSocial>{{ intermediario_servico.razao_social }}</RazaoSocial>
+		<CpfCnpj>
+			{% if intermediario_servico.cpf %}
+			<Cpf>{{ intermediario_servico.cpf }}</Cpf>
+			{% endif %}
+			{% if intermediario_servico.cnpj %}
+			<Cnpj>{{ intermediario_servico.cnpj }}</Cnpj>
+			{% endif %}
+		</CpfCnpj>
+		{% if intermediario_servico.inscricao_municipal %}
+		<InscricaoMunicipal>{{ intermediario_servico.inscricao_municipal }}</InscricaoMunicipal>
+		{% endif %}
+	</IntermediarioServico>
+	{% endif %}
+</ConsultarNfseEnvio>

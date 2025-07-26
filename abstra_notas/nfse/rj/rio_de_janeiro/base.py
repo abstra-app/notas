@@ -4,13 +4,40 @@ from .templates import load_template
 from zeep.plugins import HistoryPlugin
 from zeep import Client, Transport, Settings
 from requests import Session
+from requests.adapters import HTTPAdapter
+from urllib3.poolmanager import PoolManager
 from lxml.etree import tostring, fromstring, ElementBase
 from pathlib import Path
 from typing import Generic, TypeVar
 from tempfile import mktemp
+import ssl
+
 
 
 T = TypeVar('T', bound='Envio')
+
+# Adapta para o TLS antigo de forma a ser compatível com o servidor da prefeitura do Rio de Janeiro
+class TLSAdapterCorrigido(HTTPAdapter):
+    """Adaptador TLS corrigido para resolver problemas de SSL"""
+    def init_poolmanager(self, connections, maxsize, block=False, **pool_kwargs):
+        ctx = ssl.create_default_context()
+        ctx.set_ciphers("HIGH:!DH:!aNULL")
+        ctx.check_hostname = False
+        ctx.verify_mode = ssl.CERT_NONE
+        ctx.minimum_version = ssl.TLSVersion.TLSv1_2
+        ctx.maximum_version = ssl.TLSVersion.TLSv1_3
+        
+        try:
+            ctx.options |= ssl.OP_NO_COMPRESSION
+        except AttributeError:
+            pass
+        
+        self.poolmanager = PoolManager(
+            num_pools=connections, 
+            maxsize=maxsize, 
+            block=block, 
+            ssl_context=ctx
+        )
 
 class Envio(ABC, Generic[T]):
     def gerar_xml(self) -> ElementBase:
@@ -48,28 +75,30 @@ class Envio(ABC, Generic[T]):
             session = Session()
             session.cert = (certfile, keyfile)
             session.verify = False
+
+            session.mount('https://', TLSAdapterCorrigido())
+
             settings = Settings(strict=True, xml_huge_tree=True)
-            transport = Transport(session=session, cache=None)
+            transport = Transport(session=session, cache=None, timeout=500)
 
             if homologacao:
-                url= "https://notacarioca.rio.gov.br/WSNacional/nfse.asmx?wsdl"
-            else:
                 url = "https://notacariocahom.rio.gov.br/WSNacional/nfse.asmx?wsdl"
+            else:
+                url= "https://notacarioca.rio.gov.br/WSNacional/nfse.asmx?wsdl"
             client = Client(
                 url, transport=transport, settings=settings, plugins=[history]
             )
 
             # Assina o XML
-            xml_assinado = assinador.assinar_xml(xml)
+            xml_assinado = xml
+            #xml_assinado = assinador.assinar_xml(xml)
 
             request_tmp_path = Path(mktemp())
             request_tmp_path.write_text(tostring(xml_assinado, encoding=str), encoding="utf-8")
+            print(f"Request saved to: {request_tmp_path}")
 
 
-            cabecalho= "<?xml version='1.0' encoding='UTF-8'?>"
-            response: str = getattr(client.service, self.nome_operacao())(
-                cabecalho, tostring(xml_assinado, encoding=str)
-            )
+            response: str = getattr(client.service, self.nome_operacao())( tostring(xml_assinado, encoding=str))
 
             response_temp_path = Path(mktemp())
             response_temp_path.write_text(response, encoding="utf-8")
@@ -77,5 +106,7 @@ class Envio(ABC, Generic[T]):
             xml_resposta =  fromstring(response.encode("utf-8"))
             return self.resposta(xml_resposta)
         finally:
-            keyfile.unlink()
-            certfile.unlink()
+            if keyfile.exists():
+                keyfile.unlink()
+            if certfile.exists():
+                certfile.unlink()

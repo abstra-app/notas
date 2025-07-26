@@ -6,8 +6,9 @@ from abstra_notas.validacoes.data import normalizar_data
 from abstra_notas.validacoes.cpf import normalizar_cpf
 from abstra_notas.validacoes.cidades import normalizar_uf
 from abstra_notas.validacoes.cep import normalizar_cep
-from abstra_notas.validacoes.telefone import normalizar_validar_telefone
 from abstra_notas.validacoes.email import validar_email
+from abstra_notas.validacoes.telefone import normalizar_validar_telefone
+from abstra_notas.validacoes.inscricao_municipal import normalizar_inscricao_municipal
 from typing import List, Optional
 from lxml.etree import ElementBase
 from enum import Enum
@@ -416,40 +417,41 @@ class SituacaoLoteRps(Enum):
 
 @dataclass
 class Endereco:
-    logradouro: str
-    numero: str
-    bairro: str
-    codigo_municipio: str
+    logradouro: Optional[str] = None
+    numero: Optional[str] = None
+    bairro: Optional[str] = None
+    codigo_municipio: Optional[str] = None
     """
     abstra_notas/validacoes/cidades/municipios.json
 
     Busque pela cidade e utilize o campo "id"
     """
-    uf: str
-    cep: str
+    uf: Optional[str] = None
+    cep: Optional[str] = None
     complemento: Optional[str] = None
 
     def __post_init__(self):
         """
         Normaliza o campo UF.
         """
-        self.uf = normalizar_uf(self.uf)
-        self.cep = normalizar_cep(self.cep)
-        assert self.uf, "UF deve ser fornecida."
-        assert self.codigo_municipio, "Código do município deve ser fornecido."
+        if self.uf:
+            self.uf = normalizar_uf(self.uf)
+        if self.cep:
+            self.cep = normalizar_cep(self.cep)
 
     @classmethod
     def from_xml(cls, xml: ElementBase):
         """
         Método para criar uma instância de Endereco a partir de um elemento XML.
         """
+
         return cls(
             logradouro=find_text(xml, 'Endereco', ''),
             numero=find_text(xml, 'Numero', ''),
             complemento=find_text(xml, 'Complemento', ''),
             bairro=find_text(xml, 'Bairro', ''),
             codigo_municipio=find_text(xml, 'CodigoMunicipio', ''),
-            uf=find_text(xml, 'Uf', ''),
+            uf = find_text(xml, 'Uf', ''),
             cep=find_text(xml, 'Cep', ''),
         )
     
@@ -500,13 +502,13 @@ class DadosPrestador:
     """
 
     cnpj: str
+    razao_social: str
+    endereco: Endereco
     inscricao_municipal: Optional[str] = None
     """
     Inscrição municipal do prestador de serviços. Pode ser omitida se o CNPJ for suficiente.
     """
-    razao_social: str
     nome_fantasia: Optional[str] = None
-    endereco: Endereco
     contato: Optional[Contato] = None
 
     def __post_init__(self):
@@ -515,16 +517,17 @@ class DadosPrestador:
         """
         self.cnpj = normalizar_cnpj(self.cnpj)
         if self.inscricao_municipal:
-            self.inscricao_municipal = self.inscricao_municipal.strip()
+            self.inscricao_municipal = normalizar_inscricao_municipal(self.inscricao_municipal)
 
     @classmethod
     def from_xml(cls, xml: ElementBase):
         """
         Método para criar uma instância de DadosPrestador a partir de um elemento XML.
         """
+        identificacao = find_element(xml, 'IdentificacaoPrestador')
         return cls(
-            cnpj=find_text(xml, 'CpfCnpj', ''),
-            inscricao_municipal=find_text(xml, 'InscricaoMunicipal', ''),
+            cnpj=find_text(identificacao, 'Cnpj', '') if identificacao is not None else '',
+            inscricao_municipal=find_text(identificacao, 'InscricaoMunicipal', '') if identificacao is not None else '',
             razao_social=find_text(xml, 'RazaoSocial', ''),
             nome_fantasia=find_text(xml, 'NomeFantasia', ''),
             endereco=Endereco.from_xml(find_element(xml, 'Endereco')),
@@ -566,18 +569,25 @@ class DadosTomador:
         if self.cpf:
             self.cpf = normalizar_cpf(self.cpf)
 
-        assert self.cnpj is not None or self.cpf is not None, "CNPJ ou CPF deve ser fornecido."
         assert self.cnpj is None or self.endereco is not None, "Se 'tomador_cnpj' for preenchido, 'tomador_endereco' também deve ser preenchido."
-        assert self.cnpj is None or self.contato is not None, "Se 'tomador_cnpj' for preenchido, 'tomador_contato' também deve ser preenchido."
    
     @classmethod
     def from_xml(cls, xml: ElementBase):
         """
         Método para criar uma instância de DadosTomador a partir de um elemento XML.
         """
+
+        cpf_cnpj_element = find_element(xml, 'CpfCnpj')
+
+        if cpf_cnpj_element is not None:
+            cnpj = find_text(cpf_cnpj_element, 'Cnpj', None)
+            cpf = find_text(cpf_cnpj_element, 'Cpf', None)
+        else:
+            cnpj = None
+            cpf = None
         return cls(
-            cnpj=find_text(xml, 'Cnpj', None),
-            cpf=find_text(xml, 'Cpf', None),
+            cnpj=cnpj,
+            cpf=cpf,
             razao_social=find_text(xml, 'RazaoSocial', ''),
             endereco=Endereco.from_xml(find_element(xml, 'Endereco')) if find_element(xml, 'Endereco') is not None else None,
             contato=Contato.from_xml(find_element(xml, 'Contato')) if find_element(xml, 'Contato') is not None else None,
@@ -611,15 +621,26 @@ class IdentificacaoIntermediarioServico:
         
         assert self.cnpj or self.cpf, "CNPJ ou CPF deve ser fornecido."
 
+        if self.inscricao_municipal:
+            self.inscricao_municipal = normalizar_inscricao_municipal(self.inscricao_municipal)
+
     @classmethod
     def from_xml(cls, xml: ElementBase):
         """
         Método para criar uma instância de IdentificacaoIntermediarioServico a partir de um elemento XML.
         """
+
+        if find_element(xml, 'CpfCnpj'):
+            cnpj = find_text(find_element(xml, 'CpfCnpj'), 'Cnpj', None)
+            cpf = find_text(find_element(xml, 'CpfCnpj'), 'Cpf', None)
+        else:
+            cnpj = None
+            cpf = None
+
         return cls(
             razao_social=find_text(xml, 'RazaoSocial', ''),
-            cnpj=find_text(xml, 'Cnpj', None),
-            cpf=find_text(xml, 'Cpf', None),
+            cnpj=cnpj,
+            cpf=cpf,
             inscricao_municipal=find_text(xml, 'InscricaoMunicipal', None),
         )
     
@@ -778,8 +799,19 @@ class IdentificacaoNfse:
 
     numero: str
     cnpj: str
-    inscricao_municipal: Optional[str] = None
     codigo_municipio: str
+    inscricao_municipal: Optional[str] = None
+
+    def __post_init__(self):
+        """
+        Normaliza o CNPJ e a inscrição municipal.
+        """
+        self.cnpj = normalizar_cnpj(self.cnpj)
+        if self.inscricao_municipal:
+            self.inscricao_municipal = normalizar_inscricao_municipal(self.inscricao_municipal)
+
+        assert self.cnpj, "CNPJ deve ser fornecido."
+        assert self.codigo_municipio, "Código do município deve ser fornecido."
 
     @classmethod
     def from_xml(cls, xml: ElementBase):
@@ -927,16 +959,17 @@ class Rps:
     identificacao_rps: IdentificacaoRps
     data_emissao: datetime
     natureza_operacao: NaturezaOperacao
-    regime_especial_tributacao: Optional[RegimeEspecialTributacao]
     optante_simples_nacional: bool
     incentivador_cultural: bool
     status: StatusRps
-    rps_substituido: Optional[IdentificacaoRps]
     servico: DadosServico
-    prestador: DadosPrestador
-    tomador: Optional[DadosTomador]
-    intermediario_servico: Optional[IdentificacaoIntermediarioServico]
-    construcao_civil: Optional[DadosConstrucaoCivil]
+    prestador_cnpj: str
+    prestador_inscricao_municipal: Optional[str] = None
+    regime_especial_tributacao: Optional[RegimeEspecialTributacao] = None
+    rps_substituido: Optional[IdentificacaoRps] = None
+    tomador: Optional[DadosTomador] = None
+    intermediario_servico: Optional[IdentificacaoIntermediarioServico] = None
+    construcao_civil: Optional[DadosConstrucaoCivil] = None
 
     @property
     def optante_simples_nacional_str(self):
@@ -975,7 +1008,8 @@ class Rps:
             status=StatusRps.from_value(find_text(xml, 'Status', '1')),
             rps_substituido=IdentificacaoRps.from_xml(find_element(xml, 'RpsSubstituido')) if find_element(xml, 'RpsSubstituido') is not None else None,
             servico=DadosServico.from_xml(find_element(xml, 'Servico')),
-            prestador=DadosPrestador.from_xml(find_element(xml, 'Prestador')),
+            prestador_cnpj=normalizar_cnpj(find_text(xml, 'Prestador/Cnpj', '')),
+            prestador_inscricao_municipal=find_text(xml, 'Prestador/InscricaoMunicipal', ''),
             tomador=DadosTomador.from_xml(find_element(xml, 'Tomador')) if find_element(xml, 'Tomador') is not None else None,
             intermediario_servico=IdentificacaoIntermediarioServico.from_xml(find_element(xml, 'IntermediarioServico')) if find_element(xml, 'IntermediarioServico') is not None else None,
             construcao_civil=DadosConstrucaoCivil.from_xml(find_element(xml, 'ConstrucaoCivil')) if find_element(xml, 'ConstrucaoCivil') is not None else None,
@@ -1085,9 +1119,20 @@ class ConsultarNfseResposta:
                 lista_mensagem_retorno=lista_mensagem_retorno
             )
         else:
-            comp_nfse = CompNfse.from_xml(find_element(xml, 'CompNfse'))
+            lista_nfse = find_element(xml, 'ListaNfse')
+            if lista_nfse is not None:
+                comp_nfses = find_all_elements(lista_nfse, 'CompNfse')
+                comp_nfse_list = [CompNfse.from_xml(comp) for comp in comp_nfses]
+            
+            else:
+                comp_nfse_element = find_element(xml, 'CompNfse')
+                if comp_nfse_element is not None:
+                    comp_nfse_list = [CompNfse.from_xml(comp_nfse_element)]
+                else:
+                    comp_nfse_list = []
+            
             return cls(
-                comp_nfse=comp_nfse,
+                comp_nfse=comp_nfse_list if comp_nfse_list else None,
                 lista_mensagem_retorno=None
             )
         
@@ -1115,7 +1160,7 @@ class ConsultarNfseEnvio(Envio[ConsultarNfseResposta]):
         """
         self.prestador_cnpj = normalizar_cnpj(self.prestador_cnpj)
         if self.prestador_inscricao_municipal:
-            self.prestador_inscricao_municipal = self.prestador_inscricao_municipal.strip()
+            self.prestador_inscricao_municipal = normalizar_inscricao_municipal(self.prestador_inscricao_municipal)
 
         if self.tomador_cnpj:
             self.tomador_cnpj = normalizar_cnpj(self.tomador_cnpj)
@@ -1123,7 +1168,7 @@ class ConsultarNfseEnvio(Envio[ConsultarNfseResposta]):
             self.tomador_cpf = normalizar_cpf(self.tomador_cpf)
         
         if self.tomador_inscricao_municipal:
-            self.tomador_inscricao_municipal = self.tomador_inscricao_municipal.strip()
+            self.tomador_inscricao_municipal = normalizar_inscricao_municipal(self.tomador_inscricao_municipal)
         
         if self.data_inicial:
             self.data_inicial = normalizar_data(self.data_inicial)
@@ -1131,7 +1176,159 @@ class ConsultarNfseEnvio(Envio[ConsultarNfseResposta]):
             self.data_final = normalizar_data(self.data_final)
     
     def nome_operacao(self):
-        return "ConsultaNfseEnvio"
+        return "ConsultarNfse"
     
     def resposta(self, xml):
         return ConsultarNfseResposta.from_xml(xml)
+    
+
+@dataclass
+class ConsultarNfsePorRpsResposta:
+    """ 
+    <xsd:element name="ConsultarNfseRpsResposta">
+        <xsd:complexType>
+            <xsd:choice>
+                <xsd:element name="CompNfse" type="tcCompNfse" minOccurs="1" maxOccurs="1"/>
+                <xsd:element ref="ListaMensagemRetorno" minOccurs="1" maxOccurs="1"/>
+            </xsd:choice>
+        </xsd:complexType>
+    </xsd:element>
+    """
+    comp_nfse: CompNfse
+    lista_mensagem_retorno: Optional[List[MensagemRetorno]] = None
+
+    @classmethod
+    def from_xml(cls, xml: ElementBase):
+        """
+        Método para criar uma instância de ConsultarNfsePorRpsResposta a partir de um elemento XML.
+        """
+        if find_element(xml, 'ListaMensagemRetorno') is not None:
+            mensagens = find_all_elements(xml, 'MensagemRetorno')
+            lista_mensagem_retorno = [MensagemRetorno.from_xml(m) for m in mensagens]
+            return cls(
+                comp_nfse=None,
+                lista_mensagem_retorno=lista_mensagem_retorno
+            )
+        else:
+            comp_nfse_element = find_element(xml, 'CompNfse')
+            if comp_nfse_element is not None:
+                comp_nfse = CompNfse.from_xml(comp_nfse_element)
+                return cls(
+                    comp_nfse=comp_nfse,
+                    lista_mensagem_retorno=None
+                )
+            else:
+                return cls(
+                    comp_nfse=None,
+                    lista_mensagem_retorno=None
+                )
+            
+@dataclass
+class ConsultarNfsePorRpsEnvio(Envio[ConsultarNfsePorRpsResposta]):
+    """
+    Classe para consultar Nfse por RPS.
+
+     <xsd:element name="ConsultarNfseRpsEnvio">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="IdentificacaoRps" type="tcIdentificacaoRps" minOccurs="1" maxOccurs="1"/>
+                <xsd:element name="Prestador" type="tcIdentificacaoRps" minOccurs="1" maxOccurs="1"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    """
+    identificacao_rps: IdentificacaoRps
+    prestador_cnpj: str
+    prestador_inscricao_municipal: Optional[str] = None
+
+    def __post_init__(self):
+        """
+        Normaliza o CNPJ do prestador.
+        """
+        self.prestador_cnpj = normalizar_cnpj(self.prestador_cnpj)
+        if self.prestador_inscricao_municipal:
+            self.prestador_inscricao_municipal = normalizar_inscricao_municipal(self.prestador_inscricao_municipal)
+    
+    def nome_operacao(self):
+        return "ConsultarNfsePorRps"
+    
+    def resposta(self, xml):
+        return ConsultarNfsePorRpsResposta.from_xml(xml)
+    
+
+@dataclass
+class GerarNfseResposta:
+    """
+    <xsd:element name="GerarNfseResposta">
+    <xsd:complexType>
+      <xsd:choice>
+        <xsd:sequence>
+          <xsd:element ref="CompNfse" minOccurs="1" maxOccurs="1" />
+          <xsd:element ref="ListaMensagemRetorno"  minOccurs="0" maxOccurs="1"/>
+        </xsd:sequence>
+        <xsd:element ref="ListaMensagemRetorno" minOccurs="1" maxOccurs="1" />
+      </xsd:choice>
+    </xsd:complexType>
+  </xsd:element>
+  """
+    comp_nfse: CompNfse
+    lista_mensagem_retorno: Optional[List[MensagemRetorno]] = None
+
+    @classmethod
+    def from_xml(cls, xml: ElementBase):
+        """
+        Método para criar uma instância de GerarNfseResposta a partir de um elemento XML.
+        """
+        if find_element(xml, 'ListaMensagemRetorno') is not None:
+            mensagens = find_all_elements(xml, 'MensagemRetorno')
+            lista_mensagem_retorno = [MensagemRetorno.from_xml(m) for m in mensagens]
+            return cls(
+                comp_nfse=None,
+                lista_mensagem_retorno=lista_mensagem_retorno
+            )
+        else:
+            comp_nfse_element = find_element(xml, 'CompNfse')
+            if comp_nfse_element is not None:
+                comp_nfse = CompNfse.from_xml(comp_nfse_element)
+                return cls(
+                    comp_nfse=comp_nfse,
+                    lista_mensagem_retorno=None
+                )
+            else:
+                return cls(
+                    comp_nfse=None,
+                    lista_mensagem_retorno=None
+                )
+    
+
+
+    
+@dataclass
+class GerarNfseEnvio(Envio[GerarNfseResposta]):
+    """
+  <xsd:element name="GerarNfseEnvio">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="Rps" type="tcRps" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+    """
+  
+    rps: Rps
+    
+    def __post_init__(self):
+        """
+        Normaliza o CNPJ do prestador e a inscrição municipal.
+        """
+        self.rps.prestador.cnpj = normalizar_cnpj(self.rps.prestador.cnpj)
+        if self.rps.prestador.inscricao_municipal:
+            self.rps.prestador.inscricao_municipal = normalizar_inscricao_municipal(self.rps.prestador.inscricao_municipal)
+    
+    def nome_operacao(self):
+        return "GerarNfse"
+    
+    def resposta(self, xml):
+        return GerarNfseResposta.from_xml(xml)
+
+  
