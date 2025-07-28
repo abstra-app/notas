@@ -5,21 +5,21 @@
           <IdentificacaoRps>
             <Numero>{{ rps.identificacao_rps.numero }}</Numero>
             <Serie>{{ rps.identificacao_rps.serie }}</Serie>
-            <Tipo>{{ rps.identificacao_rps.tipo }}</Tipo>
+            <Tipo>{{ rps.identificacao_rps.tipo.value }}</Tipo>
           </IdentificacaoRps>
           <DataEmissao>{{ rps.data_emissao }}</DataEmissao>
-          <NaturezaOperacao>{{ rps.natureza_operacao }}</NaturezaOperacao>
+          <NaturezaOperacao>{{ rps.natureza_operacao.value }}</NaturezaOperacao>
           {% if rps.regime_especial_tributacao %}
-          <RegimeEspecialTributacao>{{ rps.regime_especial_tributacao }}</RegimeEspecialTributacao>
+          <RegimeEspecialTributacao>{{ rps.regime_especial_tributacao.value }}</RegimeEspecialTributacao>
           {% endif %}
-          <OptanteSimplesNacional>{{ rps.optante_simples_nacional }}</OptanteSimplesNacional>
-          <IncentivadorCultural>{{ rps.incentivador_cultural }}</IncentivadorCultural>
-          <Status>{{ rps.status }}</Status>
+          <OptanteSimplesNacional>{{ rps.optante_simples_nacional_str }}</OptanteSimplesNacional>
+          <IncentivadorCultural>{{ rps.incentivador_cultural_str }}</IncentivadorCultural>
+          <Status>{{ rps.status.value }}</Status>
           {% if rps.rps_substituido %}
           <RpsSubstituido>
             <Numero>{{ rps.rps_substituido.numero }}</Numero>
             <Serie>{{ rps.rps_substituido.serie }}</Serie>
-            <Tipo>{{ rps.rps_substituido.tipo }}</Tipo>
+            <Tipo>{{ rps.rps_substituido.tipo.value }}</Tipo>
           </RpsSubstituido>
           {% endif %}
           <Servico>

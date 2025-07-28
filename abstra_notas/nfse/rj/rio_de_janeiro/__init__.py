@@ -1321,10 +1321,10 @@ class GerarNfseEnvio(Envio[GerarNfseResposta]):
         """
         Normaliza o CNPJ do prestador e a inscrição municipal.
         """
-        self.rps.prestador.cnpj = normalizar_cnpj(self.rps.prestador.cnpj)
-        if self.rps.prestador.inscricao_municipal:
-            self.rps.prestador.inscricao_municipal = normalizar_inscricao_municipal(self.rps.prestador.inscricao_municipal)
-    
+        self.rps.prestador_cnpj = normalizar_cnpj(self.rps.prestador_cnpj)
+        if self.rps.prestador_inscricao_municipal:
+            self.rps.prestador_inscricao_municipal = normalizar_inscricao_municipal(self.rps.prestador_inscricao_municipal)
+
     def nome_operacao(self):
         return "GerarNfse"
     
