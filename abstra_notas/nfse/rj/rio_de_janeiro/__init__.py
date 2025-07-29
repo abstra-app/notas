@@ -1483,3 +1483,68 @@ class ConsultarSituacaoLoteRpsEnvio(Envio[ConsultarSituacaoLoteRpsResposta]):
     
     def resposta(self, xml: ElementBase) -> ConsultarSituacaoLoteRpsResposta:
         return ConsultarSituacaoLoteRpsResposta.from_xml(xml)
+    
+
+@dataclass
+class ConsultarLoteRpsResposta:
+    """
+    Resposta da consulta de lote de RPS.
+    <xsd:choice>
+        <xsd:element name="ListaNfse" minOccurs="1" maxOccurs="1">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="CompNfse" maxOccurs="unbounded" type="tcCompNfse" minOccurs="1"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+        <xsd:element ref="ListaMensagemRetorno" minOccurs="1" maxOccurs="1"/>
+    </xsd:choice>
+    """
+
+    comp_nfse: Optional[List[CompNfse]] = None
+    lista_mensagem_retorno: Optional[List[MensagemRetorno]] = None
+
+    @classmethod
+    def from_xml(cls, xml: ElementBase):
+        """
+        Método para criar uma instância de ConsultarLoteRpsResposta a partir de um elemento XML.
+        """
+        if find_element(xml, 'ListaMensagemRetorno') is not None:
+            mensagens = find_all_elements(xml, 'MensagemRetorno')
+            lista_mensagem_retorno = [MensagemRetorno.from_xml(m) for m in mensagens]
+            return cls(comp_nfse=[], lista_mensagem_retorno=lista_mensagem_retorno)
+        
+        comp_nfse_elements = find_all_elements(xml, 'CompNfse')
+        comp_nfse_list = [CompNfse.from_xml(comp) for comp in comp_nfse_elements]
+
+        return cls(comp_nfse=comp_nfse_list, lista_mensagem_retorno=None)
+    
+
+@dataclass
+class ConsultarLoteRpsEnvio(Envio[ConsultarLoteRpsResposta]):
+    """
+    Consultar lote de RPS.
+    <xsd:sequence>
+                <xsd:element name="Prestador" type="tcIdentificacaoPrestador" minOccurs="1" maxOccurs="1"/>
+                <xsd:element name="Protocolo" type="tsNumeroProtocolo" minOccurs="1" maxOccurs="1"/>
+            </xsd:sequence>
+    """
+    
+    prestador_cnpj: str
+    protocolo: str
+    prestador_inscricao_municipal: Optional[str] = None
+    
+
+    def __post_init__(self):
+        """
+        Normaliza o CNPJ do prestador e a inscrição municipal.
+        """
+        self.prestador_cnpj = normalizar_cnpj(self.prestador_cnpj)
+        if self.prestador_inscricao_municipal:
+            self.prestador_inscricao_municipal = normalizar_inscricao_municipal(self.prestador_inscricao_municipal)
+    
+    def nome_operacao(self):
+        return "ConsultarLoteRps"
+    
+    def resposta(self, xml: ElementBase) -> ConsultarLoteRpsResposta:
+        return ConsultarLoteRpsResposta.from_xml(xml)
