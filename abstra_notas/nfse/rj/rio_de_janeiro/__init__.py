@@ -1548,3 +1548,59 @@ class ConsultarLoteRpsEnvio(Envio[ConsultarLoteRpsResposta]):
     
     def resposta(self, xml: ElementBase) -> ConsultarLoteRpsResposta:
         return ConsultarLoteRpsResposta.from_xml(xml)
+    
+
+
+@dataclass
+class CancelarNfseResposta:
+    """
+        <xsd:complexType name="tcInfPedidoCancelamento">
+        <xsd:sequence>
+            <xsd:element name="IdentificacaoNfse" type="tcIdentificacaoNfse" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="CodigoCancelamento" type="tsCodigoCancelamentoNfse" minOccurs="0" maxOccurs="1"/>
+        </xsd:sequence>
+        <xsd:attribute name="Id" type="tsIdTag" />
+    </xsd:complexType>
+    </xsd:complexType>
+    <xsd:choice>
+        <xsd:element name="Cancelamento" type="tcCancelamentoNfse"/>
+        <xsd:element ref="ListaMensagemRetorno" minOccurs="1" maxOccurs="1"/>
+    </xsd:choice>
+    """
+
+    pedido_cancelamento: PedidoCancelamento
+    data_hora_cancelamento: datetime
+    lista_mensagem_retorno: Optional[List[MensagemRetorno]] = None
+
+    @classmethod    
+    def from_xml(cls, xml: ElementBase):
+        """
+        Método para criar uma instância de CancelarNfseResposta a partir de um elemento XML.
+        """
+        if find_element(xml, 'ListaMensagemRetorno') is not None:
+            mensagens = find_all_elements(xml, 'MensagemRetorno')
+            lista_mensagem_retorno = [MensagemRetorno.from_xml(m) for m in mensagens]
+            return cls(pedido_cancelamento=None, data_hora_cancelamento=None, lista_mensagem_retorno=lista_mensagem_retorno)
+        
+        cancelamento_element = find_element(xml, 'Cancelamento')
+        if cancelamento_element is not None:
+            pedido_cancelamento = PedidoCancelamento.from_xml(find_element(cancelamento_element, 'Pedido'))
+            data_hora_cancelamento = datetime.fromisoformat(find_text(cancelamento_element, 'DataHoraCancelamento', ''))
+            return cls(pedido_cancelamento=pedido_cancelamento, data_hora_cancelamento=data_hora_cancelamento, lista_mensagem_retorno=None)
+
+        return cls(pedido_cancelamento=None, data_hora_cancelamento=None, lista_mensagem_retorno=None)
+
+
+@dataclass
+class CancelarNfseEnvio(Envio[CancelarNfseResposta]):
+    """
+    Cancelar uma Nfse.
+    """
+
+    pedido_cancelamento: PedidoCancelamento
+    
+    def nome_operacao(self):
+        return "CancelarNfse"
+    
+    def resposta(self, xml: ElementBase) -> CancelarNfseResposta:
+        return CancelarNfseResposta.from_xml(xml)
