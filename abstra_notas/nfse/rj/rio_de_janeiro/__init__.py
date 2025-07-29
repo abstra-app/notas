@@ -1411,3 +1411,75 @@ class EnviarLoteRpsEnvio(Envio[EnviarLoteRpsResposta]):
     
     def resposta(self, xml: ElementBase) -> EnviarLoteRpsResposta:
         return EnviarLoteRpsResposta.from_xml(xml)
+
+
+@dataclass
+class ConsultarSituacaoLoteRpsResposta:
+    """
+    <xsd:sequence>
+        <xsd:element name="NumeroLote" type="tsNumeroLote" minOccurs="1" maxOccurs="1"/>
+        <xsd:element name="Situacao" type="tsSituacaoLoteRps" minOccurs="1" maxOccurs="1"/>
+    </xsd:sequence>
+    <xsd:element ref="ListaMensagemRetorno" minOccurs="1" maxOccurs="1"/>
+    """
+    
+    numero_lote: str
+    situacao: str
+    lista_mensagem_retorno: Optional[List[MensagemRetorno]] = None
+
+
+    @classmethod
+    def from_xml(cls, xml: ElementBase):
+        """
+        Método para criar uma instância de ConsultarSituacaoLoteRpsResposta a partir de um elemento XML.
+        """
+        if find_element(xml, 'ListaMensagemRetorno') is not None:
+            mensagens = find_all_elements(xml, 'MensagemRetorno')
+            lista_mensagem_retorno = [MensagemRetorno.from_xml(m) for m in mensagens]
+            return cls(numero_lote=None, situacao=None, lista_mensagem_retorno=lista_mensagem_retorno)
+        
+        # Converte o código numérico para descrição legível
+        situacao_codigo = find_text(xml, 'Situacao', None)
+        situacao_descricao = None
+        if situacao_codigo:
+            try:
+                situacao_enum = SituacaoLoteRps.from_value(situacao_codigo)
+                situacao_descricao = situacao_enum
+            except ValueError:
+                situacao_descricao = f"Situação desconhecida: {situacao_codigo}"
+
+        return cls(
+            numero_lote=find_text(xml, 'NumeroLote', None),
+            situacao=situacao_descricao,
+            lista_mensagem_retorno=None
+        )
+
+    
+
+@dataclass
+class ConsultarSituacaoLoteRpsEnvio(Envio[ConsultarSituacaoLoteRpsResposta]):
+    """
+    Consultar a situação de um lote de RPS.
+    <xsd:sequence>
+        <xsd:element name="Prestador" type="tcIdentificacaoPrestador" minOccurs="1" maxOccurs="1"/>
+        <xsd:element name="Protocolo" type="tsNumeroProtocolo" minOccurs="1" maxOccurs="1"/>
+    </xsd:sequence>
+    """
+    
+    protocolo: str
+    prestador_cnpj: str
+    prestador_inscricao_municipal: Optional[str] = None
+
+    def __post_init__(self):
+        """
+        Normaliza o CNPJ do prestador e a inscrição municipal.
+        """
+        self.prestador_cnpj = normalizar_cnpj(self.prestador_cnpj)
+        if self.prestador_inscricao_municipal:
+            self.prestador_inscricao_municipal = normalizar_inscricao_municipal(self.prestador_inscricao_municipal)
+    
+    def nome_operacao(self):
+        return "ConsultarSituacaoLoteRps"
+    
+    def resposta(self, xml: ElementBase) -> ConsultarSituacaoLoteRpsResposta:
+        return ConsultarSituacaoLoteRpsResposta.from_xml(xml)

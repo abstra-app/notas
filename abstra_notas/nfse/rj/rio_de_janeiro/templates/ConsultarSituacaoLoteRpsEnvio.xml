@@ -1,8 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ConsultarSituacaoLoteRpsEnvio xmlns="http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd">
 	<Prestador>
-		<Cnpj>04642554000143</Cnpj>
-		<InscricaoMunicipal>2994275</InscricaoMunicipal>
+		<Cnpj>{{ prestador_cnpj }}</Cnpj>
+		{% if prestador_inscricao_municipal %}
+		<InscricaoMunicipal>{{ prestador_inscricao_municipal }}</InscricaoMunicipal>
+		{% endif %}
 	</Prestador>
-	<Protocolo>750</Protocolo>
+	<Protocolo>{{ protocolo }}</Protocolo>
 </ConsultarSituacaoLoteRpsEnvio>
