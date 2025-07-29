@@ -1,182 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <EnviarLoteRpsEnvio xmlns="http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd">
-  <LoteRps Id="L1">
-    <NumeroLote>1</NumeroLote>
-    <Cnpj>04642554000143</Cnpj>
-    <InscricaoMunicipal>2994275</InscricaoMunicipal>
-    <QuantidadeRps>2</QuantidadeRps>
+  <LoteRps Id="{{ lote_id }}">
+    <NumeroLote>{{ numero_lote }}</NumeroLote>
+    <Cnpj>{{ prestador_cnpj }}</Cnpj>
+    {% if prestador_inscricao_municipal %}
+    <InscricaoMunicipal>{{ prestador_inscricao_municipal }}</InscricaoMunicipal>
+    {% endif %}
+    <QuantidadeRps>{{ quantidade_rps }}</QuantidadeRps>
     <ListaRps>
+      {% for rps in lista_rps %}
       <Rps>
-        <InfRps Id="R1">
+        <InfRps xmlns="http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd" Id="{{id}}">
           <IdentificacaoRps>
-            <Numero>1</Numero>
-            <Serie>ABC</Serie>
-            <Tipo>1</Tipo>
+            <Numero>{{ rps.identificacao_rps.numero }}</Numero>
+            <Serie>{{ rps.identificacao_rps.serie }}</Serie>
+            <Tipo>{{ rps.identificacao_rps.tipo.value }}</Tipo>
           </IdentificacaoRps>
-          <DataEmissao>2010-01-01T21:00:00</DataEmissao>
-          <NaturezaOperacao>1</NaturezaOperacao>
-          <OptanteSimplesNacional>2</OptanteSimplesNacional>
-          <IncentivadorCultural>2</IncentivadorCultural>
-          <Status>1</Status>
+          <DataEmissao>{{ rps.data_emissao }}</DataEmissao>
+          <NaturezaOperacao>{{ rps.natureza_operacao.value }}</NaturezaOperacao>
+          {% if rps.regime_especial_tributacao %}
+          <RegimeEspecialTributacao>{{ rps.regime_especial_tributacao.value }}</RegimeEspecialTributacao>
+          {% endif %}
+          <OptanteSimplesNacional>{{ rps.optante_simples_nacional_str }}</OptanteSimplesNacional>
+          <IncentivadorCultural>{{ rps.incentivador_cultural_str }}</IncentivadorCultural>
+          <Status>{{ rps.status.value }}</Status>
+          {% if rps.rps_substituido %}
+          <RpsSubstituido>
+            <Numero>{{ rps.rps_substituido.numero }}</Numero>
+            <Serie>{{ rps.rps_substituido.serie }}</Serie>
+            <Tipo>{{ rps.rps_substituido.tipo.value }}</Tipo>
+          </RpsSubstituido>
+          {% endif %}
           <Servico>
             <Valores>
-              <ValorServicos>1000.00</ValorServicos>
-              <ValorDeducoes>0</ValorDeducoes>
-              <ValorPis>10.00</ValorPis>
-              <ValorCofins>10.00</ValorCofins>
-              <ValorInss>10.00</ValorInss>
-              <ValorIr>10.00</ValorIr>
-              <ValorCsll>10.00</ValorCsll>
-              <IssRetido>2</IssRetido>
-              <ValorIss>10.00</ValorIss>
-              <OutrasRetencoes>10.00</OutrasRetencoes>
-              <Aliquota>0.05</Aliquota>
-              <DescontoIncondicionado>10.00</DescontoIncondicionado>
-              <DescontoCondicionado>10.00</DescontoCondicionado>
+              <ValorServicos>{{ rps.servico.valores.valor_servico }}</ValorServicos>
+              {% if rps.servico.valores.valor_deducoes %}
+              <ValorDeducoes>{{ rps.servico.valores.valor_deducoes }}</ValorDeducoes>
+              {% endif %}
+              {% if rps.servico.valores.valor_pis %}
+              <ValorPis>{{ rps.servico.valores.valor_pis }}</ValorPis>
+              {% endif %}
+              {% if rps.servico.valores.valor_cofins %}
+              <ValorCofins>{{ rps.servico.valores.valor_cofins }}</ValorCofins>
+              {% endif %}
+              {% if rps.servico.valores.valor_inss %}
+              <ValorInss>{{ rps.servico.valores.valor_inss }}</ValorInss>
+              {% endif %}
+              {% if rps.servico.valores.valor_ir %}
+              <ValorIr>{{ rps.servico.valores.valor_ir }}</ValorIr>
+              {% endif %}
+              {% if rps.servico.valores.valor_csll %}
+              <ValorCsll>{{ rps.servico.valores.valor_csll }}</ValorCsll>
+              {% endif %}
+              <IssRetido>{{ rps.servico.valores.iss_retido_str }}</IssRetido>
+              {% if rps.servico.valores.valor_iss %}
+              <ValorIss>{{ rps.servico.valores.valor_iss }}</ValorIss>
+              {% endif %}
+              {% if rps.servico.valores.valor_iss_retido %}
+              <ValorIssRetido>{{ rps.servico.valores.valor_iss_retido }}</ValorIssRetido>
+              {% endif %}
+              {% if rps.servico.valores.outras_retencoes %}
+              <OutrasRetencoes>{{ rps.servico.valores.outras_retencoes }}</OutrasRetencoes>
+              {% endif %}
+              {% if rps.servico.valores.base_calculo %}
+              <BaseCalculo>{{ rps.servico.valores.base_calculo }}</BaseCalculo>
+              {% endif %}
+              {% if rps.servico.valores.aliquota_iss %}
+              <Aliquota>{{ rps.servico.valores.aliquota_iss }}</Aliquota>
+              {% endif %}
+              {% if rps.servico.valores.desconto_incondicionado %}
+              <DescontoIncondicionado>{{ rps.servico.valores.desconto_incondicionado }}</DescontoIncondicionado>
+              {% endif %}
+              {% if rps.servico.valores.valor_liquido_nfse %}
+              <ValorLiquidoNfse>{{ rps.servico.valores.valor_liquido_nfse }}</ValorLiquidoNfse>
+              {% endif %}
+              {% if rps.servico.valores.desconto_condicionado %}
+              <DescontoCondicionado>{{ rps.servico.valores.desconto_condicionado }}</DescontoCondicionado>
+              {% endif %}
             </Valores>
-            <ItemListaServico>0102</ItemListaServico>
-            <CodigoTributacaoMunicipio>010201</CodigoTributacaoMunicipio>
-            <Discriminacao>Teste</Discriminacao>
-            <CodigoMunicipio>3304557</CodigoMunicipio>
+            <ItemListaServico>{{ rps.servico.item_lista_servico }}</ItemListaServico>
+            <CodigoTributacaoMunicipio>{{ rps.servico.codigo_tributacao_municipio }}</CodigoTributacaoMunicipio>
+            <Discriminacao>{{ rps.servico.discriminacao }}</Discriminacao>
+            <CodigoMunicipio>{{ rps.servico.codigo_municipio }}</CodigoMunicipio>
           </Servico>
           <Prestador>
-            <Cnpj>04642554000143</Cnpj>
-            <InscricaoMunicipal>2994275</InscricaoMunicipal>
+            <Cnpj>{{ rps.prestador_cnpj }}</Cnpj>
+            {% if rps.prestador_inscricao_municipal %}
+            <InscricaoMunicipal>{{ rps.prestador_inscricao_municipal }}</InscricaoMunicipal>
+            {% endif %}
           </Prestador>
           <Tomador>
             <IdentificacaoTomador>
               <CpfCnpj>
-                <Cnpj>99999999000191</Cnpj>
+              {% if rps.tomador.cnpj %}
+                <Cnpj>{{ rps.tomador.cnpj }}</Cnpj>
+              {% endif %}
+              {% if rps.tomador.cpf %}
+                <Cpf>{{ rps.tomador.cpf }}</Cpf>
+              {% endif %}
               </CpfCnpj>
             </IdentificacaoTomador>
-            <RazaoSocial>INSCRICAO DE TESTE</RazaoSocial>
+            {% if rps.tomador.razao_social %}
+            <RazaoSocial>{{ rps.tomador.razao_social }}</RazaoSocial>
+            {% endif %}
+            {% if rps.endereco %}
             <Endereco>
-              <Endereco>AV RIO BRANCO</Endereco>
-              <Numero>12345</Numero>
-              <Complemento>SALA 1001 1002</Complemento>
-              <Bairro>CENTRO</Bairro>
+              {% if rps.endereco.logradouro %}
+              <Endereco>{{ rps.endereco.logradouro }}</Endereco>
+              {% endif %}
+              {% if rps.endereco.numero %}
+              <Numero>{{ rps.endereco.numero }}</Numero>
+              {% endif %}
+              {% if rps.endereco.complemento %}
+              <Complemento>{{ rps.endereco.complemento }}</Complemento>
+              {% endif %}
+              {% if rps.endereco.bairro %}
+              <Bairro>{{ rps.endereco.bairro }}</Bairro>
+              {% endif %}
+              {% if rps.endereco.codigo_municipio %}
               <CodigoMunicipio>3304557</CodigoMunicipio>
+              {% endif %}
+              {% if rps.endereco.uf %}
               <Uf>RJ</Uf>
-              <Cep>20040001</Cep>
+              {% endif %}
+              {% if rps.endereco.cep %}
+              <Cep>{{ rps.endereco.cep }}</Cep>
+              {% endif %}
             </Endereco>
+            {% endif %}
+            {% if rps.tomador.contato %}
+            <Contato>
+              {% if rps.tomador.contato.telefone %}
+              <Telefone>{{ rps.tomador.contato.telefone }}</Telefone>
+              {% endif %}
+              {% if rps.tomador.contato.email %}
+              <Email>{{ rps.tomador.contato.email }}</Email>
+              {% endif %}
+            </Contato>
+            {% endif %}
           </Tomador>
+          {% if rps.intermediario_servico %}
+          <IntermediarioServico>
+            <RazaoSocial>{{ rps.intermediario_servico.razao_social }}</RazaoSocial>
+            <CpfCnpj>
+              {% if rps.intermediario_servico.cnpj %}
+              <Cnpj>{{ rps.intermediario_servico.cnpj }}</Cnpj>
+              {% elif rps.intermediario_servico.cpf %}
+              <Cpf>{{ rps.intermediario_servico.cpf }}</Cpf>
+              {% endif %}
+            {% if rps.intermediario_servico.inscricao_municipal %}
+            <InscricaoMunicipal>{{ rps.intermediario_servico.inscricao_municipal }}</InscricaoMunicipal>
+            {% endif %}
+          </IntermediarioServico>
+          {% endif %}
+          {% if rps.construcao_civil %}
+          <ConstrucaoCivil>
+            <CodigoObra>{{ rps.construcao_civil.codigo_obra }}</CodigoObra>
+            <Art>{{ rps.construcao_civil.art }}</Art>
+          </ConstrucaoCivil>
+          {% endif %}
         </InfRps>
-        <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
-          <SignedInfo>
-            <CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />
-            <SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />
-            <Reference URI="#R1">
-              <Transforms>
-                <Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />
-                <Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />
-              </Transforms>
-              <DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-              <DigestValue>pyuIXFAqQ0hwr+3cH2taKy0CGjk=</DigestValue>
-            </Reference>
-          </SignedInfo>
-          <SignatureValue>iHkS2259HxU7nFnJr1qnRA1YFuDPFH94k/TbqcXxOCISFL5vTeBY5AaV0fuUwY78/O1rczSv0pc+dNUTV2LexsSmplyyvlyDboXhPpR29Cvd2UWasAUAl4um1BLzKH322ustSNpKePbmhsMpkAIhZC3MVaCpUt4netvToveHrVA=</SignatureValue>
-          <KeyInfo>
-            <X509Data>
-              <X509Certificate>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</X509Certificate>
-            </X509Data>
-          </KeyInfo>
-        </Signature>
       </Rps>
-      <Rps>
-        <InfRps Id="R2">
-          <IdentificacaoRps>
-            <Numero>2</Numero>
-            <Serie>ABC</Serie>
-            <Tipo>1</Tipo>
-          </IdentificacaoRps>
-          <DataEmissao>2010-01-01T21:10:00</DataEmissao>
-          <NaturezaOperacao>1</NaturezaOperacao>
-          <OptanteSimplesNacional>2</OptanteSimplesNacional>
-          <IncentivadorCultural>2</IncentivadorCultural>
-          <Status>1</Status>
-          <Servico>
-            <Valores>
-              <ValorServicos>1000.00</ValorServicos>
-              <ValorDeducoes>0</ValorDeducoes>
-              <ValorPis>10.00</ValorPis>
-              <ValorCofins>10.00</ValorCofins>
-              <ValorInss>10.00</ValorInss>
-              <ValorIr>10.00</ValorIr>
-              <ValorCsll>10.00</ValorCsll>
-              <IssRetido>2</IssRetido>
-              <ValorIss>10.00</ValorIss>
-              <OutrasRetencoes>10.00</OutrasRetencoes>
-              <Aliquota>0.05</Aliquota>
-              <DescontoIncondicionado>10.00</DescontoIncondicionado>
-              <DescontoCondicionado>10.00</DescontoCondicionado>
-            </Valores>
-            <ItemListaServico>0102</ItemListaServico>
-            <CodigoTributacaoMunicipio>010201</CodigoTributacaoMunicipio>
-            <Discriminacao>Teste</Discriminacao>
-            <CodigoMunicipio>3304557</CodigoMunicipio>
-          </Servico>
-          <Prestador>
-            <Cnpj>04642554000143</Cnpj>
-            <InscricaoMunicipal>2994275</InscricaoMunicipal>
-          </Prestador>
-          <Tomador>
-            <IdentificacaoTomador>
-              <CpfCnpj>
-                <Cnpj>99999999000191</Cnpj>
-              </CpfCnpj>
-            </IdentificacaoTomador>
-            <RazaoSocial>INSCRICAO DE TESTE</RazaoSocial>
-            <Endereco>
-              <Endereco>AV RIO BRANCO</Endereco>
-              <Numero>12345</Numero>
-              <Complemento>SALA 1001 1002</Complemento>
-              <Bairro>CENTRO</Bairro>
-              <CodigoMunicipio>3304557</CodigoMunicipio>
-              <Uf>RJ</Uf>
-              <Cep>20040001</Cep>
-            </Endereco>
-          </Tomador>
-        </InfRps>
-        <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
-          <SignedInfo>
-            <CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />
-            <SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />
-            <Reference URI="#R2">
-              <Transforms>
-                <Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />
-                <Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />
-              </Transforms>
-              <DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-              <DigestValue>SNNbP4MTcqVZZIwb30KWhA+rVy8=</DigestValue>
-            </Reference>
-          </SignedInfo>
-          <SignatureValue>CZL9pJrdVBiO46FIAw97puzdyfeLDMj3p/BMKvbXgDD/Vn7fnG2Bfqlf5jbujFbhElkB6f/3ODre8s05bI/tFl/AiYT27Z/KE6mUgP54YBkv+UQmlD799PnX5zqU0uvxEr8j5YiUT5Lh6OszTIlNRfTG6Fedur4ll7BTgse4BZ0=</SignatureValue>
-          <KeyInfo>
-            <X509Data>
-              <X509Certificate>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</X509Certificate>
-            </X509Data>
-          </KeyInfo>
-        </Signature>
-      </Rps>
+      {% endfor %}
     </ListaRps>
   </LoteRps>
-  <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
-    <SignedInfo>
-      <CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />
-      <SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />
-      <Reference URI="#L1">
-        <Transforms>
-          <Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />
-          <Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />
-        </Transforms>
-        <DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <DigestValue>+jSJxAuTpHtKZA8vcO7zMqD5V9o=</DigestValue>
-      </Reference>
-    </SignedInfo>
-    <SignatureValue>A46erP1KpX0j60GjJLq++xb/VqK3A2qNBMyMohB5mjVF/VPM+512Ta00cfSgr9iy9jUWN6AzW0Q3pFWdxpeDqGN+GqT4V0WYf/e6d1jK+Uf+KHY08GIB4XA8CcJOWTNwSG5bqdTRKgBnoz2Q/kI/dS2Bte9yWFS7TaJwL6yslgI=</SignatureValue>
-    <KeyInfo>
-      <X509Data>
-        <X509Certificate>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</X509Certificate>
-      </X509Data>
-    </KeyInfo>
-  </Signature>
 </EnviarLoteRpsEnvio>

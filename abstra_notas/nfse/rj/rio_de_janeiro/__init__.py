@@ -991,7 +991,16 @@ class Rps:
         Retorna a data de emissão no formato ISO 8601.
         """
         return self.data_emissao.isoformat()
-    
+
+    def __post_init__(self):
+        """
+        Valida os dados após a inicialização da classe.
+        """
+        self.prestador_cnpj = normalizar_cnpj(self.prestador_cnpj)
+        if self.prestador_inscricao_municipal:
+            self.prestador_inscricao_municipal = normalizar_inscricao_municipal(self.prestador_inscricao_municipal)
+
+
     @classmethod
     def from_xml(cls, xml: ElementBase):
         """
@@ -1317,18 +1326,88 @@ class GerarNfseEnvio(Envio[GerarNfseResposta]):
   
     rps: Rps
     
-    def __post_init__(self):
-        """
-        Normaliza o CNPJ do prestador e a inscrição municipal.
-        """
-        self.rps.prestador_cnpj = normalizar_cnpj(self.rps.prestador_cnpj)
-        if self.rps.prestador_inscricao_municipal:
-            self.rps.prestador_inscricao_municipal = normalizar_inscricao_municipal(self.rps.prestador_inscricao_municipal)
-
     def nome_operacao(self):
         return "GerarNfse"
     
     def resposta(self, xml):
         return GerarNfseResposta.from_xml(xml)
 
-  
+
+@dataclass
+class EnviarLoteRpsResposta:
+    """
+    <xsd:sequence>
+        <xsd:element name="NumeroLote" type="tsNumeroLote" minOccurs="1" maxOccurs="1"/>
+        <xsd:element name="DataRecebimento" type="xsd:dateTime" minOccurs="1" maxOccurs="1"/>
+        <xsd:element name="Protocolo" type="tsNumeroProtocolo" minOccurs="1" maxOccurs="1"/>
+        <xsd:element ref="ListaMensagemRetorno" minOccurs="1" maxOccurs="1"/>
+    </xsd:sequence>
+    """
+    numero_lote: str
+    data_recebimento: datetime
+    protocolo: str
+    lista_mensagem_retorno: List[MensagemRetorno]
+
+    @classmethod
+    def from_xml(cls, xml: ElementBase):
+        """
+        Método para criar uma instância de EnviarLoteRpsResposta a partir de um elemento XML.
+        """
+        
+        if find_element(xml, 'ListaMensagemRetorno') is not None:
+            mensagens = find_all_elements(xml, 'MensagemRetorno')
+            lista_mensagem_retorno = [MensagemRetorno.from_xml(m) for m in mensagens]
+            return cls(numero_lote=None, data_recebimento=None, protocolo=None, lista_mensagem_retorno=lista_mensagem_retorno)
+        
+        return cls(
+            numero_lote=find_text(xml, 'NumeroLote', ''),
+            data_recebimento=datetime.fromisoformat(find_text(xml, 'DataRecebimento', '')),
+            protocolo=find_text(xml, 'Protocolo', ''),
+            lista_mensagem_retorno=[]
+        )
+        
+
+@dataclass
+class EnviarLoteRpsEnvio(Envio[EnviarLoteRpsResposta]):
+    """
+    <xsd:sequence>
+        <xsd:element name="NumeroLote" type="tsNumeroLote" minOccurs="1" maxOccurs="1"/>
+        <xsd:element name="Cnpj" type="tsCnpj" minOccurs="1" maxOccurs="1"/>
+        <xsd:element name="InscricaoMunicipal" type="tsInscricaoMunicipal" minOccurs="1" maxOccurs="1"/>
+        <xsd:element name="QuantidadeRps" type="tsQuantidadeRps" minOccurs="1" maxOccurs="1"/>
+        <xsd:element name="ListaRps" minOccurs="1" maxOccurs="1">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="Rps" maxOccurs="unbounded" type="tcRps" minOccurs="1">
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:complexType>
+                </xsd:element>
+        </xsd:sequence>
+        <xsd:attribute name="Id" type="tsIdTag" />
+    """
+    
+    lote_id: str
+    numero_lote: str
+    prestador_cnpj: str
+    prestador_inscricao_municipal: str
+    lista_rps: List[Rps]
+    quantidade_rps: int = 0
+
+    def __post_init__(self):
+        """
+        Normaliza o CNPJ do prestador e a inscrição municipal.
+        """
+        self.prestador_cnpj = normalizar_cnpj(self.prestador_cnpj)
+        self.prestador_inscricao_municipal = normalizar_inscricao_municipal(self.prestador_inscricao_municipal)
+    
+        if not self.lista_rps:
+            raise ValueError("A lista de RPS não pode estar vazia.")
+        
+        self.quantidade_rps = len(self.lista_rps)
+        
+    def nome_operacao(self):
+        return "RecepcionarLoteRps"
+    
+    def resposta(self, xml: ElementBase) -> EnviarLoteRpsResposta:
+        return EnviarLoteRpsResposta.from_xml(xml)

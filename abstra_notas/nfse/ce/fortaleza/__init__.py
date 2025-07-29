@@ -1416,4 +1416,3 @@ class ConsultarNfsePorRpsEnvio(Envio[ConsultarNfsePorRpsResposta]):
     
     def resposta(self, xml: ElementBase) -> ConsultarNfsePorRpsResposta:
         return ConsultarNfsePorRpsResposta.from_xml(xml)
-
