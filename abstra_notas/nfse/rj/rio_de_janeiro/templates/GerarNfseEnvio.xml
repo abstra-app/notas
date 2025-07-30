@@ -94,28 +94,28 @@
             {% if rps.tomador.razao_social %}
             <RazaoSocial>{{ rps.tomador.razao_social }}</RazaoSocial>
             {% endif %}
-            {% if rps.endereco %}
+            {% if rps.tomador.endereco %}
             <Endereco>
-              {% if rps.endereco.logradouro %}
-              <Endereco>{{ rps.endereco.logradouro }}</Endereco>
+              {% if rps.tomador.endereco.logradouro %}
+              <Endereco>{{ rps.tomador.endereco.logradouro }}</Endereco>
               {% endif %}
-              {% if rps.endereco.numero %}
-              <Numero>{{ rps.endereco.numero }}</Numero>
+              {% if rps.tomador.endereco.numero %}
+              <Numero>{{ rps.tomador.endereco.numero }}</Numero>
               {% endif %}
-              {% if rps.endereco.complemento %}
-              <Complemento>{{ rps.endereco.complemento }}</Complemento>
+              {% if rps.tomador.endereco.complemento %}
+              <Complemento>{{ rps.tomador.endereco.complemento }}</Complemento>
               {% endif %}
-              {% if rps.endereco.bairro %}
-              <Bairro>{{ rps.endereco.bairro }}</Bairro>
+              {% if rps.tomador.endereco.bairro %}
+              <Bairro>{{ rps.tomador.endereco.bairro }}</Bairro>
               {% endif %}
-              {% if rps.endereco.codigo_municipio %}
-              <CodigoMunicipio>3304557</CodigoMunicipio>
+              {% if rps.tomador.endereco.codigo_municipio %}
+              <CodigoMunicipio>{{ rps.tomador.endereco.codigo_municipio }}</CodigoMunicipio>
               {% endif %}
-              {% if rps.endereco.uf %}
-              <Uf>RJ</Uf>
+              {% if rps.tomador.endereco.uf %}
+              <Uf>{{ rps.tomador.endereco.uf }}</Uf>
               {% endif %}
-              {% if rps.endereco.cep %}
-              <Cep>{{ rps.endereco.cep }}</Cep>
+              {% if rps.tomador.endereco.cep %}
+              <Cep>{{ rps.tomador.endereco.cep }}</Cep>
               {% endif %}
             </Endereco>
             {% endif %}
@@ -139,6 +139,7 @@
               {% elif rps.intermediario_servico.cpf %}
               <Cpf>{{ rps.intermediario_servico.cpf }}</Cpf>
               {% endif %}
+            </CpfCnpj>
             {% if rps.intermediario_servico.inscricao_municipal %}
             <InscricaoMunicipal>{{ rps.intermediario_servico.inscricao_municipal }}</InscricaoMunicipal>
             {% endif %}

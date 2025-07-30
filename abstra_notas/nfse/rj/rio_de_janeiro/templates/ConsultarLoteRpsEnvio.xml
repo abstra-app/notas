@@ -2,7 +2,9 @@
 <ConsultarLoteRpsEnvio xmlns="http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd">
 	<Prestador>
 		<Cnpj>{{ prestador_cnpj }}</Cnpj>
+		{% if prestador_inscricao_municipal %}
 		<InscricaoMunicipal>{{ prestador_inscricao_municipal }}</InscricaoMunicipal>
+		{% endif %}
 	</Prestador>
 	<Protocolo>{{protocolo}}</Protocolo>
 </ConsultarLoteRpsEnvio>

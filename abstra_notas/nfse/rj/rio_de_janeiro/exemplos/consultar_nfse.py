@@ -21,8 +21,8 @@ data_inicial = data_final - timedelta(days=30)
 # Criar o pedido de consulta
 consulta = ConsultarNfseEnvio(
     prestador_cnpj=prestador_cnpj,
-    data_inicial=data_inicial.strftime("%Y-%m-%d"),
-    data_final=data_final.strftime("%Y-%m-%d"),
+    data_inicial=data_inicial,
+    data_final=data_final,
 )
 
 try:

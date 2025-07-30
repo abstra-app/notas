@@ -1,7 +1,13 @@
 from abstra_notas.nfse.rj.rio_de_janeiro import ConsultarLoteRpsEnvio
+from pathlib import Path
 from dotenv import load_dotenv
+from os import getenv
 
 load_dotenv()
+
+# Configuração das credenciais
+caminho_certificado = Path(getenv("NFSE_PFX_PATH", "certificado.pfx"))
+senha_certificado = getenv("NFSE_PFX_PASSWORD", "senha_certificado")
 
 
 # Dados do prestador
@@ -34,12 +40,10 @@ try:
             print(f"NFSe: {nfse.numero} | RPS: {nfse.identificacao_rps.numero}/{nfse.identificacao_rps.serie}")
             
             # Verificar se foi cancelada
-            if comp_nfse.nfse_cancelamento and comp_nfse.nfse_cancelamento.sucesso:
-                print(f"Status: CANCELADA em {comp_nfse.nfse_cancelamento.data_hora}")
+            if comp_nfse.nfse_cancelamento:
+                print(f"Status: CANCELADA em {comp_nfse.nfse_cancelamento.data_hora_cancelamento}")
             else:
                 print(f"Status: ATIVA")
-    else:
-        print("Nenhuma NFSe encontrada para este lote")
     
     if hasattr(resposta, 'lista_mensagem_retorno') and resposta.lista_mensagem_retorno:
         print("\nMensagens:")

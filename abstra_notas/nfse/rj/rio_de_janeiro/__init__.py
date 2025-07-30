@@ -290,8 +290,23 @@ class DadosServico:
     Consultar nfse/rj/rio_de_janeiro/manuais/TabelaServicos.txt
     Exemplo:
        item_lista_servico="010104" ->  Geracao de programa de computador sob encomenda.
+
+    """
+    codigo_beneficio_fiscal: Optional[str] = None
+    """
+        Para uso de benefícios fiscais. Códigos benefícios fiscais: /nfse/rj/rio_de_janeiro/manuais/beneficios_fiscais_rj.pdf. Para novos códigos procurar em https://notacarioca.rio.gov.br/manuais.aspx.
+    Exemplo:
+        Lei 4.372/2006 - Redução de Aliq. - Serviços Vinculados à operação de terminais portuários na Zona Oeste - código: 040
+        Porto Maravilha. Código do benefício: 046
+
+        Atenção: Alguns benefícios fiscais podem não funcionar no ambiente de homologação. Testar em produção.
     """
 
+    def __post_init__(self):
+        if self.codigo_beneficio_fiscal:
+            self.item_lista_servico = f"{self.codigo_beneficio_fiscal}{self.item_lista_servico}"
+
+        assert len(self.discriminacao) <= 2000 , "Discriminação deve ter no máximo 2000 caracteres."
 
     @classmethod
     def from_xml(cls, xml: ElementBase):
@@ -1178,11 +1193,7 @@ class ConsultarNfseEnvio(Envio[ConsultarNfseResposta]):
         
         if self.tomador_inscricao_municipal:
             self.tomador_inscricao_municipal = normalizar_inscricao_municipal(self.tomador_inscricao_municipal)
-        
-        if self.data_inicial:
-            self.data_inicial = normalizar_data(self.data_inicial)
-        if self.data_final:
-            self.data_final = normalizar_data(self.data_final)
+    
     
     def nome_operacao(self):
         return "ConsultarNfse"
@@ -1237,14 +1248,6 @@ class ConsultarNfsePorRpsEnvio(Envio[ConsultarNfsePorRpsResposta]):
     """
     Classe para consultar Nfse por RPS.
 
-     <xsd:element name="ConsultarNfseRpsEnvio">
-        <xsd:complexType>
-            <xsd:sequence>
-                <xsd:element name="IdentificacaoRps" type="tcIdentificacaoRps" minOccurs="1" maxOccurs="1"/>
-                <xsd:element name="Prestador" type="tcIdentificacaoRps" minOccurs="1" maxOccurs="1"/>
-            </xsd:sequence>
-        </xsd:complexType>
-    </xsd:element>
     """
     identificacao_rps: IdentificacaoRps
     prestador_cnpj: str
@@ -1315,13 +1318,7 @@ class GerarNfseResposta:
 @dataclass
 class GerarNfseEnvio(Envio[GerarNfseResposta]):
     """
-  <xsd:element name="GerarNfseEnvio">
-    <xsd:complexType>
-      <xsd:sequence>
-        <xsd:element name="Rps" type="tcRps" minOccurs="1" maxOccurs="1" />
-      </xsd:sequence>
-    </xsd:complexType>
-  </xsd:element>
+    Classe para gerar Nfse a partir de um RPS.
     """
   
     rps: Rps
@@ -1346,7 +1343,7 @@ class EnviarLoteRpsResposta:
     numero_lote: str
     data_recebimento: datetime
     protocolo: str
-    lista_mensagem_retorno: List[MensagemRetorno]
+    lista_mensagem_retorno: Optional[List[MensagemRetorno]] = None
 
     @classmethod
     def from_xml(cls, xml: ElementBase):
@@ -1370,21 +1367,7 @@ class EnviarLoteRpsResposta:
 @dataclass
 class EnviarLoteRpsEnvio(Envio[EnviarLoteRpsResposta]):
     """
-    <xsd:sequence>
-        <xsd:element name="NumeroLote" type="tsNumeroLote" minOccurs="1" maxOccurs="1"/>
-        <xsd:element name="Cnpj" type="tsCnpj" minOccurs="1" maxOccurs="1"/>
-        <xsd:element name="InscricaoMunicipal" type="tsInscricaoMunicipal" minOccurs="1" maxOccurs="1"/>
-        <xsd:element name="QuantidadeRps" type="tsQuantidadeRps" minOccurs="1" maxOccurs="1"/>
-        <xsd:element name="ListaRps" minOccurs="1" maxOccurs="1">
-            <xsd:complexType>
-                <xsd:sequence>
-                    <xsd:element name="Rps" maxOccurs="unbounded" type="tcRps" minOccurs="1">
-                    </xsd:element>
-                </xsd:sequence>
-            </xsd:complexType>
-                </xsd:element>
-        </xsd:sequence>
-        <xsd:attribute name="Id" type="tsIdTag" />
+    Enviar um lote de RPS para processamento.
     """
     
     lote_id: str
@@ -1460,10 +1443,7 @@ class ConsultarSituacaoLoteRpsResposta:
 class ConsultarSituacaoLoteRpsEnvio(Envio[ConsultarSituacaoLoteRpsResposta]):
     """
     Consultar a situação de um lote de RPS.
-    <xsd:sequence>
-        <xsd:element name="Prestador" type="tcIdentificacaoPrestador" minOccurs="1" maxOccurs="1"/>
-        <xsd:element name="Protocolo" type="tsNumeroProtocolo" minOccurs="1" maxOccurs="1"/>
-    </xsd:sequence>
+
     """
     
     protocolo: str
