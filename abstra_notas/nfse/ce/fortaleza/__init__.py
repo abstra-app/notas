@@ -491,8 +491,15 @@ class DadosPrestador:
         """
         Método para criar uma instância de DadosPrestador a partir de um elemento XML.
         """
-        cnpj = find_text(xml, 'Cnpj', None)
-        inscricao_municipal = find_text(xml, 'InscricaoMunicipal', None)
+        
+        identificacao_prestador = find_element(xml, 'IdentificacaoPrestador')
+        
+        cnpj = None
+        inscricao_municipal = None
+        
+        if identificacao_prestador is not None:
+            cnpj = find_text(identificacao_prestador, 'Cnpj', None)
+            inscricao_municipal = find_text(identificacao_prestador, 'InscricaoMunicipal', None)
         
         if cnpj:
             cnpj = normalizar_cnpj(cnpj)
@@ -527,13 +534,22 @@ class DadosTomador:
 
         assert self.cnpj is not None or self.cpf is not None, "CNPJ ou CPF deve ser fornecido."
     
+
     @classmethod
     def from_xml(cls, xml: ElementBase):
         """
         Método para criar uma instância de DadosTomador a partir de um elemento XML.
         """
-        cnpj = find_text(xml, 'Cnpj', None)
-        cpf = find_text(xml, 'Cpf', None)
+        # Busca dentro de IdentificacaoTomador/CpfCnpj
+        identificacao_tomador = find_element(xml, 'IdentificacaoTomador')
+        cpf_cnpj_element = find_element(identificacao_tomador, 'CpfCnpj') if identificacao_tomador is not None else None
+        
+        cnpj = None
+        cpf = None
+        
+        if cpf_cnpj_element:
+            cnpj = find_text(cpf_cnpj_element, 'Cnpj', None)
+            cpf = find_text(cpf_cnpj_element, 'Cpf', None)
         
         if cnpj:
             cnpj = normalizar_cnpj(cnpj)
@@ -541,7 +557,7 @@ class DadosTomador:
         return cls(
             cnpj=cnpj,
             cpf=cpf,
-            razao_social=find_text(xml, 'RazaoSocial', ''),
+            razao_social=find_text(xml, 'RazaoSocial', None),
             endereco=Endereco.from_xml(find_element(xml, 'Endereco')) if find_element(xml, 'Endereco') is not None else None,
             contato=Contato.from_xml(find_element(xml, 'Contato')) if find_element(xml, 'Contato') is not None else None,
         )
@@ -563,6 +579,18 @@ class IdentificacaoIntermediarioServico:
             self.cpf = normalizar_cpf(self.cpf)
         
         assert self.cnpj or self.cpf, "CNPJ ou CPF deve ser fornecido."
+
+    @classmethod
+    def from_xml(cls, xml: ElementBase):
+        """
+        Método para criar uma instância de IdentificacaoIntermediarioServico a partir de um elemento XML.
+        """
+        return cls(
+            razao_social=find_text(xml, 'RazaoSocial', ''),
+            cnpj=find_text(xml, 'Cnpj', None),
+            cpf=find_text(xml, 'Cpf', None),
+            inscricao_municipal=find_text(xml, 'InscricaoMunicipal', None),
+        )
 
 @dataclass
 class IdentificacaoOrgaoGerador:
@@ -667,14 +695,14 @@ class Nfse:
     @property
     def optante_simples_nacional_value(self):
         """
-        Retorna o valor do campo optante_simples_nacional como 'S' ou 'N'.
+        Retorna o valor do campo optante_simples_nacional como '1' para sim ou '2' para não.
         """
         return '1' if self.optante_simples_nacional else '2'
 
     @property
     def incentivador_cultural_value(self):
         """
-        Retorna o valor do campo incentivador_cultural como 'S' ou 'N'.
+        Retorna o valor do campo incentivador_cultural como '1' para sim ou '2' para não.
         """
         return '1' if self.incentivador_cultural else '2'
 
@@ -692,8 +720,8 @@ class Nfse:
             data_emissao_rps=datetime.fromisoformat(find_text(xml, 'DataEmissaoRps', '')) if find_element(xml, 'DataEmissaoRps') is not None else None,
             natureza_operacao=NaturezaOperacao(find_text(xml, 'NaturezaOperacao', '')) if find_element(xml, 'NaturezaOperacao') is not None else None,
             regime_especial_tributacao=RegimeEspecialTributacao(find_text(xml, 'RegimeEspecialTributacao', '')) if find_element(xml, 'RegimeEspecialTributacao') is not None else None,
-            optante_simples_nacional=find_text(xml, 'OptanteSimplesNacional', 'N') == 'S',
-            incentivador_cultural=find_text(xml, 'IncentivadorCultural', 'N') == 'S',
+            optante_simples_nacional=find_text(xml, 'OptanteSimplesNacional', '2') == '1',
+            incentivador_cultural=find_text(xml, 'IncentivadorCultural', '2') == '1',
             competencia=datetime.fromisoformat(find_text(xml, 'Competencia', '')) if find_element(xml, 'Competencia') is not None else None,
             nfse_substituida=find_text(xml, 'NfseSubstituida', None),
             outras_informacoes=find_text(xml, 'OutrasInformacoes', None),
@@ -861,14 +889,14 @@ class Rps:
     @property
     def optante_simples_nacional_value(self):
         """
-        Retorna o valor do campo optante_simples_nacional como 'S' ou 'N'.
+        Retorna o valor do campo optante_simples_nacional como '1' para sim ou '2' para não.
         """
         return '1' if self.optante_simples_nacional else '2'
 
     @property
     def incentivador_cultural_value(self):
         """
-        Retorna o valor do campo incentivador_cultural como 'S' ou 'N'.
+        Retorna o valor do campo incentivador_cultural como '1' para sim ou '2' para não.
         """
         return '1' if self.incentivador_cultural else '2'
     
@@ -906,14 +934,15 @@ class Rps:
         Método para criar uma instância de Rps a partir de um elemento XML.
         """
         return cls(
+            id=xml.get('Id', ''),
             numero=find_text(xml, 'Numero', ''),
             serie=find_text(xml, 'Serie', ''),
             tipo=TipoRps(find_text(xml, 'Tipo', '')),
             data_emissao=datetime.fromisoformat(find_text(xml, 'DataEmissao', '')),
             natureza_operacao=NaturezaOperacao(find_text(xml, 'NaturezaOperacao', '')),
             regime_especial_tributacao=RegimeEspecialTributacao(find_text(xml, 'RegimeEspecialTributacao', '')),
-            optante_simples_nacional=find_text(xml, 'OptanteSimplesNacional', 'N') == 'S',
-            incentivador_cultural=find_text(xml, 'IncentivadorCultural', 'N') == 'S',
+            optante_simples_nacional=find_text(xml, 'OptanteSimplesNacional', '2') == '1',
+            incentivador_cultural=find_text(xml, 'IncentivadorCultural', '2') == '1',
             status=StatusRps(find_text(xml, 'Status', '')),
             servico=DadosServico.from_xml(find_element(xml, 'Servico')),
             prestador_cnpj=normalizar_cnpj(find_text(xml, 'Prestador/Cnpj', '')),
@@ -1322,17 +1351,23 @@ class ConsultarLoteRpsResposta:
 		</xsd:complexType>
 	</xsd:element>
     """
-    comp_nfse: List[CompNfse]
+    comp_nfse: List[CompNfse] 
+    lista_mensagem_retorno: Optional[List[MensagemRetorno]] = None
 
     @classmethod
     def from_xml(cls, xml: ElementBase):
         """
         Método para criar uma instância de ConsultarLoteRpsResposta a partir de um elemento XML.
         """
+        if find_element(xml, 'ListaMensagemRetorno') is not None:
+            mensagens = find_all_elements(xml, 'MensagemRetorno')
+            lista_mensagem_retorno = [MensagemRetorno.from_xml(m) for m in mensagens]
+            return cls(comp_nfse=[], lista_mensagem_retorno=lista_mensagem_retorno)
+        
         comp_nfse_elements = find_all_elements(xml, 'CompNfse')
         comp_nfse_list = [CompNfse.from_xml(comp) for comp in comp_nfse_elements]
-        
-        return cls(comp_nfse=comp_nfse_list)
+
+        return cls(comp_nfse=comp_nfse_list, lista_mensagem_retorno=None)
     
 @dataclass
 class ConsultarLoteRpsEnvio(Envio[ConsultarLoteRpsResposta]):

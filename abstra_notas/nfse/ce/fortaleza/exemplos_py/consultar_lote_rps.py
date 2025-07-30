@@ -43,8 +43,6 @@ try:
                 print(f"Status: CANCELADA em {comp_nfse.cancelamento.data_hora}")
             else:
                 print(f"Status: ATIVA")
-    else:
-        print("Nenhuma NFSe encontrada para este lote")
     
     if hasattr(resposta, 'lista_mensagem_retorno') and resposta.lista_mensagem_retorno:
         print("\nMensagens:")

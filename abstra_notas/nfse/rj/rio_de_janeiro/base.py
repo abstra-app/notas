@@ -95,14 +95,14 @@ class Envio(ABC, Generic[T]):
 
             request_tmp_path = Path(mktemp())
             request_tmp_path.write_text(tostring(xml_assinado, encoding=str), encoding="utf-8")
-            print(f"Request saved to: {request_tmp_path}")
+            #print(f"Request saved to: {request_tmp_path}")
 
 
             response: str = getattr(client.service, self.nome_operacao())( tostring(xml_assinado, encoding=str))
 
             response_temp_path = Path(mktemp())
             response_temp_path.write_text(response, encoding="utf-8")
-            print(f"Response saved to: {response_temp_path}")
+            #print(f"Response saved to: {response_temp_path}")
             xml_resposta =  fromstring(response.encode("utf-8"))
             return self.resposta(xml_resposta)
         finally:

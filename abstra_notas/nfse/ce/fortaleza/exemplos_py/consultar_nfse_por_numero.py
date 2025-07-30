@@ -45,10 +45,7 @@ try:
             print(f"      Código de verificação: {nfse.codigo_verificacao}")
             print(f"      Status: {status}")
             print(f"      Discriminação: {nfse.servico.discriminacao}")
-            print()
-    else:
-        print("Nenhuma NFSe encontrada no período consultado")
-    
+
     if resposta.lista_mensagem_retorno:
         print("Mensagens de retorno:")
         for msg in resposta.lista_mensagem_retorno:
