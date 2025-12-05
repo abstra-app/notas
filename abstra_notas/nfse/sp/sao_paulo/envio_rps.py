@@ -15,6 +15,8 @@ from .retorno import Retorno
 from .templates import load_template
 from abstra_notas.assinatura import Assinador
 from .erro import Erro
+import re
+import re
 
 
 @dataclass
@@ -451,6 +453,161 @@ class RPS:
             if self.valor_total_recebido_centavos is not None
             else None,
         )
+
+    @staticmethod
+    def ler_txt(conteudo: str) -> List["RPS"]:
+        lista_rps = []
+        lines = conteudo.splitlines()
+        inscricao_prestador = None
+
+        for line in lines:
+            if line.startswith("1"):
+                inscricao_prestador = int(line[1:9])
+            elif line.startswith("6"):
+                if inscricao_prestador is None:
+                    continue
+
+                tipo_rps = line[1:6].strip()
+                serie_rps = line[6:11].strip()
+                numero_rps = int(line[11:23])
+                data_emissao = parse(line[23:31]).date()
+                tributacao_rps = line[31:32]
+
+                valor_servicos_centavos = int(line[32:47])
+                valor_deducoes_centavos = int(line[47:62])
+
+                codigo_servico = line[62:67].strip()
+
+                aliquota_servicos = int(line[67:71]) / 10000
+
+                iss_retido = line[71:72] == "1"
+                tipo_tomador = line[72:73]
+                
+                tomador_cpf_cnpj = line[73:87].strip()
+                
+                # If Type 1 (CPF), ensure it is treated as 11 digits by stripping leading zeros/padding
+                if tipo_tomador == '1':
+                    # Taking the last 11 digits is safer if it was left-padded with zeros
+                    if len(tomador_cpf_cnpj) > 11:
+                        tomador_cpf_cnpj = tomador_cpf_cnpj[-11:]
+
+                try:
+                    tomador_cpf_cnpj = normalizar_cpf_ou_cnpj(tomador_cpf_cnpj)
+                except ValueError:
+                    tomador_cpf_cnpj = None
+
+                im_tomador = line[87:95].strip()
+                ie_tomador = line[95:107].strip()
+
+                razao_social_tomador = line[107:182].strip()
+
+                endereco_tipo_logradouro_raw = line[182:185].strip().rstrip('.')
+                try:
+                    if endereco_tipo_logradouro_raw.upper() in TipoLogradouro.__members__:
+                        endereco_tipo_logradouro = TipoLogradouro[endereco_tipo_logradouro_raw.upper()]
+                    else:
+                        endereco_tipo_logradouro = TipoLogradouro(endereco_tipo_logradouro_raw.upper())
+                except ValueError:
+                    endereco_tipo_logradouro = None
+                endereco_logradouro = line[185:235].strip()
+                endereco_numero = line[235:245].strip()
+                endereco_complemento = line[245:275].strip()
+                endereco_bairro = line[275:305].strip()
+                
+                # Robust UF and CEP parsing
+                raw_uf_slice = line[355:357].strip()
+                raw_cep_slice = line[357:365].strip()
+
+                endereco_uf = None
+                endereco_cep = None
+
+                if len(raw_uf_slice) == 2 and raw_uf_slice.isalpha():
+                    endereco_uf = raw_uf_slice
+                    if raw_cep_slice.isdigit() and len(raw_cep_slice) == 8:
+                        endereco_cep = raw_cep_slice
+                
+                # If UF is not found in its expected slice, check if it's embedded in the CEP slice
+                if not endereco_uf and len(raw_cep_slice) == 10 and raw_cep_slice[:2].isalpha() and raw_cep_slice[2:].isdigit():
+                    endereco_uf = raw_cep_slice[:2]
+                    endereco_cep = raw_cep_slice[2:]
+                elif not endereco_uf and raw_cep_slice.isdigit() and len(raw_cep_slice) == 8: # If UF is truly missing
+                    endereco_cep = raw_cep_slice
+                    # endereco_uf remains None
+
+                email_tomador_raw = line[365:440].strip()
+                email_tomador = email_tomador_raw if '@' in email_tomador_raw else None
+
+                valor_carga_tributaria_centavos = 0
+                percentual_carga_tributaria = 0.0
+                fonte_carga_tributaria = ""
+
+                # Search for the pattern 'DDDDDDDDDDDDDDDDPPPPP' followed by 'IBPT'
+                # within a broader segment where these fields are expected.
+                tax_segment = line[500:560] # Adjusted slice to capture the tax info reliably
+                tax_match = re.search(r'(\\d+)(\\d{5})(IBPT)', tax_segment)
+
+                if tax_match:
+                    valor_carga_tributaria_centavos = int(tax_match.group(1))
+                    percentual_carga_tributaria = int(tax_match.group(2)) / 10000
+                    fonte_carga_tributaria = tax_match.group(3)
+
+                codigo_cei = line[545:557].strip()
+                matricula_obra = line[557:569].strip()
+                municipio_prestacao = line[569:576].strip()
+                numero_encapsulamento = line[576:583].strip()
+                # 583-596: Reserved/Spaces?
+                valor_total_recebido_centavos = line[596:611].strip()
+
+                discriminacao = line[611:].strip()
+
+                rps = RPS(
+                    inscricao_prestador=inscricao_prestador,
+                    numero_rps=numero_rps,
+                    tipo_rps=tipo_rps,
+                    data_emissao=data_emissao,
+                    status_rps="N",
+                    tributacao_rps=tributacao_rps,
+                    valor_servicos_centavos=valor_servicos_centavos,
+                    valor_deducoes_centavos=valor_deducoes_centavos,
+                    codigo_servico=codigo_servico,
+                    aliquota_servicos=aliquota_servicos,
+                    iss_retido=iss_retido,
+                    serie_rps=serie_rps,
+                    tomador=tomador_cpf_cnpj,
+                    razao_social_tomador=razao_social_tomador,
+                    endereco_tipo_logradouro=endereco_tipo_logradouro,
+                    endereco_logradouro=endereco_logradouro,
+                    endereco_numero=endereco_numero,
+                    endereco_complemento=endereco_complemento,
+                    endereco_bairro=endereco_bairro,
+                    endereco_uf=endereco_uf,
+                    endereco_cep=endereco_cep,
+                    email_tomador=email_tomador,
+                    discriminacao=discriminacao,
+                    valor_carga_tributaria_centavos=valor_carga_tributaria_centavos,
+                    percentual_carga_tributaria=percentual_carga_tributaria,
+                    fonte_carga_tributaria=fonte_carga_tributaria,
+                    codigo_cei=int(codigo_cei) if codigo_cei else None,
+                    matricula_obra=int(matricula_obra) if matricula_obra else None,
+                    municipio_prestacao=int(municipio_prestacao)
+                    if municipio_prestacao
+                    else None,
+                    numero_encapsulamento=int(numero_encapsulamento)
+                    if numero_encapsulamento
+                    else None,
+                    valor_total_recebido_centavos=int(valor_total_recebido_centavos)
+                    if valor_total_recebido_centavos
+                    else None,
+                    inscricao_municipal_tomador=im_tomador
+                    if im_tomador and im_tomador != "00000000"
+                    else None,
+                    inscricao_estadual_tomador=ie_tomador
+                    if ie_tomador and ie_tomador != "000000000000"
+                    else None,
+                )
+                lista_rps.append(rps)
+
+        return lista_rps
 
     def assinatura(self, assinador: Assinador) -> str:
         template = ""
