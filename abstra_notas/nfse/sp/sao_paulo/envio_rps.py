@@ -462,7 +462,7 @@ class RPS:
 
         for line in lines:
             if line.startswith("1"):
-                inscricao_prestador = int(line[1:9])
+                inscricao_prestador = int(line[4:12])
             elif line.startswith("6"):
                 if inscricao_prestador is None:
                     continue
@@ -471,7 +471,7 @@ class RPS:
                 serie_rps = line[6:11].strip()
                 numero_rps = int(line[11:23])
                 data_emissao = parse(line[23:31]).date()
-                tributacao_rps = line[31:32]
+                status_rps = line[31:32]
 
                 valor_servicos_centavos = int(line[32:47])
                 valor_deducoes_centavos = int(line[47:62])
@@ -482,11 +482,11 @@ class RPS:
 
                 iss_retido = line[71:72] == "1"
                 tipo_tomador = line[72:73]
-                
+
                 tomador_cpf_cnpj = line[73:87].strip()
-                
+
                 # If Type 1 (CPF), ensure it is treated as 11 digits by stripping leading zeros/padding
-                if tipo_tomador == '1':
+                if tipo_tomador == "1":
                     # Taking the last 11 digits is safer if it was left-padded with zeros
                     if len(tomador_cpf_cnpj) > 11:
                         tomador_cpf_cnpj = tomador_cpf_cnpj[-11:]
@@ -501,72 +501,97 @@ class RPS:
 
                 razao_social_tomador = line[107:182].strip()
 
-                endereco_tipo_logradouro_raw = line[182:185].strip().rstrip('.')
+                endereco_tipo_logradouro_raw = line[182:185].strip().rstrip(".")
                 try:
-                    if endereco_tipo_logradouro_raw.upper() in TipoLogradouro.__members__:
-                        endereco_tipo_logradouro = TipoLogradouro[endereco_tipo_logradouro_raw.upper()]
+                    if (
+                        endereco_tipo_logradouro_raw.upper()
+                        in TipoLogradouro.__members__
+                    ):
+                        endereco_tipo_logradouro = TipoLogradouro[
+                            endereco_tipo_logradouro_raw.upper()
+                        ]
                     else:
-                        endereco_tipo_logradouro = TipoLogradouro(endereco_tipo_logradouro_raw.upper())
+                        endereco_tipo_logradouro = TipoLogradouro(
+                            endereco_tipo_logradouro_raw.upper()
+                        )
                 except ValueError:
                     endereco_tipo_logradouro = None
                 endereco_logradouro = line[185:235].strip()
                 endereco_numero = line[235:245].strip()
                 endereco_complemento = line[245:275].strip()
                 endereco_bairro = line[275:305].strip()
-                
-                # Robust UF and CEP parsing
-                raw_uf_slice = line[355:357].strip()
-                raw_cep_slice = line[357:365].strip()
 
-                endereco_uf = None
-                endereco_cep = None
+                # Cidade (Nome) is at 306-355, but we don't map it to IBGE int code here
+                # because we don't have a lookup table loaded.
+                # We will rely on 'Município Prestação' (570-576) if available or logic elsewhere.
 
-                if len(raw_uf_slice) == 2 and raw_uf_slice.isalpha():
-                    endereco_uf = raw_uf_slice
-                    if raw_cep_slice.isdigit() and len(raw_cep_slice) == 8:
-                        endereco_cep = raw_cep_slice
-                
-                # If UF is not found in its expected slice, check if it's embedded in the CEP slice
-                if not endereco_uf and len(raw_cep_slice) == 10 and raw_cep_slice[:2].isalpha() and raw_cep_slice[2:].isdigit():
-                    endereco_uf = raw_cep_slice[:2]
-                    endereco_cep = raw_cep_slice[2:]
-                elif not endereco_uf and raw_cep_slice.isdigit() and len(raw_cep_slice) == 8: # If UF is truly missing
-                    endereco_cep = raw_cep_slice
-                    # endereco_uf remains None
+                endereco_uf = line[355:357].strip()
+                endereco_cep = line[357:365].strip()
 
                 email_tomador_raw = line[365:440].strip()
-                email_tomador = email_tomador_raw if '@' in email_tomador_raw else None
+                email_tomador = (
+                    email_tomador_raw if "@" in email_tomador_raw else None
+                )
 
-                valor_carga_tributaria_centavos = 0
-                percentual_carga_tributaria = 0.0
-                fonte_carga_tributaria = ""
+                # Layout V.002 Fields (Positions 441+)
+                valor_pis_centavos = int(line[440:455])
+                valor_cofins_centavos = int(line[455:470])
+                valor_inss_centavos = int(line[470:485])
+                valor_ir_centavos = int(line[485:500])
+                valor_csll_centavos = int(line[500:515])
 
-                # Search for the pattern 'DDDDDDDDDDDDDDDDPPPPP' followed by 'IBPT'
-                # within a broader segment where these fields are expected.
-                tax_segment = line[500:560] # Adjusted slice to capture the tax info reliably
-                tax_match = re.search(r'(\\d+)(\\d{5})(IBPT)', tax_segment)
-
-                if tax_match:
-                    valor_carga_tributaria_centavos = int(tax_match.group(1))
-                    percentual_carga_tributaria = int(tax_match.group(2)) / 10000
-                    fonte_carga_tributaria = tax_match.group(3)
+                valor_carga_tributaria_centavos = int(line[515:530])
+                percentual_carga_tributaria = int(line[530:535]) / 10000
+                fonte_carga_tributaria = line[535:545].strip()
 
                 codigo_cei = line[545:557].strip()
                 matricula_obra = line[557:569].strip()
                 municipio_prestacao = line[569:576].strip()
-                numero_encapsulamento = line[576:583].strip()
-                # 583-596: Reserved/Spaces?
+                numero_encapsulamento = line[576:586].strip()
+                
+                # Reserved 587-596
+
                 valor_total_recebido_centavos = line[596:611].strip()
 
-                discriminacao = line[611:].strip()
+                # Reserved 612-786
+
+                discriminacao = line[786:].strip()
 
                 rps = RPS(
                     inscricao_prestador=inscricao_prestador,
                     numero_rps=numero_rps,
                     tipo_rps=tipo_rps,
                     data_emissao=data_emissao,
-                    status_rps="N",
-                    tributacao_rps=tributacao_rps,
+                    status_rps=status_rps,
+                    tributacao_rps="T",  # Defaulting or needs extraction?
+                    # WARNING: 'tributacao_rps' was missing in V.002 extraction in previous code too?
+                    # In V.001/V.002 header logic:
+                    # Pos 32: Situação do RPS (T, F, A, B...) -> This maps to 'tributacao_rps' in RPS dataclass?
+                    # In RPS dataclass: status_rps is Literal["N", "C"] (Normal, Cancelado).
+                    # But in Manual: Pos 32 is "Situação do RPS" with values T, F, A, B...
+                    # Wait. Manual says:
+                    # 6) Situação do RPS (32-32): T, F, A, B... (Taxation Type).
+                    # BUT RPS Dataclass has `status_rps` AND `tributacao_rps`.
+                    # Let's check RPS Dataclass:
+                    # `status_rps`: Literal["N", "C"]
+                    # `tributacao_rps`: Literal["T", "F", ...]
+                    #
+                    # In Manual V.001/V.002:
+                    # Field 6 "Situação do RPS" contains T, F, A, B, C (Cancelado)...
+                    # So if it is 'C', it is Cancelled. If it is 'T', it is Normal & Taxed inside SP.
+                    # The `RPS` object separates Status (Normal/Cancelled) and Taxation.
+                    # Logic needed:
+                    # If line[31] == 'C': status='C', tributacao=? (Maybe previous valid one or None?)
+                    # If line[31] != 'C': status='N', tributacao=line[31]
+                    #
+                    # Re-reading Manual 2.3.1:
+                    # "Situação do RPS ... C – Cancelado"
+                    # "T – Tributado em São Paulo"
+                    #
+                    # So line[31] (pos 32) holds the Taxation info OR Cancelled status.
+                    #
+                    # I will implement logic to split this.
+                    #
                     valor_servicos_centavos=valor_servicos_centavos,
                     valor_deducoes_centavos=valor_deducoes_centavos,
                     codigo_servico=codigo_servico,
@@ -584,6 +609,11 @@ class RPS:
                     endereco_cep=endereco_cep,
                     email_tomador=email_tomador,
                     discriminacao=discriminacao,
+                    valor_pis_centavos=valor_pis_centavos,
+                    valor_cofins_centavos=valor_cofins_centavos,
+                    valor_inss_centavos=valor_inss_centavos,
+                    valor_ir_centavos=valor_ir_centavos,
+                    valor_csll_centavos=valor_csll_centavos,
                     valor_carga_tributaria_centavos=valor_carga_tributaria_centavos,
                     percentual_carga_tributaria=percentual_carga_tributaria,
                     fonte_carga_tributaria=fonte_carga_tributaria,
@@ -605,6 +635,18 @@ class RPS:
                     if ie_tomador and ie_tomador != "000000000000"
                     else None,
                 )
+                
+                # Correction for status/tributacao logic inside the object construction above
+                if line[31] == 'C':
+                    rps.status_rps = 'C'
+                    # Tributacao is mandatory in RPS dataclass, but meaningless if cancelled?
+                    # We'll default to 'T' if cancelled, or leave it if it allows.
+                    # The dataclass definition says `tributacao_rps: Literal[...]`
+                    rps.tributacao_rps = 'T' 
+                else:
+                    rps.status_rps = 'N'
+                    rps.tributacao_rps = line[31]
+
                 lista_rps.append(rps)
 
         return lista_rps
