@@ -502,7 +502,18 @@ class RPS:
 
                 razao_social_tomador = line[107:182].strip()
 
-                endereco_tipo_logradouro_raw = line[182:185].strip().rstrip(".")
+                # Dynamic Offset Calculation Logic
+                # Search for UF+CEP anchor (2 uppercase letters + 8 digits) around expected position 355
+                # We search a wider window to catch significant shifts
+                match_uf_cep = re.search(r'([A-Z]{2}\d{8})', line[330:380])
+                offset = 0
+                if match_uf_cep:
+                    # Found relative to slice start (330), so actual pos is match.start() + 330
+                    actual_uf_pos = match_uf_cep.start() + 330
+                    expected_uf_pos = 355
+                    offset = actual_uf_pos - expected_uf_pos
+
+                endereco_tipo_logradouro_raw = line[182+offset:185+offset].strip().rstrip(".")
                 try:
                     if (
                         endereco_tipo_logradouro_raw.upper()
@@ -517,45 +528,47 @@ class RPS:
                         )
                 except ValueError:
                     endereco_tipo_logradouro = None
-                endereco_logradouro = line[185:235].strip()
-                endereco_numero = line[235:245].strip()
-                endereco_complemento = line[245:275].strip()
-                endereco_bairro = line[275:305].strip()
+                
+                endereco_logradouro = line[185+offset:235+offset].strip()
+                endereco_numero = line[235+offset:245+offset].strip()
+                endereco_complemento = line[245+offset:275+offset].strip()
+                endereco_bairro = line[275+offset:305+offset].strip()
 
                 # Cidade (Nome) is at 306-355
-                endereco_cidade = line[305:355].strip()
+                endereco_cidade = line[305+offset:355+offset].strip()
 
-                endereco_uf = line[355:357].strip()
-                endereco_cep = line[357:365].strip()
+                endereco_uf = line[355+offset:357+offset].strip()
+                endereco_cep = line[357+offset:365+offset].strip()
 
-                email_tomador_raw = line[365:440].strip()
+                email_tomador_raw = line[365+offset:440+offset].strip()
                 email_tomador = (
                     email_tomador_raw if "@" in email_tomador_raw else None
                 )
 
                 # Layout V.002 Fields (Positions 441+)
-                valor_pis_centavos = int(line[440:455])
-                valor_cofins_centavos = int(line[455:470])
-                valor_inss_centavos = int(line[470:485])
-                valor_ir_centavos = int(line[485:500])
-                valor_csll_centavos = int(line[500:515])
+                # Apply offset to subsequent fields as shift likely originated in text fields
+                valor_pis_centavos = int(line[440+offset:455+offset])
+                valor_cofins_centavos = int(line[455+offset:470+offset])
+                valor_inss_centavos = int(line[470+offset:485+offset])
+                valor_ir_centavos = int(line[485+offset:500+offset])
+                valor_csll_centavos = int(line[500+offset:515+offset])
 
-                valor_carga_tributaria_centavos = int(line[515:530])
-                percentual_carga_tributaria = int(line[530:535]) / 10000
-                fonte_carga_tributaria = line[535:545].strip()
+                valor_carga_tributaria_centavos = int(line[515+offset:530+offset])
+                percentual_carga_tributaria = int(line[530+offset:535+offset]) / 10000
+                fonte_carga_tributaria = line[535+offset:545+offset].strip()
 
-                codigo_cei = line[545:557].strip()
-                matricula_obra = line[557:569].strip()
-                municipio_prestacao = line[569:576].strip()
-                numero_encapsulamento = line[576:586].strip()
+                codigo_cei = line[545+offset:557+offset].strip()
+                matricula_obra = line[557+offset:569+offset].strip()
+                municipio_prestacao = line[569+offset:576+offset].strip()
+                numero_encapsulamento = line[576+offset:586+offset].strip()
                 
                 # Reserved 587-596
 
-                valor_total_recebido_centavos = line[596:611].strip()
+                valor_total_recebido_centavos = line[596+offset:611+offset].strip()
 
                 # Reserved 612-786
 
-                discriminacao = line[786:].strip()
+                discriminacao = line[786+offset:].strip()
 
                 rps = RPS(
                     inscricao_prestador=inscricao_prestador,
