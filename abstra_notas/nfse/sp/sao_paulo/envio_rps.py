@@ -180,7 +180,7 @@ class RPS:
     endereco_numero: Optional[str] = None
     endereco_complemento: Optional[str] = None
     endereco_uf: Optional[UF] = None
-    endereco_cidade: Optional[int] = None
+    endereco_cidade: Optional[str] = None
     """
     Código da cidade. Pode ser obtido em:
 
@@ -258,9 +258,10 @@ class RPS:
             self.tomador = normalizar_cpf_ou_cnpj(self.tomador)
 
         if self.endereco_cidade is not None:
-            assert validar_codigo_cidade(
-                self.endereco_cidade
-            ), f"Código de cidade inválido: {self.endereco_cidade}"
+            if str(self.endereco_cidade).isdigit():
+                assert validar_codigo_cidade(
+                    self.endereco_cidade
+                ), f"Código de cidade inválido: {self.endereco_cidade}"
 
         if isinstance(self.endereco_tipo_logradouro, str):
             if self.endereco_tipo_logradouro.upper() in TipoLogradouro.__members__:
@@ -521,9 +522,8 @@ class RPS:
                 endereco_complemento = line[245:275].strip()
                 endereco_bairro = line[275:305].strip()
 
-                # Cidade (Nome) is at 306-355, but we don't map it to IBGE int code here
-                # because we don't have a lookup table loaded.
-                # We will rely on 'Município Prestação' (570-576) if available or logic elsewhere.
+                # Cidade (Nome) is at 306-355
+                endereco_cidade = line[305:355].strip()
 
                 endereco_uf = line[355:357].strip()
                 endereco_cep = line[357:365].strip()
@@ -605,6 +605,7 @@ class RPS:
                     endereco_numero=endereco_numero,
                     endereco_complemento=endereco_complemento,
                     endereco_bairro=endereco_bairro,
+                    endereco_cidade=endereco_cidade,
                     endereco_uf=endereco_uf,
                     endereco_cep=endereco_cep,
                     email_tomador=email_tomador,
